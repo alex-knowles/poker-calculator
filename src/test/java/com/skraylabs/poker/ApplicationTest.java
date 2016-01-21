@@ -14,6 +14,16 @@ import java.io.PrintStream;
 public class ApplicationTest {
 
   /**
+   * SUT: Application.
+   */
+  private Application app;
+
+  /**
+   * Error code returned from Application under test.
+   */
+  private int errorCode;
+
+  /**
    * Output stream from Application.main() for test verification.
    */
   private ByteArrayOutputStream output;
@@ -28,6 +38,12 @@ public class ApplicationTest {
    */
   @Before
   public void setUp() throws Exception {
+    app = new Application() {
+      @Override
+      public void exit(int errorCode) {
+        ApplicationTest.this.errorCode = errorCode;
+      }
+    };
     output = new ByteArrayOutputStream();
     console = System.out;
     System.setOut(new PrintStream(output));

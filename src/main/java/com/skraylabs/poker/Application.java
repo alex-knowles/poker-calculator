@@ -5,6 +5,7 @@ public class Application {
   static final String MSG_TOO_FEW_ARGS = "Too few arguments";
   static final String MSG_TOO_MANY_ARGS = "Too many arguments";
   static final String MSG_USAGE = "Usage: PokerCalculator filepath";
+  static final int ERROR_CODE_BAD_ARGS = 1;
 
   private static Application app;
 
@@ -24,9 +25,18 @@ public class Application {
     if (!validate(args)) {
       System.out.println(errorMessage);
       System.out.println(MSG_USAGE);
+      exit(ERROR_CODE_BAD_ARGS);
     } else {
       // TODO: process input from file
     }
+  }
+
+  /**
+   * Terminate execution with a given error code.
+   * @param errorCode nonzero for abnormal termination.
+   */
+  public void exit(int errorCode) {
+    System.exit(errorCode);
   }
 
   /**
