@@ -49,4 +49,14 @@ public class ApplicationTest {
         containsString(MSG_USAGE)));
   }
 
+  @Test
+  public void testShowUsageForTooManyArguments() {
+    // Exercise
+    Application.main("1", "2");
+    // Verify
+    String outputString = output.toString();
+    assertThat(outputString, allOf(containsString(MSG_TOO_MANY_ARGS),
+        containsString(MSG_USAGE)));
+  }
+
 }
