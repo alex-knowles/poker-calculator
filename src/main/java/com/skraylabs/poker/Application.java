@@ -37,6 +37,7 @@ public class Application {
       System.out.println(MSG_USAGE);
       exit(ERROR_CODE_BAD_ARGS);
     } else {
+      this.filepath = args[0];
       // TODO: process input from file
     }
   }
