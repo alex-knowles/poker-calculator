@@ -44,7 +44,7 @@ public class ApplicationTest {
   @Test
   public void testAbortForTooFewArguments() {
     // Exercise
-    Application.main();
+    app.execute();
     // Verify
     String outputString = output.toString();
     assertThat(outputString, allOf(containsString(Application.MSG_TOO_FEW_ARGS),
@@ -54,7 +54,7 @@ public class ApplicationTest {
   @Test
   public void testAbortForTooManyArguments() {
     // Exercise
-    Application.main("1", "2");
+    app.execute("1", "2");
     // Verify
     String outputString = output.toString();
     assertThat(outputString, allOf(containsString(Application.MSG_TOO_MANY_ARGS),
