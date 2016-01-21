@@ -26,9 +26,8 @@ public class ApplicationTest {
     PrintStream console = System.out;
     try {
       System.setOut(new PrintStream(output));
-      String[] args = {""};
       // Exercise
-      Application.main(args);
+      Application.main();
     } finally {
       // Tear down
       System.setOut(console);
