@@ -65,10 +65,7 @@ public class ApplicationTest {
     // Exercise
     app.execute();
     // Verify
-    String outputString = output.toString();
-    assertThat(outputString, allOf(containsString(Application.MSG_TOO_FEW_ARGS),
-        containsString(Application.MSG_USAGE)));
-    assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
+    assertAbortBadArgs(Application.MSG_TOO_FEW_ARGS);
   }
 
   @Test
@@ -76,10 +73,7 @@ public class ApplicationTest {
     // Exercise
     app.execute("1", "2");
     // Verify
-    String outputString = output.toString();
-    assertThat(outputString, allOf(containsString(Application.MSG_TOO_MANY_ARGS),
-        containsString(Application.MSG_USAGE)));
-    assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
+    assertAbortBadArgs(Application.MSG_TOO_MANY_ARGS);
   }
 
   @Test
@@ -92,6 +86,18 @@ public class ApplicationTest {
     assertThat(outputString, not(containsString(Application.MSG_USAGE)));
     assertThat(app.getFilepath(), equalTo(filepath));
     assertThat(errorCode, not(Application.ERROR_CODE_BAD_ARGS));
+  }
+
+  /**
+   * Assert that the Application aborts with an error code indicating invalid arguments.
+   *
+   * @param errorMessage Detailed error message to check for.
+   */
+  void assertAbortBadArgs(String errorMessage) {
+    String outputString = output.toString();
+    assertThat(outputString, allOf(containsString(errorMessage),
+        containsString(Application.MSG_USAGE)));
+    assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
   }
 
 }
