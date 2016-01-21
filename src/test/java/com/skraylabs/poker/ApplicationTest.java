@@ -13,29 +13,40 @@ import java.io.PrintStream;
 
 public class ApplicationTest {
 
+  private static final String MSG_TOO_FEW_ARGS = "Too few arguments";
+  private static final String MSG_TOO_MANY_ARGS = "Too many arguments";
+  private static final String MSG_USAGE = "Usage: PokerCalculator filepath";
+
+  /**
+   * Output stream from Application.main() for test verification.
+   */
+  private ByteArrayOutputStream output;
+
+  /**
+   * Temporary reference to System.out
+   */
+  private PrintStream console;
+
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+    output = new ByteArrayOutputStream();
+    console = System.out;
+    System.setOut(new PrintStream(output));
+  }
 
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+    System.setOut(console);    
+  }
 
   @Test
   public void testShowUsageForTooFewArguments() {
-    // Set up
-    ByteArrayOutputStream output = new ByteArrayOutputStream();
-    PrintStream console = System.out;
-    try {
-      System.setOut(new PrintStream(output));
-      // Exercise
-      Application.main();
-    } finally {
-      // Tear down
-      System.setOut(console);
-    }
+    // Exercise
+    Application.main();
     // Verify
     String outputString = output.toString();
-    assertThat(outputString, allOf(containsString("Too few arguments"),
-        containsString("Usage: PokerCalculator filepath")));
+    assertThat(outputString, allOf(containsString(MSG_TOO_FEW_ARGS),
+        containsString(MSG_USAGE)));
   }
 
 }
