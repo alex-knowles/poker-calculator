@@ -13,10 +13,6 @@ import java.io.PrintStream;
 
 public class ApplicationTest {
 
-  private static final String MSG_TOO_FEW_ARGS = "Too few arguments";
-  private static final String MSG_TOO_MANY_ARGS = "Too many arguments";
-  private static final String MSG_USAGE = "Usage: PokerCalculator filepath";
-
   /**
    * Output stream from Application.main() for test verification.
    */
@@ -45,8 +41,8 @@ public class ApplicationTest {
     Application.main();
     // Verify
     String outputString = output.toString();
-    assertThat(outputString, allOf(containsString(MSG_TOO_FEW_ARGS),
-        containsString(MSG_USAGE)));
+    assertThat(outputString, allOf(containsString(Application.MSG_TOO_FEW_ARGS),
+        containsString(Application.MSG_USAGE)));
   }
 
   @Test
@@ -55,8 +51,8 @@ public class ApplicationTest {
     Application.main("1", "2");
     // Verify
     String outputString = output.toString();
-    assertThat(outputString, allOf(containsString(MSG_TOO_MANY_ARGS),
-        containsString(MSG_USAGE)));
+    assertThat(outputString, allOf(containsString(Application.MSG_TOO_MANY_ARGS),
+        containsString(Application.MSG_USAGE)));
   }
 
 }
