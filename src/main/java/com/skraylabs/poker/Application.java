@@ -10,6 +10,16 @@ public class Application {
   private static Application app;
 
   private String errorMessage;
+  private String filepath;
+
+  /**
+   * Access the filepath where Application will attempt to read input from.
+   *
+   * @return relative filepath to input file
+   */
+  public String getFilepath() {
+    return filepath;
+  }
 
   public static void main(String... args) {
     app = new Application();

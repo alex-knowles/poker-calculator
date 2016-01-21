@@ -3,6 +3,7 @@ package com.skraylabs.poker;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.After;
@@ -79,6 +80,18 @@ public class ApplicationTest {
     assertThat(outputString, allOf(containsString(Application.MSG_TOO_MANY_ARGS),
         containsString(Application.MSG_USAGE)));
     assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
+  }
+
+  @Test
+  public void testValidArguments() {
+    // Exercise
+    final String filepath = "poker.txt";
+    app.execute(filepath);
+    // Verify
+    String outputString = output.toString();
+    assertThat(outputString, not(containsString(Application.MSG_USAGE)));
+    assertThat(app.getFilepath(), equalTo(filepath));
+    assertThat(errorCode, not(Application.ERROR_CODE_BAD_ARGS));
   }
 
 }
