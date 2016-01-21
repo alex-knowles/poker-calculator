@@ -23,6 +23,9 @@ public class ApplicationTest {
    */
   private PrintStream console;
 
+  /**
+   * Set up test fixture.
+   */
   @Before
   public void setUp() throws Exception {
     output = new ByteArrayOutputStream();
@@ -30,6 +33,9 @@ public class ApplicationTest {
     System.setOut(new PrintStream(output));
   }
 
+  /**
+   * Tear down test fixture.
+   */
   @After
   public void tearDown() throws Exception {
     System.setOut(console);    
