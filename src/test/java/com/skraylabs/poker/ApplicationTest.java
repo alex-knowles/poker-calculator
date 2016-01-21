@@ -42,7 +42,7 @@ public class ApplicationTest {
   }
 
   @Test
-  public void testShowUsageForTooFewArguments() {
+  public void testAbortForTooFewArguments() {
     // Exercise
     Application.main();
     // Verify
@@ -52,7 +52,7 @@ public class ApplicationTest {
   }
 
   @Test
-  public void testShowUsageForTooManyArguments() {
+  public void testAbortForTooManyArguments() {
     // Exercise
     Application.main("1", "2");
     // Verify
