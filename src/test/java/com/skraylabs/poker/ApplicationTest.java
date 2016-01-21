@@ -2,6 +2,7 @@ package com.skraylabs.poker;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.After;
@@ -54,7 +55,8 @@ public class ApplicationTest {
    */
   @After
   public void tearDown() throws Exception {
-    System.setOut(console);    
+    System.setOut(console);
+    errorCode = 0;
   }
 
   @Test
@@ -65,6 +67,7 @@ public class ApplicationTest {
     String outputString = output.toString();
     assertThat(outputString, allOf(containsString(Application.MSG_TOO_FEW_ARGS),
         containsString(Application.MSG_USAGE)));
+    assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
   }
 
   @Test
@@ -75,6 +78,7 @@ public class ApplicationTest {
     String outputString = output.toString();
     assertThat(outputString, allOf(containsString(Application.MSG_TOO_MANY_ARGS),
         containsString(Application.MSG_USAGE)));
+    assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
   }
 
 }
