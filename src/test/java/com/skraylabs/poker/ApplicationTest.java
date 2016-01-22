@@ -10,7 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 
 public class ApplicationTest {
@@ -94,6 +96,26 @@ public class ApplicationTest {
     assertThat(outputString, not(containsString(Application.MSG_USAGE)));
     assertThat(app.getFilepath(), equalTo(filepath));
     assertThat(errorCode, not(Application.ERROR_CODE_BAD_ARGS));
+  }
+
+  @Test
+  public void testAbortMalformedInput() {
+    // Set up
+    final String input = "5h 7d Tr%n";
+    app = new SafeExitApplication() {
+      @Override
+      InputStream createInputStream() {
+        return new ByteArrayInputStream(input.getBytes());
+      }
+    };
+
+    // Exercise
+    app.execute("foo");
+    // Verify
+    String outputString = output.toString();
+    assertThat(outputString, allOf(containsString("Tr"),
+        containsString(Application.MSG_INVALID_INPUT)));
+    assertThat(errorCode, equalTo(Application.ERROR_INVALID_INPUT));
   }
 
   /**

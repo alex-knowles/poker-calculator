@@ -1,11 +1,15 @@
 package com.skraylabs.poker;
 
+import java.io.InputStream;
+
 public class Application {
 
   static final String MSG_TOO_FEW_ARGS = "Too few arguments";
   static final String MSG_TOO_MANY_ARGS = "Too many arguments";
   static final String MSG_USAGE = "Usage: PokerCalculator filepath";
+  static final String MSG_INVALID_INPUT = "Input is formatted incorrectly";
   static final int ERROR_CODE_BAD_ARGS = 1;
+  static final int ERROR_INVALID_INPUT = 2;
 
   private static Application app;
 
@@ -67,6 +71,17 @@ public class Application {
       result = false;
     }
     return result;
+  }
+
+  /**
+   * Helper method to create an input stream from which to read game state.
+   *
+   * @return input stream that can be processed for board and pocket cards.
+   */
+  InputStream createInputStream() {
+    InputStream result = null;
+    // TODO: implement me!
+    return null;
   }
 
 }
