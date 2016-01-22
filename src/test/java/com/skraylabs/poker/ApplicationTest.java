@@ -36,16 +36,24 @@ public class ApplicationTest {
   private PrintStream console;
 
   /**
+   * A version of Application that can call exit() without stopping the test framework.
+   *
+   * <p>
+   * Also acts as a Test Spy that allows us to observe the error code upon Application termination.
+   */
+  class SafeExitApplication extends Application {
+    @Override
+    public void exit(int errorCode) {
+      ApplicationTest.this.errorCode = errorCode;
+    }
+  }
+
+  /**
    * Set up test fixture.
    */
   @Before
   public void setUp() throws Exception {
-    app = new Application() {
-      @Override
-      public void exit(int errorCode) {
-        ApplicationTest.this.errorCode = errorCode;
-      }
-    };
+    app = new SafeExitApplication();
     output = new ByteArrayOutputStream();
     console = System.out;
     System.setOut(new PrintStream(output));
