@@ -1,6 +1,5 @@
 package com.skraylabs.poker;
 
-import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
@@ -112,10 +111,7 @@ public class ApplicationTest {
     // Exercise
     app.execute("foo");
     // Verify
-    String outputString = output.toString();
-    assertThat(outputString, allOf(containsString("Tr"),
-        containsString(Application.MSG_INVALID_INPUT)));
-    assertThat(errorCode, equalTo(Application.ERROR_INVALID_INPUT));
+    assertAbort(Application.ERROR_INVALID_INPUT, "Tr", Application.MSG_INVALID_INPUT);
   }
 
   @Test
@@ -124,22 +120,32 @@ public class ApplicationTest {
     final String filepath = "absent_file.txt";
     app.execute(filepath);
     // Verify
-    String outputString = output.toString();
-    assertThat(outputString,
-        containsString(String.format(Application.MSG_FILE_NOT_OPENED, filepath)));
-    assertThat(errorCode, equalTo(Application.ERROR_FILE_NOT_OPENED));
+    assertAbort(Application.ERROR_FILE_NOT_OPENED,
+        String.format(Application.MSG_FILE_NOT_OPENED, filepath));
   }
 
   /**
    * Assert that the Application aborts with an error code indicating invalid arguments.
    *
-   * @param errorMessage Detailed error message to check for.
+   * @param errorCode sent upon exit()
+   * @param errorMessages Detailed error message(s) to check for.
+   */
+  void assertAbort(int errorCode, String... errorMessages) {
+    assertThat(this.errorCode, equalTo(errorCode));
+    String outputString = output.toString();
+    for (String s : errorMessages) {
+      assertThat(outputString, containsString(s));
+    }
+  }
+
+  /**
+   * Assert that the Application aborts with an error code indicating invalid arguments.
+   *
+   * @param errorMessage Detail error message (in addition to
+   *        {@link Application#ERROR_CODE_BAD_ARGS}).
    */
   void assertAbortBadArgs(String errorMessage) {
-    String outputString = output.toString();
-    assertThat(outputString, allOf(containsString(errorMessage),
-        containsString(Application.MSG_USAGE)));
-    assertThat(errorCode, equalTo(Application.ERROR_CODE_BAD_ARGS));
+    assertAbort(Application.ERROR_CODE_BAD_ARGS, errorMessage);
   }
 
 }
