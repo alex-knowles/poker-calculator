@@ -118,6 +118,18 @@ public class ApplicationTest {
     assertThat(errorCode, equalTo(Application.ERROR_INVALID_INPUT));
   }
 
+  @Test
+  public void testAbortInputFileNotOpened() {
+    // Exercise
+    final String filepath = "absent_file.txt";
+    app.execute(filepath);
+    // Verify
+    String outputString = output.toString();
+    assertThat(outputString,
+        containsString(String.format(Application.MSG_FILE_NOT_OPENED, filepath)));
+    assertThat(errorCode, equalTo(Application.ERROR_FILE_NOT_OPENED));
+  }
+
   /**
    * Assert that the Application aborts with an error code indicating invalid arguments.
    *

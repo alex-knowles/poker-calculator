@@ -8,8 +8,10 @@ public class Application {
   static final String MSG_TOO_MANY_ARGS = "Too many arguments";
   static final String MSG_USAGE = "Usage: PokerCalculator filepath";
   static final String MSG_INVALID_INPUT = "Input is formatted incorrectly";
+  static final String MSG_FILE_NOT_OPENED = "File [%s] could not be opened";
   static final int ERROR_CODE_BAD_ARGS = 1;
   static final int ERROR_INVALID_INPUT = 2;
+  static final int ERROR_FILE_NOT_OPENED = 3;
 
   private static Application app;
 
