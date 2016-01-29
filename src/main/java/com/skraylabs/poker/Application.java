@@ -1,5 +1,11 @@
 package com.skraylabs.poker;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Application {
@@ -43,8 +49,27 @@ public class Application {
       System.out.println(MSG_USAGE);
       exit(ERROR_CODE_BAD_ARGS);
     } else {
+      // Create input stream from filepath
       this.filepath = args[0];
+      InputStream input = null;
+      try {
+         input = createInputStream();
+      } catch (FileNotFoundException e) {
+        errorMessage = String.format(MSG_FILE_NOT_OPENED, filepath);
+        System.out.println(errorMessage);
+        exit(ERROR_FILE_NOT_OPENED);
+      }
+
       // TODO: process input from file
+
+      // Close input stream
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          // Could not close input stream.
+        }
+      }
     }
   }
 
@@ -79,11 +104,16 @@ public class Application {
    * Helper method to create an input stream from which to read game state.
    *
    * @return input stream that can be processed for board and pocket cards.
+   * @throws FileNotFoundException if {@link Application#filepath} cannot be found.
    */
-  InputStream createInputStream() {
+  InputStream createInputStream() throws FileNotFoundException{
     InputStream result = null;
     // TODO: implement me!
-    return null;
+    if (!StringUtils.isBlank(filepath)) {
+      File inputFile = new File(filepath);
+      result = new FileInputStream(inputFile);
+    }
+    return result;
   }
 
 }
