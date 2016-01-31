@@ -29,7 +29,7 @@ public class ApplicationTest {
   /**
    * Output stream from Application.main() for test verification.
    */
-  private ByteArrayOutputStream output;
+  private ByteArrayOutputStream outputStream;
 
   /**
    * Temporary reference to System.out
@@ -55,9 +55,9 @@ public class ApplicationTest {
   @Before
   public void setUp() throws Exception {
     app = new SafeExitApplication();
-    output = new ByteArrayOutputStream();
+    outputStream = new ByteArrayOutputStream();
     console = System.out;
-    System.setOut(new PrintStream(output));
+    System.setOut(new PrintStream(outputStream));
   }
 
   /**
@@ -91,8 +91,8 @@ public class ApplicationTest {
     final String filepath = "poker.txt";
     app.execute(filepath);
     // Verify
-    String outputString = output.toString();
-    assertThat(outputString, not(containsString(Application.MSG_USAGE)));
+    String output = outputStream.toString();
+    assertThat(output, not(containsString(Application.MSG_USAGE)));
     assertThat(app.getFilepath(), equalTo(filepath));
     assertThat(errorCode, not(Application.ERROR_CODE_BAD_ARGS));
   }
@@ -132,9 +132,9 @@ public class ApplicationTest {
    */
   void assertAbort(int errorCode, String... errorMessages) {
     assertThat(this.errorCode, equalTo(errorCode));
-    String outputString = output.toString();
+    String output = outputStream.toString();
     for (String s : errorMessages) {
-      assertThat(outputString, containsString(s));
+      assertThat(output, containsString(s));
     }
   }
 
