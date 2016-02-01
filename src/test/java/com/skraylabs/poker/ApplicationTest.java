@@ -12,9 +12,10 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 
-public class ApplicationTest {
+public class ApplicationTest implements ApplicationTestInterface {
 
   /**
    * SUT: Application.
@@ -30,6 +31,14 @@ public class ApplicationTest {
    * Temporary reference to System.out
    */
   private PrintStream console;
+
+  public SafeExitApplication getApp() {
+    return this.app;
+  }
+
+  public OutputStream getOutputStream() {
+    return this.outputStream;
+  }
 
   /**
    * Set up test fixture.
