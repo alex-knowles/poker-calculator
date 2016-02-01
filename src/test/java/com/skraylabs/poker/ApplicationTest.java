@@ -66,7 +66,6 @@ public class ApplicationTest {
   @After
   public void tearDown() throws Exception {
     System.setOut(console);
-    errorCode = 0;
   }
 
   @Test
