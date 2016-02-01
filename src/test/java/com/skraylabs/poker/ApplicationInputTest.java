@@ -1,7 +1,13 @@
 package com.skraylabs.poker;
 
+import static com.skraylabs.poker.TestUtils.assertAbort;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -70,6 +76,39 @@ public class ApplicationInputTest implements ApplicationTestInterface {
   @After
   public void tearDown() throws Exception {
     System.setOut(console);
+  }
+
+  @Test
+  public void testAbortMalformedInput() {
+    // Set up
+    final String input = "5h 7d Tr%n";
+    app.inputString = input;
+    // Exercise
+    app.execute("foo");
+    // Verify
+    assertAbort(this, Application.ERROR_INVALID_INPUT, "Tr", Application.MSG_INVALID_INPUT);
+  }
+
+  @Test
+  public void testValidInput() {
+    // Set up
+    final String input = "5h 7d Ts Kc 2d%n"
+        + "5d 5s%n";
+    app.inputString = input;
+    // Exercise
+    app.execute("foo.txt");
+    // Verify
+    assertThat(app.errorCode, equalTo(0));
+    String output = outputStream.toString();
+    assertThat(output, containsString("Royal Flush: 0%"));
+    assertThat(output, containsString("Straight Flush: 0%"));
+    assertThat(output, containsString("Four of a Kind: 0%"));
+    assertThat(output, containsString("Full House: 0%"));
+    assertThat(output, containsString("Flush: 0%"));
+    assertThat(output, containsString("Straight: 0%"));
+    assertThat(output, containsString("Three of a Kind: 100%"));
+    assertThat(output, containsString("Two Pair: 0%"));
+    assertThat(output, containsString("Two of a Kind: 100%"));
   }
 
 }

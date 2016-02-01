@@ -11,9 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -87,51 +85,6 @@ public class ApplicationTest implements ApplicationTestInterface {
     assertThat(output, not(containsString(Application.MSG_USAGE)));
     assertThat(app.getFilepath(), equalTo(filepath));
     assertThat(app.errorCode, not(Application.ERROR_CODE_BAD_ARGS));
-  }
-
-  @Test
-  public void testAbortMalformedInput() {
-    // Set up
-    final String input = "5h 7d Tr%n";
-    app = new SafeExitApplication() {
-      @Override
-      InputStream createInputStream() {
-        return new ByteArrayInputStream(input.getBytes());
-      }
-    };
-
-    // Exercise
-    app.execute("foo");
-    // Verify
-    assertAbort(this, Application.ERROR_INVALID_INPUT, "Tr", Application.MSG_INVALID_INPUT);
-  }
-
-  @Test
-  public void testValidInput() {
-    // Set up
-    final String input = "5h 7d Ts Kc 2d%n"
-        + "5d 5s%n";
-    app = new SafeExitApplication() {
-      @Override
-      InputStream createInputStream() {
-        return new ByteArrayInputStream(input.getBytes());
-      }
-    };
-
-    // Exercise
-    app.execute("foo.txt");
-    // Verify
-    assertThat(app.errorCode, equalTo(0));
-    String output = outputStream.toString();
-    assertThat(output, containsString("Royal Flush: 0%"));
-    assertThat(output, containsString("Straight Flush: 0%"));
-    assertThat(output, containsString("Four of a Kind: 0%"));
-    assertThat(output, containsString("Full House: 0%"));
-    assertThat(output, containsString("Flush: 0%"));
-    assertThat(output, containsString("Straight: 0%"));
-    assertThat(output, containsString("Three of a Kind: 100%"));
-    assertThat(output, containsString("Two Pair: 0%"));
-    assertThat(output, containsString("Two of a Kind: 100%"));
   }
 
   @Test
