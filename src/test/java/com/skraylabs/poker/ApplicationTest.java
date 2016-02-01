@@ -1,5 +1,7 @@
 package com.skraylabs.poker;
 
+import static com.skraylabs.poker.TestUtils.assertAbort;
+import static com.skraylabs.poker.TestUtils.assertAbortBadArgs;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
@@ -64,7 +66,7 @@ public class ApplicationTest implements ApplicationTestInterface {
     // Exercise
     app.execute();
     // Verify
-    assertAbortBadArgs(Application.MSG_TOO_FEW_ARGS);
+    assertAbortBadArgs(this, Application.MSG_TOO_FEW_ARGS);
   }
 
   @Test
@@ -72,7 +74,7 @@ public class ApplicationTest implements ApplicationTestInterface {
     // Exercise
     app.execute("1", "2");
     // Verify
-    assertAbortBadArgs(Application.MSG_TOO_MANY_ARGS);
+    assertAbortBadArgs(this, Application.MSG_TOO_MANY_ARGS);
   }
 
   @Test
@@ -101,7 +103,7 @@ public class ApplicationTest implements ApplicationTestInterface {
     // Exercise
     app.execute("foo");
     // Verify
-    assertAbort(Application.ERROR_INVALID_INPUT, "Tr", Application.MSG_INVALID_INPUT);
+    assertAbort(this, Application.ERROR_INVALID_INPUT, "Tr", Application.MSG_INVALID_INPUT);
   }
 
   @Test
@@ -138,32 +140,8 @@ public class ApplicationTest implements ApplicationTestInterface {
     final String filepath = "absent_file.txt";
     app.execute(filepath);
     // Verify
-    assertAbort(Application.ERROR_FILE_NOT_OPENED,
+    assertAbort(this, Application.ERROR_FILE_NOT_OPENED,
         String.format(Application.MSG_FILE_NOT_OPENED, filepath));
-  }
-
-  /**
-   * Assert that the Application aborts with an error code indicating invalid arguments.
-   *
-   * @param errorCode sent upon exit()
-   * @param errorMessages Detailed error message(s) to check for.
-   */
-  void assertAbort(int errorCode, String... errorMessages) {
-    assertThat(app.errorCode, equalTo(errorCode));
-    String output = outputStream.toString();
-    for (String s : errorMessages) {
-      assertThat(output, containsString(s));
-    }
-  }
-
-  /**
-   * Assert that the Application aborts with an error code indicating invalid arguments.
-   *
-   * @param errorMessage Detail error message (in addition to
-   *        {@link Application#ERROR_CODE_BAD_ARGS}).
-   */
-  void assertAbortBadArgs(String errorMessage) {
-    assertAbort(Application.ERROR_CODE_BAD_ARGS, errorMessage);
   }
 
 }
