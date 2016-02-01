@@ -19,12 +19,7 @@ public class ApplicationTest {
   /**
    * SUT: Application.
    */
-  private Application app;
-
-  /**
-   * Error code returned from Application under test.
-   */
-  private int errorCode;
+  private SafeExitApplication app;
 
   /**
    * Output stream from Application.main() for test verification.
@@ -35,19 +30,6 @@ public class ApplicationTest {
    * Temporary reference to System.out
    */
   private PrintStream console;
-
-  /**
-   * A version of Application that can call exit() without stopping the test framework.
-   *
-   * <p>
-   * Also acts as a Test Spy that allows us to observe the error code upon Application termination.
-   */
-  class SafeExitApplication extends Application {
-    @Override
-    public void exit(int errorCode) {
-      ApplicationTest.this.errorCode = errorCode;
-    }
-  }
 
   /**
    * Set up test fixture.
@@ -93,7 +75,7 @@ public class ApplicationTest {
     String output = outputStream.toString();
     assertThat(output, not(containsString(Application.MSG_USAGE)));
     assertThat(app.getFilepath(), equalTo(filepath));
-    assertThat(errorCode, not(Application.ERROR_CODE_BAD_ARGS));
+    assertThat(app.errorCode, not(Application.ERROR_CODE_BAD_ARGS));
   }
 
   @Test
@@ -128,7 +110,7 @@ public class ApplicationTest {
     // Exercise
     app.execute("foo.txt");
     // Verify
-    assertThat(this.errorCode, equalTo(0));
+    assertThat(app.errorCode, equalTo(0));
     String output = outputStream.toString();
     assertThat(output, containsString("Royal Flush: 0%"));
     assertThat(output, containsString("Straight Flush: 0%"));
@@ -158,7 +140,7 @@ public class ApplicationTest {
    * @param errorMessages Detailed error message(s) to check for.
    */
   void assertAbort(int errorCode, String... errorMessages) {
-    assertThat(this.errorCode, equalTo(errorCode));
+    assertThat(app.errorCode, equalTo(errorCode));
     String output = outputStream.toString();
     for (String s : errorMessages) {
       assertThat(output, containsString(s));
