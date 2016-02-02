@@ -106,9 +106,8 @@ public class Application {
    * @return input stream that can be processed for board and pocket cards.
    * @throws FileNotFoundException if {@link Application#filepath} cannot be found.
    */
-  InputStream createInputStream() throws FileNotFoundException{
+  InputStream createInputStream() throws FileNotFoundException {
     InputStream result = null;
-    // TODO: implement me!
     if (!StringUtils.isBlank(filepath)) {
       File inputFile = new File(filepath);
       result = new FileInputStream(inputFile);
