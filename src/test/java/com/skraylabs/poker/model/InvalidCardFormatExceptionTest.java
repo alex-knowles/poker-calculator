@@ -40,4 +40,15 @@ public class InvalidCardFormatExceptionTest {
     assertThat(message, equalTo(expectedMessage));
     assertThat(invalidString, equalTo("5x"));
   }
+
+  @Test
+  public void testInitializingConstructor_emptyInvalidString() {
+    // Exercise
+    InvalidCardFormatException exception = new InvalidCardFormatException("");
+    // Verify
+    String message = exception.getMessage();
+    String invalidString = exception.getInvalidString();
+    assertThat(message, equalTo(InvalidCardFormatException.MSG_DEFAULT));
+    assertThat(invalidString, is(nullValue()));
+  }
 }
