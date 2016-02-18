@@ -1,5 +1,7 @@
 package com.skraylabs.poker.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * A checked exception thrown when a string cannot be resolved to the expected {@link Card} format.
  */
@@ -39,7 +41,9 @@ public class InvalidCardFormatException extends Exception {
    * @param invalidString offending string
    */
   public InvalidCardFormatException(String invalidString) {
-    super();
+    // Use 1 of 2 message formats depending on whether or not invalidString argument is empty/null.
+    super(StringUtils.isBlank(invalidString) ? MSG_DEFAULT
+        : String.format(MSG_WITH_SAMPLE, invalidString));
     this.invalidString = invalidString;
   }
 
