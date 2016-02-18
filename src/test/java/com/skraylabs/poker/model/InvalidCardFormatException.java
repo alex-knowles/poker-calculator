@@ -44,7 +44,11 @@ public class InvalidCardFormatException extends Exception {
     // Use 1 of 2 message formats depending on whether or not invalidString argument is empty/null.
     super(StringUtils.isBlank(invalidString) ? MSG_DEFAULT
         : String.format(MSG_WITH_INVALID_STRING, invalidString));
-    this.invalidString = invalidString;
+    if (StringUtils.isBlank(invalidString)) {
+      this.invalidString = null;
+    } else {
+      this.invalidString = invalidString;
+    }
   }
 
   /**
