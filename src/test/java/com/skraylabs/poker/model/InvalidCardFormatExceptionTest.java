@@ -34,6 +34,14 @@ public class InvalidCardFormatExceptionTest {
   }
 
   @Test
+  public void testInitializingConstructor_nullInvalidString() {
+    // Exercise
+    InvalidCardFormatException exception = new InvalidCardFormatException(null);
+    // Verify
+    assertMessageAndInvalidString(exception, InvalidCardFormatException.MSG_DEFAULT, null);
+  }
+
+  @Test
   public void testInitializingConstructor_emptyInvalidString() {
     // Exercise
     InvalidCardFormatException exception = new InvalidCardFormatException("");
