@@ -1,8 +1,6 @@
 package com.skraylabs.poker.model;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.After;
@@ -22,10 +20,7 @@ public class InvalidCardFormatExceptionTest {
     // Exercise
     InvalidCardFormatException exception = new InvalidCardFormatException();
     // Verify
-    String message = exception.getMessage();
-    String invalidString = exception.getInvalidString();
-    assertThat(message, equalTo(InvalidCardFormatException.MSG_DEFAULT));
-    assertThat(invalidString, is(nullValue()));
+    assertMessageAndInvalidString(exception, InvalidCardFormatException.MSG_DEFAULT, null);
   }
 
   @Test
@@ -33,12 +28,9 @@ public class InvalidCardFormatExceptionTest {
     // Exercise
     InvalidCardFormatException exception = new InvalidCardFormatException("5x");
     // Verify
-    String message = exception.getMessage();
-    String invalidString = exception.getInvalidString();
     String expectedMessage =
         String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, "5x");
-    assertThat(message, equalTo(expectedMessage));
-    assertThat(invalidString, equalTo("5x"));
+    assertMessageAndInvalidString(exception, expectedMessage, "5x");
   }
 
   @Test
@@ -46,9 +38,20 @@ public class InvalidCardFormatExceptionTest {
     // Exercise
     InvalidCardFormatException exception = new InvalidCardFormatException("");
     // Verify
-    String message = exception.getMessage();
-    String invalidString = exception.getInvalidString();
-    assertThat(message, equalTo(InvalidCardFormatException.MSG_DEFAULT));
-    assertThat(invalidString, is(nullValue()));
+    assertMessageAndInvalidString(exception, InvalidCardFormatException.MSG_DEFAULT, null);
+  }
+
+  /**
+   * Test utility to assert values of {@link InvalidCardFormatException#getMessage()} and
+   * {@link InvalidCardFormatException#getInvalidString()}.
+   *
+   * @param exception system under test
+   * @param message expected value of detail message
+   * @param invalidString expected value of invalid string
+   */
+  static void assertMessageAndInvalidString(InvalidCardFormatException exception, String message,
+      String invalidString) {
+    assertThat(exception.getMessage(), equalTo(message));
+    assertThat(exception.getInvalidString(), equalTo(invalidString));
   }
 }
