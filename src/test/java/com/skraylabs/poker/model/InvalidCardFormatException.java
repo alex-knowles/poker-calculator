@@ -20,7 +20,7 @@ public class InvalidCardFormatException extends Exception {
   /**
    * Detail message used when the invalid string sample is provided. Expects one String argument.
    */
-  public static final String MSG_WITH_SAMPLE =
+  public static final String MSG_WITH_INVALID_STRING =
       "The string <%s> could not be resolved to a Card format.";
 
   /**
@@ -43,7 +43,7 @@ public class InvalidCardFormatException extends Exception {
   public InvalidCardFormatException(String invalidString) {
     // Use 1 of 2 message formats depending on whether or not invalidString argument is empty/null.
     super(StringUtils.isBlank(invalidString) ? MSG_DEFAULT
-        : String.format(MSG_WITH_SAMPLE, invalidString));
+        : String.format(MSG_WITH_INVALID_STRING, invalidString));
     this.invalidString = invalidString;
   }
 

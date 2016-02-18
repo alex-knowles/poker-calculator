@@ -35,7 +35,8 @@ public class InvalidCardFormatExceptionTest {
     // Verify
     String message = exception.getMessage();
     String invalidString = exception.getInvalidString();
-    String expectedMessage = String.format(InvalidCardFormatException.MSG_WITH_SAMPLE, "5x");
+    String expectedMessage =
+        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, "5x");
     assertThat(message, equalTo(expectedMessage));
     assertThat(invalidString, equalTo("5x"));
   }
