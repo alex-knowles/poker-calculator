@@ -30,6 +30,7 @@ public class InvalidCardFormatException extends Exception {
    * Default constructor.
    */
   public InvalidCardFormatException() {
+    super(MSG_DEFAULT);
   }
 
   /**
