@@ -39,7 +39,7 @@ public class CardFactory {
    * @throws InvalidCardFormatException if {@code cardString} is formatted incorrectly.
    */
   public static Card createCardFromString(String card) throws InvalidCardFormatException {
-    // TODO: implement me!
+    // Sanity checks
     Card result = null;
     if (card == null) {
       throw new InvalidCardFormatException();
@@ -50,7 +50,44 @@ public class CardFactory {
     if (cardStripped.length() != 2) {
       throw new InvalidCardFormatException(cardStripped);
     }
+
+    // It is safe to assume cardStripped is exactly 2 chars long
+    // Attempt to process rank and suit
+    Rank rank;
+    try {
+      rank = parseRank(cardStripped.charAt(0));
+    } catch (InvalidCardFormatException e) {
+      // Re-throw with 2-char string
+      throw new InvalidCardFormatException(cardStripped);
+    }
+    result = new Card(rank, Suit.Spades);
     return result;
   }
 
+  /**
+   * Map a single character to a playing card rank.
+   *
+   * @param rank
+   * @return {@link Rank} matching {@code rank}
+   * @throws InvalidCardFormatException if {@code rank} is not one of the 13 expected characters
+   */
+  static Rank parseRank(char rank) throws InvalidCardFormatException {
+    switch (rank) {
+      case 'A': return Rank.Ace;
+      case 'K': return Rank.King;
+      case 'Q': return Rank.Queen;
+      case 'J': return Rank.Jack;
+      case 'T': return Rank.Ten;
+      case '9': return Rank.Nine;
+      case '8': return Rank.Eight;
+      case '7': return Rank.Seven;
+      case '6': return Rank.Six;
+      case '5': return Rank.Five;
+      case '4': return Rank.Four;
+      case '3': return Rank.Three;
+      case '2': return Rank.Two;
+      default:
+        throw new InvalidCardFormatException();
+    }
+  }
 }
