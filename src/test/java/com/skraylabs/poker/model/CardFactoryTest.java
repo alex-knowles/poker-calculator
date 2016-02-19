@@ -116,6 +116,19 @@ public class CardFactoryTest {
   }
 
   @Test
+  public void testInvalidInput_badSuit1() throws InvalidCardFormatException {
+    // Set up
+    final String cardInput = "Kx";
+    // Verify
+    String expectedMessage =
+        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(InvalidCardFormatException.class);
+    exception.expectMessage(expectedMessage);
+    // Exercise
+    CardFactory.createCardFromString(cardInput);
+  }
+
+  @Test
   public void testValidInput1() {
     // Exercise
     Card card = null;
