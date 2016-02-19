@@ -43,7 +43,7 @@ public class CardFactory {
     Card result = null;
     if (cardString == null) {
       throw new InvalidCardFormatException();
-    } else if (StringUtils.isEmpty(cardString)) {
+    } else if (StringUtils.isBlank(cardString)) {
       throw new InvalidCardFormatException(cardString);
     }
     return result;
