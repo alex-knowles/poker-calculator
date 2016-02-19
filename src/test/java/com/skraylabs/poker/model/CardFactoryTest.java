@@ -116,7 +116,7 @@ public class CardFactoryTest {
   }
 
   @Test
-  public void testValidInput() {
+  public void testValidInput1() {
     // Exercise
     Card card = null;
     try {
@@ -126,6 +126,19 @@ public class CardFactoryTest {
     }
     // Verify
     assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
+  }
+
+  @Test
+  public void testValidInput2() {
+    // Exercise
+    Card card = null;
+    try {
+      card = CardFactory.createCardFromString("8c");
+    } catch (InvalidCardFormatException e) {
+      fail("An InvalidCardFormatException was thrown for a valid Card input.");
+    }
+    // Verify
+    assertCardRankAndSuit(card, Rank.Eight, Suit.Clubs);
   }
 
   @Test
