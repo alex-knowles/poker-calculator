@@ -89,6 +89,19 @@ public class CardFactoryTest {
     assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
   }
 
+  @Test
+  public void testValidInput_extraWhitespace() {
+    // Exercise
+    Card card = null;
+    try {
+      card = CardFactory.createCardFromString("   As ");
+    } catch (InvalidCardFormatException e) {
+      fail("An InvalidCardFormatException was thrown for a valid Card input.");
+    }
+    // Verify
+    assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
+  }
+
   /**
    * Test utility to assert 3 properties of a given {@link Card}.
    * <ul>
