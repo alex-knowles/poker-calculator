@@ -39,6 +39,9 @@ public class CardFactory {
   public static Card createCardFromString(String cardString) throws InvalidCardFormatException {
     // TODO: implement me!
     Card result = null;
+    if (cardString == null) {
+      throw new InvalidCardFormatException();
+    }
     return result;
   }
 
