@@ -60,7 +60,14 @@ public class CardFactory {
       // Re-throw with 2-char string
       throw new InvalidCardFormatException(cardStripped);
     }
-    result = new Card(rank, Suit.Spades);
+    Suit suit;
+    try {
+      suit = parseSuit(cardStripped.charAt(1));
+    } catch (InvalidCardFormatException e) {
+      // Re-throw with 2-char string
+      throw new InvalidCardFormatException(cardStripped);
+    }
+    result = new Card(rank, suit);
     return result;
   }
 
@@ -86,6 +93,24 @@ public class CardFactory {
       case '4': return Rank.Four;
       case '3': return Rank.Three;
       case '2': return Rank.Two;
+      default:
+        throw new InvalidCardFormatException();
+    }
+  }
+
+  /**
+   * Map a single character to a playing card suit.
+   *
+   * @param suit
+   * @return {@link Suit} matching {@code suit}
+   * @throws InvalidCardFormatException if {@code suit} is not one of the 4 expected characters
+   */
+  static Suit parseSuit(char suit) throws InvalidCardFormatException {
+    switch (suit) {
+      case 's': return Suit.Spades;
+      case 'h': return Suit.Hearts;
+      case 'd': return Suit.Diamonds;
+      case 'c': return Suit.Clubs;
       default:
         throw new InvalidCardFormatException();
     }
