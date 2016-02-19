@@ -76,6 +76,19 @@ public class CardFactoryTest {
     CardFactory.createCardFromString(cardInput);
   }
 
+  @Test
+  public void testInvalidInput_tooManyChars() throws InvalidCardFormatException {
+    // Set up
+    final String cardInput = "Ask";
+    // Verify
+    String expectedMessage =
+        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(InvalidCardFormatException.class);
+    exception.expectMessage(expectedMessage);
+    // Exercise
+    CardFactory.createCardFromString(cardInput);
+  }
+
   /**
    * Test utility to assert 3 properties of a given {@link Card}.
    * <ul>
