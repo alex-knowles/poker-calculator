@@ -22,19 +22,6 @@ public class CardFactoryTest {
   public void tearDown() throws Exception {}
 
   @Test
-  public void testValidInput() {
-    // Exercise
-    Card card = null;
-    try {
-      card = CardFactory.createCardFromString("As");
-    } catch (InvalidCardFormatException e) {
-      fail("An InvalidCardFormatException was thrown for a valid Card input.");
-    }
-    // Verify
-    assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
-  }
-
-  @Test
   public void testInvalidInput_null() throws InvalidCardFormatException {
     // Verify
     exception.expect(InvalidCardFormatException.class);
@@ -87,6 +74,19 @@ public class CardFactoryTest {
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
+  }
+
+  @Test
+  public void testValidInput() {
+    // Exercise
+    Card card = null;
+    try {
+      card = CardFactory.createCardFromString("As");
+    } catch (InvalidCardFormatException e) {
+      fail("An InvalidCardFormatException was thrown for a valid Card input.");
+    }
+    // Verify
+    assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
   }
 
   /**
