@@ -34,19 +34,19 @@ public class CardFactory {
    * <li> c (Clubs)
    * </ul>
    * 
-   * @param cardString two-character string representation of a card
+   * @param card two-character string representation of a card
    * @return a new {@link Card}
    * @throws InvalidCardFormatException if {@code cardString} is formatted incorrectly.
    */
-  public static Card createCardFromString(String cardString) throws InvalidCardFormatException {
+  public static Card createCardFromString(String card) throws InvalidCardFormatException {
     // TODO: implement me!
     Card result = null;
-    if (cardString == null) {
+    if (card == null) {
       throw new InvalidCardFormatException();
-    } else if (StringUtils.isBlank(cardString)) {
-      throw new InvalidCardFormatException(cardString);
-    } else if (cardString.length() != 2) {
-      throw new InvalidCardFormatException(cardString);
+    } else if (StringUtils.isBlank(card)) {
+      throw new InvalidCardFormatException(card);
+    } else if (card.length() != 2) {
+      throw new InvalidCardFormatException(card);
     }
     return result;
   }
