@@ -50,6 +50,15 @@ public class InvalidCardFormatExceptionTest {
     assertMessageAndInvalidString(exception, expectedMessage, "");
   }
 
+  @Test
+  public void testInitializingConstructor_blankInvalidString() {
+    // Exercise
+    InvalidCardFormatException exception = new InvalidCardFormatException(" ");
+    // Verify
+    String expectedMessage = String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, " ");
+    assertMessageAndInvalidString(exception, expectedMessage, " ");
+  }
+
   /**
    * Test utility to assert values of {@link InvalidCardFormatException#getMessage()} and
    * {@link InvalidCardFormatException#getInvalidString()}.
