@@ -45,8 +45,10 @@ public class CardFactory {
       throw new InvalidCardFormatException();
     } else if (StringUtils.isBlank(card)) {
       throw new InvalidCardFormatException(card);
-    } else if (card.length() != 2) {
-      throw new InvalidCardFormatException(card);
+    }
+    final String cardStripped = StringUtils.strip(card);
+    if (cardStripped.length() != 2) {
+      throw new InvalidCardFormatException(cardStripped);
     }
     return result;
   }
