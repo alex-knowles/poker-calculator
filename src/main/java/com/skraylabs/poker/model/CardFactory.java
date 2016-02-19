@@ -45,6 +45,8 @@ public class CardFactory {
       throw new InvalidCardFormatException();
     } else if (StringUtils.isBlank(cardString)) {
       throw new InvalidCardFormatException(cardString);
+    } else if (cardString.length() != 2) {
+      throw new InvalidCardFormatException(cardString);
     }
     return result;
   }
