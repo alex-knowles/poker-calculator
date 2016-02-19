@@ -46,7 +46,8 @@ public class InvalidCardFormatExceptionTest {
     // Exercise
     InvalidCardFormatException exception = new InvalidCardFormatException("");
     // Verify
-    assertMessageAndInvalidString(exception, InvalidCardFormatException.MSG_DEFAULT, null);
+    String expectedMessage = String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, "");
+    assertMessageAndInvalidString(exception, expectedMessage, "");
   }
 
   /**
