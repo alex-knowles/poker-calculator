@@ -53,6 +53,16 @@ public class CardFactoryTest {
     CardFactory.createCardFromString("");
   }
 
+  @Test
+  public void testInvalidInput_blank() throws InvalidCardFormatException {
+    // Verify
+    String expectedMessage = String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, " ");
+    exception.expect(InvalidCardFormatException.class);
+    exception.expectMessage(expectedMessage);
+    // Exercise
+    CardFactory.createCardFromString(" ");
+  }
+
   /**
    * Test utility to assert 3 properties of a given {@link Card}.
    * <ul>
