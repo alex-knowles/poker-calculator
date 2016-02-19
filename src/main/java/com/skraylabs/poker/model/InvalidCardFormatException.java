@@ -21,7 +21,7 @@ public class InvalidCardFormatException extends Exception {
    * Detail message used when the invalid string sample is provided. Expects one String argument.
    */
   public static final String MSG_WITH_INVALID_STRING =
-      "The string <%s> could not be resolved to a Card format.";
+      "The string <\"%s\"> could not be resolved to a Card format.";
 
   /**
    * Invalid string representation of a {@link Card}.
