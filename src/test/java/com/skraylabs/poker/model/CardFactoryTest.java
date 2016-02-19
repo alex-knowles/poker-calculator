@@ -27,9 +27,25 @@ public class CardFactoryTest {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify
+    assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
+  }
+
+  /**
+   * Test utility to assert 3 properties of a given {@link Card}.
+   * <ul>
+   * <li>is not null
+   * <li>has an expected rank
+   * <li>has an expected suit
+   * </ul>
+   *
+   * @param card system under test
+   * @param rank expected rank of card
+   * @param suit expected suit of card
+   */
+  static void assertCardRankAndSuit(Card card, Rank rank, Suit suit) {
     assertThat(card, notNullValue());
-    assertThat(card.rank, equalTo(Rank.Ace));
-    assertThat(card.suit, equalTo(Suit.Spades));
+    assertThat(card.rank, equalTo(rank));
+    assertThat(card.suit, equalTo(suit));
   }
 
 }
