@@ -77,6 +77,19 @@ public class CardFactoryTest {
   }
 
   @Test
+  public void testInvalidInput_extraWhitespace() throws InvalidCardFormatException {
+    // Set up
+    final String cardInput = "  Fc ";
+    // Verify
+    String expectedMessage =
+        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, "Fc");
+    exception.expect(InvalidCardFormatException.class);
+    exception.expectMessage(expectedMessage);
+    // Exercise
+    CardFactory.createCardFromString(cardInput);
+  }
+
+  @Test
   public void testInvalidInput_badRank1() throws InvalidCardFormatException {
     // Set up
     final String cardInput = "1s";
