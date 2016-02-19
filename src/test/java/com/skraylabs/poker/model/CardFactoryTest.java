@@ -7,9 +7,13 @@ import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class CardFactoryTest {
+
+  @Rule public ExpectedException exception = ExpectedException.none();
 
   @Before
   public void setUp() throws Exception {}
@@ -28,6 +32,15 @@ public class CardFactoryTest {
     }
     // Verify
     assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
+  }
+
+  @Test
+  public void testInvalidInput_null() throws InvalidCardFormatException {
+    // Verify
+    exception.expect(InvalidCardFormatException.class);
+    exception.expectMessage(InvalidCardFormatException.MSG_DEFAULT);
+    // Exercise
+    CardFactory.createCardFromString(null);
   }
 
   /**
