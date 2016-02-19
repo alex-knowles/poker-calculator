@@ -1,5 +1,7 @@
 package com.skraylabs.poker.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Factory class for constructing {@link Card} objects from String values.
  */
@@ -41,6 +43,8 @@ public class CardFactory {
     Card result = null;
     if (cardString == null) {
       throw new InvalidCardFormatException();
+    } else if (StringUtils.isEmpty(cardString)) {
+      throw new InvalidCardFormatException(cardString);
     }
     return result;
   }
