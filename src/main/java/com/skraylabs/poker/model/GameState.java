@@ -76,7 +76,7 @@ public class GameState {
    *
    * @param board community cards to set
    */
-  public void setBoard(Board board) {
+  void setBoard(Board board) {
     this.board = board;
   }
 
@@ -94,7 +94,7 @@ public class GameState {
    *
    * @param pockets player cards to set
    */
-  public void setPockets(Pocket[] pockets) {
+  void setPockets(Pocket[] pockets) {
     this.pockets = pockets;
   }
 }
