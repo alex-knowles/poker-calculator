@@ -22,7 +22,7 @@ public class GameStateTest {
     // Exercise
     GameState game = new GameState();
     // Verify
-    GameState.Board board = game.getBoard();
+    Board board = game.getBoard();
     Pocket[] pockets = game.getPockets();
     assertThat(board, is(nullValue()));
     assertThat(pockets, is(notNullValue()));
