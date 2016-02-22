@@ -12,4 +12,22 @@ public class Pocket {
    * Second of two pocket cards.
    */
   public Card card2;
+
+  /**
+   * Default constructor.
+   */
+  public Pocket() {
+    this(null, null);
+  }
+
+  /**
+   * Initializing constructor
+   *
+   * @param card1 first of two cards
+   * @param card2 second of two cards
+   */
+  public Pocket(Card card1, Card card2) {
+    this.card1 = card1;
+    this.card2 = card2;
+  }
 } // end of class Pocket
