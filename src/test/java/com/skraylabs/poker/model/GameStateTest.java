@@ -23,11 +23,11 @@ public class GameStateTest {
     GameState game = new GameState();
     // Verify
     GameState.Board board = game.getBoard();
-    GameState.Pocket[] pockets = game.getPockets();
+    Pocket[] pockets = game.getPockets();
     assertThat(board, is(nullValue()));
     assertThat(pockets, is(notNullValue()));
     assertThat(pockets.length, is(10));
-    for (GameState.Pocket pocket : pockets) {
+    for (Pocket pocket : pockets) {
       assertThat(pocket, is(nullValue()));
     }
   }
