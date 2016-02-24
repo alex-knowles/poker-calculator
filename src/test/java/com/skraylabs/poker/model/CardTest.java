@@ -76,6 +76,16 @@ public class CardTest {
   }
 
   @Test
+  public void testEquals_notACard() {
+    // Set up
+    Object differentObject = "Ace of Clubs";
+    // Exercise
+    final boolean equals = fixedCard.equals(differentObject);
+    // Verify
+    assertThat(equals, is(false));
+  }
+
+  @Test
   public void testEquals_sameRankAndSameSuit() {
     // Set up
     Card equivalentCard = new Card(fixedRank, fixedSuit);
