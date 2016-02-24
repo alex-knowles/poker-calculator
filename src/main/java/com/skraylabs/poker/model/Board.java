@@ -72,4 +72,11 @@ public class Board {
     this.turnCard = turnCard;
     this.riverCard = riverCard;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    // TODO: implement me!
+    boolean result = false;
+    return result;
+  }
 } // end of class Board
