@@ -75,4 +75,14 @@ public class CardTest {
     assertThat(equals, is(false));
   }
 
+  @Test
+  public void testEquals_sameRankAndSameSuit() {
+    // Set up
+    Card equivalentCard = new Card(fixedRank, fixedSuit);
+    // Exercise
+    final boolean equals = fixedCard.equals(equivalentCard);
+    // Verify
+    assertThat(equals, is(true));
+  }
+
 }
