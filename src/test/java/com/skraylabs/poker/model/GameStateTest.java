@@ -11,8 +11,30 @@ import org.junit.Test;
 
 public class GameStateTest {
 
+  /**
+   * Test fixture cards to use in test methods. There are no duplicates in this set.
+   */
+  Card card1;
+  Card card2;
+  Card card3;
+  Card card4;
+  Card card5;
+
+  /**
+   * Set up shared test fixture.
+   *
+   * <p>Establishes some card values to make test methods predictable.
+   *
+   * @throws Exception shouldn't happen.
+   */
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+    card1 = new Card(Rank.Ace, Suit.Spades);
+    card2 = new Card(Rank.Three, Suit.Clubs);
+    card3 = new Card(Rank.Nine, Suit.Diamonds);
+    card4 = new Card(Rank.Queen, Suit.Hearts);
+    card5 = new Card(Rank.Five, Suit.Clubs);
+  }
 
   @After
   public void tearDown() throws Exception {}
