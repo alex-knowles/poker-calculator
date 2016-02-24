@@ -1,6 +1,7 @@
 package com.skraylabs.poker.model;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Before;
@@ -43,5 +44,35 @@ public class CardTest {
     // Verify
     assertThat(suit, equalTo(fixedSuit));
   }
-  
+
+  @Test
+  public void testEquals_differentSuit() {
+    // Set up
+    Card differentCard = new Card(fixedRank, Suit.Diamonds);
+    // Exercise
+    final boolean equals = fixedCard.equals(differentCard);
+    // Verify
+    assertThat(equals, is(false));
+  }
+
+  @Test
+  public void testEquals_differentRank() {
+    // Set up
+    Card differentCard = new Card(Rank.Four, fixedSuit);
+    // Exercise
+    final boolean equals = fixedCard.equals(differentCard);
+    // Verify
+    assertThat(equals, is(false));
+  }
+
+  @Test
+  public void testEquals_differentRankAndDifferentSuit() {
+    // Set up
+    Card differentCard = new Card(Rank.Queen, Suit.Hearts);
+    // Exercise
+    final boolean equals = fixedCard.equals(differentCard);
+    // Verify
+    assertThat(equals, is(false));
+  }
+
 }
