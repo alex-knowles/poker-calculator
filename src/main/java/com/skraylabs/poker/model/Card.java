@@ -33,8 +33,13 @@ class Card {
    */
   @Override
   public boolean equals(Object o) {
-    // TODO: implement me!
     boolean result = false;
+    if (o instanceof Card) {
+      Card card = (Card) o;
+      if (card.rank == this.rank && card.suit == this.suit) {
+        result = true;
+      }
+    }
     return result;
   }
 
