@@ -26,6 +26,24 @@ class Card {
   }
 
   /**
+   * Test equality with another object. Other object must be a Card with identical {link Rank} and
+   * {@link Suit} values.
+   *
+   * @return true if {@code o} is a Card with the same rank and suit; false otherwise.
+   */
+  @Override
+  public boolean equals(Object o) {
+    boolean result = false;
+    if (o instanceof Card) {
+      Card card = (Card) o;
+      if (card.rank == this.rank && card.suit == this.suit) {
+        result = true;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Accessor: Playing card rank (A, K, Q, J, 10-2).
    * @return the rank
    */
