@@ -3,30 +3,45 @@ package com.skraylabs.poker.model;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class CardTest {
 
+  /**
+   * Test fixture card.
+   */
+  Card fixedCard;
+
+  /**
+   * Test fixture rank.
+   */
+  final Rank fixedRank = Rank.Ace;
+
+  /**
+   * Test fixture suit.
+   */
+  Suit fixedSuit = Suit.Clubs;
+
+  @Before
+  public void setUp() throws Exception {
+    fixedCard = new Card(fixedRank, fixedSuit);
+  }
+
   @Test
   public void testGetRank() {
-    // Set up
-    Card card = new Card(Rank.Ace, Suit.Clubs);
     // Exercise
-    Rank rank = card.getRank();
+    Rank rank = fixedCard.getRank();
     // Verify
-    Rank expectedRank = Rank.Ace;
-    assertThat(rank, equalTo(expectedRank));
+    assertThat(rank, equalTo(fixedRank));
   }
 
   @Test
   public void testGetSuit() {
-    // Set up
-    Card card = new Card(Rank.Eight, Suit.Diamonds);
     // Exercise
-    Suit suit = card.getSuit();
+    Suit suit = fixedCard.getSuit();
     // Verify
-    Suit expectedSuit = Suit.Diamonds;
-    assertThat(suit, equalTo(expectedSuit));
+    assertThat(suit, equalTo(fixedSuit));
   }
   
 }
