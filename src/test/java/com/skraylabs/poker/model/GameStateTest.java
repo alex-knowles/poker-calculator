@@ -2,6 +2,7 @@ package com.skraylabs.poker.model;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -94,6 +95,23 @@ public class GameStateTest {
     // Verify
     assertThat(game.getBoard(), is(notNullValue()));
     assertThat(game.getBoard().flopCard1, is(card1));
+  }
+
+  @Test
+  public void testGetBoard_readOnly3() {
+    // Set up
+    GameState game = new GameState();
+    game.setBoard(new Board(card1, card2, card3));
+    final Card expectedFlopCard1 = new Card(card1);
+    // Exercise
+    // Attempt to modify board card
+    Board board = game.getBoard();
+    board.flopCard1.rank = Rank.Two;
+    board.flopCard1.suit = Suit.Clubs;
+    assertThat(board.flopCard1, not(expectedFlopCard1)); // guard assertion
+    // Verify
+    assertThat(game.getBoard(), is(notNullValue()));
+    assertThat(game.getBoard().flopCard1, is(expectedFlopCard1));
   }
 
 }
