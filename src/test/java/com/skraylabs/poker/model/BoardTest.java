@@ -1,13 +1,18 @@
 package com.skraylabs.poker.model;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class BoardTest {
+
+  @Rule public ExpectedException exception = ExpectedException.none();
 
   Board fixedBoard;
   Card card1;
@@ -33,6 +38,23 @@ public class BoardTest {
 
   @After
   public void tearDown() throws Exception {}
+
+  @Test
+  public void testCopyConstructor_success() {
+    // Exercise
+    Board board = new Board(fixedBoard);
+    // Verify
+    assertThat(board, equalTo(fixedBoard));
+  }
+
+  @Test
+  public void testCopyConstructor_null() {
+    // Verify
+    exception.expect(NullPointerException.class);
+    // Exercise
+    @SuppressWarnings("unused")
+    Board board = new Board(null);
+  }
 
   @Test
   public void testEquals_same() {

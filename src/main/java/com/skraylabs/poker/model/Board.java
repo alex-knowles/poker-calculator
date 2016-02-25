@@ -74,6 +74,15 @@ public class Board {
   }
 
   /**
+   * Copy constructor.
+   *
+   * @param board non-null instance from which to copy attributes.
+   */
+  public Board(Board board) {
+    // TODO: implement me!
+  }
+
+  /**
    * Helper method to retrieve a member Card based on a number 0 through 4.
    *
    * <p>
