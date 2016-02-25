@@ -45,6 +45,14 @@ public class BoardTest {
   }
 
   @Test
+  public void testEquals_null() {
+    // Exercise
+    boolean equals = fixedBoard.equals(null);
+    // Verify
+    assertThat(equals, is(false));
+  }
+
+  @Test
   public void testEquals_different1() {
     // Set up
     Board differentBoard = new Board();
