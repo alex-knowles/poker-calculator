@@ -82,4 +82,18 @@ public class GameStateTest {
     assertThat(game.getBoard().flopCard1, is(card1));
   }
 
+  @Test
+  public void testGetBoard_readOnly2() {
+    // Set up
+    GameState game = new GameState();
+    game.setBoard(new Board(card1, card2, card3));
+    // Exercise
+    // Attempt to assign board card to a different card
+    Board board = game.getBoard();
+    board.flopCard1 = card4;
+    // Verify
+    assertThat(game.getBoard(), is(notNullValue()));
+    assertThat(game.getBoard().flopCard1, is(card1));
+  }
+
 }
