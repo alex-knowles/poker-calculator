@@ -1,12 +1,17 @@
 package com.skraylabs.poker.model;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class PocketTest {
+
+  @Rule public ExpectedException exception = ExpectedException.none();
 
   Pocket fixedPocket;
   Card card1;
@@ -24,6 +29,23 @@ public class PocketTest {
     card1 = new Card(Rank.Ace, Suit.Hearts);
     card2 = new Card(Rank.Ace, Suit.Diamonds);
     fixedPocket = new Pocket(card1, card2);
+  }
+
+  @Test
+  public void testCopyConstructor_success() {
+    // Exercise
+    Pocket pocket = new Pocket(fixedPocket);
+    // Verify
+    assertThat(pocket, equalTo(fixedPocket));
+  }
+
+  @Test
+  public void testCopyConstructor_null() {
+    // Verify
+    exception.expect(NullPointerException.class);
+    // Exercise
+    @SuppressWarnings("unused")
+    Pocket pocket = new Pocket(null);
   }
 
   @Test

@@ -30,4 +30,13 @@ public class Pocket {
     this.card1 = card1;
     this.card2 = card2;
   }
+
+  /**
+   * Copy constructor.
+   *
+   * @param pocket non-null instance from which to copy attributes.
+   */
+  public Pocket(Pocket pocket) {
+    // TODO: implement me!
+  }
 } // end of class Pocket
