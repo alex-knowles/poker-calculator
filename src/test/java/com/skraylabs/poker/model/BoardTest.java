@@ -62,4 +62,15 @@ public class BoardTest {
     assertThat(equals, is(false));
   }
 
+  @Test
+  public void testEquals_different2() {
+    // Set up
+    Card riverCard = new Card(Rank.Eight, Suit.Clubs);
+    Board differentBoard = new Board(card1, card2, card3, card4, riverCard);
+    // Exercise
+    boolean equals = fixedBoard.equals(differentBoard);
+    // Verify
+    assertThat(equals, is(false));
+  }
+
 }
