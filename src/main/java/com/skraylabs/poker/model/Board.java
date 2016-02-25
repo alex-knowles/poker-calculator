@@ -121,18 +121,21 @@ public class Board {
       for (int i = 0 ; i < 5; ++i) {
         Card thisCard = Board.getNthCard(this, i);
         Card thatCard = Board.getNthCard(thatBoard, i);
-        if (thisCard != null) {
-          if (thisCard.equals(thatCard)) {
-            continue;
+        if (thisCard == null && thatCard == null) {
+          continue;
+        } else {
+          if (thisCard != null && thatCard != null) {
+            if (thisCard.equals(thatCard)) {
+              continue;
+            } else {
+              result = false;
+              break;
+            }
           } else {
+            // One card must be null and the other card must be non-null
             result = false;
             break;
           }
-        } else if (thatCard == null) {
-          continue;
-        } else {
-          result = false;
-          continue;
         }
       }
     }
