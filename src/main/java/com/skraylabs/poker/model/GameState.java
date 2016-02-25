@@ -22,12 +22,16 @@ public class GameState {
   }
 
   /**
-   * Accessor: get the board cards.
+   * Accessor: get a copy of the board cards.
    *
    * @return community cards
    */
   public Board getBoard() {
-    return board;
+    Board result = null;
+    if (this.board != null) {
+      result = new Board(this.board);
+    }
+    return result;
   }
 
   /**
