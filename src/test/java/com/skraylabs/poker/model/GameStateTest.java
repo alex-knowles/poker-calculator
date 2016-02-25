@@ -1,5 +1,6 @@
 package com.skraylabs.poker.model;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -52,6 +53,19 @@ public class GameStateTest {
     for (Pocket pocket : pockets) {
       assertThat(pocket, is(nullValue()));
     }
+  }
+
+  @Test
+  public void testSetBoard() {
+    // Set up
+    GameState game = new GameState();
+    Board expectedBoard = new Board(card1, card2, card3, card4, card5);
+    // Exercise
+    game.setBoard(expectedBoard);
+    // Verify
+    Board board = game.getBoard();
+    assertThat(board, is(notNullValue()));
+    assertThat(board, equalTo(expectedBoard));
   }
 
 }
