@@ -46,6 +46,14 @@ public class CardTest {
   }
 
   @Test
+  public void testCopyConstructor_success() {
+    // Exercise
+    Card card = new Card(fixedCard);
+    // Verify
+    assertThat(card, equalTo(fixedCard));
+  }
+
+  @Test
   public void testEquals_differentSuit() {
     // Set up
     Card differentCard = new Card(fixedRank, Suit.Diamonds);
