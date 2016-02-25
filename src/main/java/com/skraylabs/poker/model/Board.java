@@ -75,8 +75,50 @@ public class Board {
 
   @Override
   public boolean equals(Object o) {
-    // TODO: implement me!
     boolean result = false;
+    if (o instanceof Board) {
+      Board thatBoard = (Board) o;
+      result = true;
+      for (int i = 0 ; i < 5; ++i) {
+        Card thisCard = null;
+        Card thatCard = null;
+        switch (i) {
+          case 0:
+            thisCard = this.flopCard1;
+            thatCard = thatBoard.flopCard1;
+            break;
+          case 1:
+            thisCard = this.flopCard2;
+            thatCard = thatBoard.flopCard2;
+            break;
+          case 2:
+            thisCard = this.flopCard3;
+            thatCard = thatBoard.flopCard3;
+            break;
+          case 3:
+            thisCard = this.turnCard;
+            thatCard = thatBoard.turnCard;
+            break;
+          case 4:
+            thisCard = this.riverCard;
+            thatCard = thatBoard.riverCard;
+            break;
+        }
+        if (thisCard != null) {
+          if (thisCard.equals(thatCard)) {
+            continue;
+          } else {
+            result = false;
+            break;
+          }
+        } else if (thatCard == null) {
+          continue;
+        } else {
+          result = false;
+          continue;
+        }
+      }
+    }
     return result;
   }
 } // end of class Board
