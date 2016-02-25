@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,9 +34,6 @@ public class BoardTest {
     card4 = new Card(Rank.Jack, Suit.Spades);
     fixedBoard = new Board(card1, card2, card3, card4);
   }
-
-  @After
-  public void tearDown() throws Exception {}
 
   @Test
   public void testCopyConstructor_success() {
