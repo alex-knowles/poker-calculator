@@ -68,4 +68,18 @@ public class GameStateTest {
     assertThat(board, equalTo(expectedBoard));
   }
 
+  @Test
+  public void testGetBoard_readOnly1() {
+    // Set up
+    GameState game = new GameState();
+    game.setBoard(new Board(card1, card2, card3));
+    // Exercise
+    // Attempt to assign board card to null
+    Board board = game.getBoard();
+    board.flopCard1 = null;
+    // Verify
+    assertThat(game.getBoard(), is(notNullValue()));
+    assertThat(game.getBoard().flopCard1, is(card1));
+  }
+
 }
