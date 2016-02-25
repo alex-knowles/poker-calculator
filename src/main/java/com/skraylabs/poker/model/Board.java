@@ -73,6 +73,45 @@ public class Board {
     this.riverCard = riverCard;
   }
 
+  /**
+   * Helper method to retrieve a member Card based on a number 0 through 4.
+   *
+   * <p>
+   * This is useful for arbitrarily comparing Card values between 2 different instances of the Board
+   * class. For example, in {@link Board#equals(Object)}.
+   *
+   * @param board instance from which to retrieve a Card member variable.
+   * @param n an integer in the range [0, 4]. A value of 0 represents the first flop card and a
+   *        value of 4 represents the river card.
+   * @return the "nth" {@link Card} instance from {@code board}
+   */
+  static protected Card getNthCard(Board board, int n) {
+    Card result = null;
+    if (board == null) {
+      throw new IllegalArgumentException("Argument 'board' must be non-null");
+    }
+    switch (n) {
+      case 0:
+        result = board.flopCard1;
+        break;
+      case 1:
+        result = board.flopCard2;
+        break;
+      case 2:
+        result = board.flopCard3;
+        break;
+      case 3:
+        result = board.turnCard;
+        break;
+      case 4:
+        result = board.riverCard;
+        break;
+      default:
+        throw new IllegalArgumentException("Argument 'n' must be in range [0, 4]");
+    }
+    return result;
+  }
+
   @Override
   public boolean equals(Object o) {
     boolean result = false;
@@ -80,30 +119,8 @@ public class Board {
       Board thatBoard = (Board) o;
       result = true;
       for (int i = 0 ; i < 5; ++i) {
-        Card thisCard = null;
-        Card thatCard = null;
-        switch (i) {
-          case 0:
-            thisCard = this.flopCard1;
-            thatCard = thatBoard.flopCard1;
-            break;
-          case 1:
-            thisCard = this.flopCard2;
-            thatCard = thatBoard.flopCard2;
-            break;
-          case 2:
-            thisCard = this.flopCard3;
-            thatCard = thatBoard.flopCard3;
-            break;
-          case 3:
-            thisCard = this.turnCard;
-            thatCard = thatBoard.turnCard;
-            break;
-          case 4:
-            thisCard = this.riverCard;
-            thatCard = thatBoard.riverCard;
-            break;
-        }
+        Card thisCard = Board.getNthCard(this, i);
+        Card thatCard = Board.getNthCard(thatBoard, i);
         if (thisCard != null) {
           if (thisCard.equals(thatCard)) {
             continue;
