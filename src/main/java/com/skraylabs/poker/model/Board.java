@@ -79,7 +79,36 @@ public class Board {
    * @param board non-null instance from which to copy attributes.
    */
   public Board(Board board) {
-    // TODO: implement me!
+    // Copy flopCard1
+    if (board.flopCard1 == null) {
+      this.flopCard1 = null;
+    } else {
+      this.flopCard1 = new Card(board.flopCard1);
+    }
+    // Copy flopCard2
+    if (board.flopCard2 == null) {
+      this.flopCard2 = null;
+    } else {
+      this.flopCard2 = new Card(board.flopCard2);
+    }
+    // Copy flopCard3
+    if (board.flopCard3 == null) {
+      this.flopCard3 = null;
+    } else {
+      this.flopCard3 = new Card(board.flopCard3);
+    }
+    // Copy turnCard
+    if (board.turnCard == null) {
+      this.turnCard = null;
+    } else {
+      this.turnCard = new Card(board.turnCard);
+    }
+    // Copy riverCard
+    if (board.riverCard == null) {
+      this.riverCard = null;
+    } else {
+      this.riverCard = new Card(board.riverCard);
+    }
   }
 
   /**
