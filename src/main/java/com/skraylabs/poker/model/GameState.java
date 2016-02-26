@@ -5,6 +5,8 @@ package com.skraylabs.poker.model;
  */
 public class GameState {
 
+  static final int MAX_PLAYERS = 10;
+
   /**
    * The "board". Community cards.
    */
@@ -13,7 +15,7 @@ public class GameState {
   /**
    * Pocket cards. Player cards. There is a maximum of 10 players.
    */
-  private Pocket[] pockets = new Pocket[10];
+  private Pocket[] pockets = new Pocket[MAX_PLAYERS];
 
   /**
    * Default constructor.
@@ -59,6 +61,11 @@ public class GameState {
    * @param pocket Pocket value to assign.
    */
   void setPocketForPlayer(int playerIndex, Pocket pocket) {
-    // TODO: implement me!
+    if (playerIndex < 0 || MAX_PLAYERS <= playerIndex) {
+      throw new IllegalArgumentException(
+          String.format("Unexpected value [%d] for 'playerIndex'. Must be in range [0, %d]",
+              playerIndex, MAX_PLAYERS - 1));
+    }
+    pockets[playerIndex] = pocket;
   }
 }
