@@ -9,9 +9,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class GameStateTest {
+
+  @Rule public ExpectedException exception = ExpectedException.none();
 
   /**
    * Test fixture cards to use in test methods. There are no duplicates in this set.
@@ -114,4 +118,58 @@ public class GameStateTest {
     assertThat(game.getBoard().flopCard1, is(expectedFlopCard1));
   }
 
+  @Test
+  public void testSetPocket_indexLow() {
+    // Set up
+    GameState game = new GameState();
+    // Verify
+    exception.expect(IllegalArgumentException.class);
+    // Exercise
+    game.setPocketForPlayer(-1, new Pocket(card1, card2));
+  }
+
+  @Test
+  public void testSetPocket_indexHigh() {
+    // Set up
+    GameState game = new GameState();
+    // Verify
+    exception.expect(IllegalArgumentException.class);
+    // Exercise
+    game.setPocketForPlayer(10, new Pocket(card1, card2));
+  }
+
+  @Test
+  public void testSetPocket_null() {
+    // Set up
+    GameState game = new GameState();
+    // Exercise
+    game.setPocketForPlayer(0, null);
+    // Verify
+    Pocket[] pockets = game.getPockets();
+    assertThat(pockets[0], is(nullValue()));
+  }
+
+  @Test
+  public void testSetPocket_firstPlayer() {
+    // Set up
+    GameState game = new GameState();
+    Pocket expectedPocket = new Pocket(card1, card2);
+    // Exercise
+    game.setPocketForPlayer(0, expectedPocket);
+    // Verify
+    Pocket[] pockets = game.getPockets();
+    assertThat(pockets[0], equalTo(expectedPocket));
+  }
+
+  @Test
+  public void testSetPocket_lastPlayer() {
+    // Set up
+    GameState game = new GameState();
+    Pocket expectedPocket = new Pocket(card3, card4);
+    // Exercise
+    game.setPocketForPlayer(9, expectedPocket);
+    // Verify
+    Pocket[] pockets = game.getPockets();
+    assertThat(pockets[9], equalTo(expectedPocket));
+  }
 }

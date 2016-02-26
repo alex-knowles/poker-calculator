@@ -53,11 +53,12 @@ public class GameState {
   }
 
   /**
-   * Modifier: set pocket cards.
+   * Modifier: set Pocket cards for a specified player.
    *
-   * @param pockets player cards to set
+   * @param playerIndex a value in range [0, 9]. Specify player for which to assign pocket cards.
+   * @param pocket Pocket value to assign.
    */
-  void setPockets(Pocket[] pockets) {
-    this.pockets = pockets;
+  void setPocketForPlayer(int playerIndex, Pocket pocket) {
+    // TODO: implement me!
   }
 }
