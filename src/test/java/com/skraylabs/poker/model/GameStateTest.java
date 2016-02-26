@@ -172,4 +172,45 @@ public class GameStateTest {
     Pocket[] pockets = game.getPockets();
     assertThat(pockets[9], equalTo(expectedPocket));
   }
+
+  @Test
+  public void testGetPocket_readOnly1() {
+    // Set up
+    GameState game = new GameState();
+    game.setPocketForPlayer(0, new Pocket(card1, card2));
+    // Exercise
+    // Attempt to assign pocket card to null
+    Pocket pocket = game.getPockets()[0];
+    pocket.card1 = null;
+    // Verify
+    assertThat(game.getPockets()[0].card1, is(card1));
+  }
+
+  @Test
+  public void testGetPocket_readOnly2() {
+    // Set up
+    GameState game = new GameState();
+    game.setPocketForPlayer(0, new Pocket(card1, card2));
+    // Exercise
+    // Attempt to assign pocket card to a different card
+    Pocket pocket = game.getPockets()[0];
+    pocket.card1 = card3;
+    // Verify
+    assertThat(game.getPockets()[0].card1, is(card1));
+  }
+
+  @Test
+  public void testGetPocket_readOnly3() {
+    // Set up
+    GameState game = new GameState();
+    game.setPocketForPlayer(0, new Pocket(card1, card2));
+    final Card expectedCard1 = new Card(card1);
+    // Exercise
+    // Attempt to modify pocket card
+    Pocket pocket = game.getPockets()[0];
+    pocket.card1.rank = Rank.Nine;
+    pocket.card1.suit = Suit.Diamonds;
+    // Verify
+    assertThat(game.getPockets()[0].card1, is(expectedCard1));
+  }
 }
