@@ -20,11 +20,11 @@ public class GameStateTest {
   /**
    * Test fixture cards to use in test methods. There are no duplicates in this set.
    */
-  Card card1;
-  Card card2;
-  Card card3;
-  Card card4;
-  Card card5;
+  Card cardA;
+  Card cardB;
+  Card cardC;
+  Card cardD;
+  Card cardE;
 
   /**
    * Set up shared test fixture.
@@ -35,11 +35,11 @@ public class GameStateTest {
    */
   @Before
   public void setUp() throws Exception {
-    card1 = new Card(Rank.Ace, Suit.Spades);
-    card2 = new Card(Rank.Three, Suit.Clubs);
-    card3 = new Card(Rank.Nine, Suit.Diamonds);
-    card4 = new Card(Rank.Queen, Suit.Hearts);
-    card5 = new Card(Rank.Five, Suit.Clubs);
+    cardA = new Card(Rank.Ace, Suit.Spades);
+    cardB = new Card(Rank.Three, Suit.Clubs);
+    cardC = new Card(Rank.Nine, Suit.Diamonds);
+    cardD = new Card(Rank.Queen, Suit.Hearts);
+    cardE = new Card(Rank.Five, Suit.Clubs);
   }
 
   @After
@@ -64,7 +64,7 @@ public class GameStateTest {
   public void testSetBoard() {
     // Set up
     GameState game = new GameState();
-    Board expectedBoard = new Board(card1, card2, card3, card4, card5);
+    Board expectedBoard = new Board(cardA, cardB, cardC, cardD, cardE);
     // Exercise
     game.setBoard(expectedBoard);
     // Verify
@@ -77,36 +77,36 @@ public class GameStateTest {
   public void testGetBoard_readOnly1() {
     // Set up
     GameState game = new GameState();
-    game.setBoard(new Board(card1, card2, card3));
+    game.setBoard(new Board(cardA, cardB, cardC));
     // Exercise
     // Attempt to assign board card to null
     Board board = game.getBoard();
     board.flopCard1 = null;
     // Verify
     assertThat(game.getBoard(), is(notNullValue()));
-    assertThat(game.getBoard().flopCard1, is(card1));
+    assertThat(game.getBoard().flopCard1, is(cardA));
   }
 
   @Test
   public void testGetBoard_readOnly2() {
     // Set up
     GameState game = new GameState();
-    game.setBoard(new Board(card1, card2, card3));
+    game.setBoard(new Board(cardA, cardB, cardC));
     // Exercise
     // Attempt to assign board card to a different card
     Board board = game.getBoard();
-    board.flopCard1 = card4;
+    board.flopCard1 = cardD;
     // Verify
     assertThat(game.getBoard(), is(notNullValue()));
-    assertThat(game.getBoard().flopCard1, is(card1));
+    assertThat(game.getBoard().flopCard1, is(cardA));
   }
 
   @Test
   public void testGetBoard_readOnly3() {
     // Set up
     GameState game = new GameState();
-    game.setBoard(new Board(card1, card2, card3));
-    final Card expectedFlopCard1 = new Card(card1);
+    game.setBoard(new Board(cardA, cardB, cardC));
+    final Card expectedFlopCard1 = new Card(cardA);
     // Exercise
     // Attempt to modify board card
     Board board = game.getBoard();
@@ -125,7 +125,7 @@ public class GameStateTest {
     // Verify
     exception.expect(IllegalArgumentException.class);
     // Exercise
-    game.setPocketForPlayer(-1, new Pocket(card1, card2));
+    game.setPocketForPlayer(-1, new Pocket(cardA, cardB));
   }
 
   @Test
@@ -135,7 +135,7 @@ public class GameStateTest {
     // Verify
     exception.expect(IllegalArgumentException.class);
     // Exercise
-    game.setPocketForPlayer(10, new Pocket(card1, card2));
+    game.setPocketForPlayer(10, new Pocket(cardA, cardB));
   }
 
   @Test
@@ -153,7 +153,7 @@ public class GameStateTest {
   public void testSetPocket_firstPlayer() {
     // Set up
     GameState game = new GameState();
-    Pocket expectedPocket = new Pocket(card1, card2);
+    Pocket expectedPocket = new Pocket(cardA, cardB);
     // Exercise
     game.setPocketForPlayer(0, expectedPocket);
     // Verify
@@ -165,7 +165,7 @@ public class GameStateTest {
   public void testSetPocket_lastPlayer() {
     // Set up
     GameState game = new GameState();
-    Pocket expectedPocket = new Pocket(card3, card4);
+    Pocket expectedPocket = new Pocket(cardC, cardD);
     // Exercise
     game.setPocketForPlayer(9, expectedPocket);
     // Verify
@@ -177,34 +177,34 @@ public class GameStateTest {
   public void testGetPocket_readOnly1() {
     // Set up
     GameState game = new GameState();
-    game.setPocketForPlayer(0, new Pocket(card1, card2));
+    game.setPocketForPlayer(0, new Pocket(cardA, cardB));
     // Exercise
     // Attempt to assign pocket card to null
     Pocket pocket = game.getPockets()[0];
     pocket.card1 = null;
     // Verify
-    assertThat(game.getPockets()[0].card1, is(card1));
+    assertThat(game.getPockets()[0].card1, is(cardA));
   }
 
   @Test
   public void testGetPocket_readOnly2() {
     // Set up
     GameState game = new GameState();
-    game.setPocketForPlayer(0, new Pocket(card1, card2));
+    game.setPocketForPlayer(0, new Pocket(cardA, cardB));
     // Exercise
     // Attempt to assign pocket card to a different card
     Pocket pocket = game.getPockets()[0];
-    pocket.card1 = card3;
+    pocket.card1 = cardC;
     // Verify
-    assertThat(game.getPockets()[0].card1, is(card1));
+    assertThat(game.getPockets()[0].card1, is(cardA));
   }
 
   @Test
   public void testGetPocket_readOnly3() {
     // Set up
     GameState game = new GameState();
-    game.setPocketForPlayer(0, new Pocket(card1, card2));
-    final Card expectedCard1 = new Card(card1);
+    game.setPocketForPlayer(0, new Pocket(cardA, cardB));
+    final Card expectedCard1 = new Card(cardA);
     // Exercise
     // Attempt to modify pocket card
     Pocket pocket = game.getPockets()[0];
