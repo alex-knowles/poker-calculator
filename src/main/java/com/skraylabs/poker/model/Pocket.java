@@ -40,35 +40,31 @@ public class Pocket {
     // TODO: implement me!
   }
 
+  /**
+   * Helper method to determine if two Card objects are equivalent. Both objects being null is
+   * considered equal.
+   *
+   * @param card1
+   * @param card2
+   * @return true if the cards are equal (or both are null); false otherwise
+   */
+  static boolean cardsAreEqual(Card card1, Card card2) {
+    boolean result = false;
+    if (card1 == null && card2 == null) {
+      result = true;
+    } else if (card1 != null && card2 != null) {
+      result = card1.equals(card2);
+    }
+    return result;
+  }
+
   @Override
   public boolean equals(Object o) {
     boolean result = false;
     if (o instanceof Pocket) {
       Pocket thatPocket = (Pocket) o;
-      // Compare card1 values
-      boolean card1Equals = false;
-      if (this.card1 != null) {
-        card1Equals = this.card1.equals(thatPocket.card1);
-      } else {
-        // this.card1 is null
-        if (thatPocket.card1 == null) {
-          card1Equals = true;
-        } else {
-          card1Equals = false;
-        }
-      }
-      // Compare card2 values
-      boolean card2Equals = false;
-      if (this.card2 != null) {
-        card2Equals = this.card2.equals(thatPocket.card2);
-      } else {
-        // this.card2 is null
-        if (thatPocket.card2 == null) {
-          card2Equals = true;
-        } else {
-          card2Equals = false;
-        }
-      }
+      boolean card1Equals = cardsAreEqual(this.card1, thatPocket.card1);
+      boolean card2Equals = cardsAreEqual(this.card2, thatPocket.card2);
       result = card1Equals && card2Equals;
     }
     return result;
