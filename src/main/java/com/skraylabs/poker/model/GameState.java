@@ -46,12 +46,18 @@ public class GameState {
   }
 
   /**
-   * Accessor: get pocket cards.
+   * Accessor: get copies of the pocket cards.
    *
    * @return player cards
    */
   public Pocket[] getPockets() {
-    return pockets;
+    Pocket[] result = new Pocket[MAX_PLAYERS];
+    for (int i = 0; i < MAX_PLAYERS; ++i) {
+      if (this.pockets[i] != null) {
+        result[i] = new Pocket(this.pockets[i]);
+      }
+    }
+    return result;
   }
 
   /**
