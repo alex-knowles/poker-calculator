@@ -97,4 +97,43 @@ public class PocketTest {
     assertThat(equals, is(false));
   }
 
+  @Test
+  public void testCardsAreEqual_bothNull() {
+    // Exercise
+    boolean equal = Pocket.cardsAreEqual(null, null);
+    // Verify
+    assertThat(equal, is(true));
+  }
+
+  @Test
+  public void testCardsAreEqual_firstNullSecondNonNull() {
+    // Exercise
+    boolean equal = Pocket.cardsAreEqual(null, card2);
+    // Verify
+    assertThat(equal, is(false));
+  }
+
+  @Test
+  public void testCardsAreEqual_firstNonNullSecondNull() {
+    // Exercise
+    boolean equal = Pocket.cardsAreEqual(card1, null);
+    // Verify
+    assertThat(equal, is(false));
+  }
+
+  @Test
+  public void testCardsAreEqual_equal() {
+    // Exercise
+    boolean equal = Pocket.cardsAreEqual(new Card(card1), new Card(card1));
+    // Verify
+    assertThat(equal, is(true));
+  }
+
+  @Test
+  public void testCardsAreEqual_notEqual() {
+    // Exercise
+    boolean equal = Pocket.cardsAreEqual(card1, card2);
+    // Verify
+    assertThat(equal, is(false));
+  }
 }
