@@ -37,7 +37,18 @@ public class Pocket {
    * @param pocket non-null instance from which to copy attributes.
    */
   public Pocket(Pocket pocket) {
-    // TODO: implement me!
+    // Assign card1
+    if (pocket.card1 == null) {
+      this.card1 = null;
+    } else {
+      this.card1 = new Card(pocket.card1);
+    }
+    // Assign card2
+    if (pocket.card2 == null) {
+      this.card2 = null;
+    } else {
+      this.card2 = new Card(pocket.card2);
+    }
   }
 
   /**
