@@ -3,7 +3,7 @@ package com.skraylabs.poker.model;
 /**
  * A checked exception thrown when a string cannot be resolved to the expected {@link Card} format.
  */
-public class CardFormatException extends Exception {
+public class CardFormatException extends PokerFormatException {
   /**
    * Generated serial ID.
    */
@@ -22,11 +22,6 @@ public class CardFormatException extends Exception {
       "The string <\"%s\"> could not be resolved to a Card format.";
 
   /**
-   * Invalid string representation of a {@link Card}.
-   */
-  private String invalidString;
-
-  /**
    * Default constructor.
    */
   public CardFormatException() {
@@ -39,43 +34,9 @@ public class CardFormatException extends Exception {
    * @param invalidString offending string
    */
   public CardFormatException(String invalidString) {
-    super(formatMessageForInvalidString(invalidString));
+    super(formatMessageForInvalidString(MSG_DEFAULT, MSG_WITH_INVALID_STRING, invalidString));
     if (invalidString != null) {
       this.invalidString = invalidString;
     }
-  }
-
-  /**
-   * Helper method to determine message based on a given invalidString parameter.
-   *
-   * <p>
-   * This is mainly intended to be used by the initializing constructor
-   * {@link CardFormatException#CardFormatException(String)}.
-   *
-   * <p>
-   * Although {@code invalidString} is expected to be non-null, it would be undesirable for the
-   * constructor to throw an IllegalArgumenException. Instead, this helper method will test for null
-   * and return the default exception message. Otherwise, this helper method will insert the
-   * {@code invalidString} value into the {@link CardFormatException#MSG_WITH_INVALID_STRING}
-   * format.
-   *
-   * @param invalidString offending string (which may erroneously be set to null)
-   * @return an appropriate exception message
-   */
-  protected static String formatMessageForInvalidString(String invalidString) {
-    String result = MSG_DEFAULT;
-    if (invalidString != null) {
-      result = String.format(MSG_WITH_INVALID_STRING, invalidString);
-    }
-    return result;
-  }
-
-  /**
-   * Accessor: string with invalid format.
-   *
-   * @return the invalidString
-   */
-  public String getInvalidString() {
-    return invalidString;
   }
 }
