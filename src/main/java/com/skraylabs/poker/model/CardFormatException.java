@@ -39,12 +39,35 @@ public class CardFormatException extends Exception {
    * @param invalidString offending string
    */
   public CardFormatException(String invalidString) {
-    // Use 1 of 2 message formats depending on whether or not invalidString argument is empty/null.
-    super((invalidString == null) ? MSG_DEFAULT
-        : String.format(MSG_WITH_INVALID_STRING, invalidString));
+    super(formatMessageForInvalidString(invalidString));
     if (invalidString != null) {
       this.invalidString = invalidString;
     }
+  }
+
+  /**
+   * Helper method to determine message based on a given invalidString parameter.
+   *
+   * <p>
+   * This is mainly intended to be used by the initializing constructor
+   * {@link CardFormatException#CardFormatException(String)}.
+   *
+   * <p>
+   * Although {@code invalidString} is expected to be non-null, it would be undesirable for the
+   * constructor to throw an IllegalArgumenException. Instead, this helper method will test for null
+   * and return the default exception message. Otherwise, this helper method will insert the
+   * {@code invalidString} value into the {@link CardFormatException#MSG_WITH_INVALID_STRING}
+   * format.
+   *
+   * @param invalidString offending string (which may erroneously be set to null)
+   * @return an appropriate exception message
+   */
+  protected static String formatMessageForInvalidString(String invalidString) {
+    String result = MSG_DEFAULT;
+    if (invalidString != null) {
+      result = String.format(MSG_WITH_INVALID_STRING, invalidString);
+    }
+    return result;
   }
 
   /**
