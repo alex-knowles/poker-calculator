@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class InvalidCardFormatExceptionTest {
+public class CardFormatExceptionTest {
 
   @Before
   public void setUp() throws Exception {}
