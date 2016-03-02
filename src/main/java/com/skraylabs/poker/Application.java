@@ -53,7 +53,7 @@ public class Application {
       this.filepath = args[0];
       InputStream input = null;
       try {
-         input = createInputStream();
+        input = createInputStream();
       } catch (FileNotFoundException e) {
         errorMessage = String.format(MSG_FILE_NOT_OPENED, filepath);
         System.out.println(errorMessage);

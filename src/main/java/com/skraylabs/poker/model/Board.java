@@ -36,9 +36,9 @@ public class Board {
   /**
    * Initializing constructor.
    *
-   * @param flopCard1
-   * @param flopCard2
-   * @param flopCard3
+   * @param flopCard1 first of three flop cards
+   * @param flopCard2 second of three flop cards
+   * @param flopCard3 third of three flop cards
    */
   public Board(Card flopCard1, Card flopCard2, Card flopCard3) {
     this(flopCard1, flopCard2, flopCard3, null);
@@ -47,10 +47,10 @@ public class Board {
   /**
    * Initializing constructor.
    *
-   * @param flopCard1
-   * @param flopCard2
-   * @param flopCard3
-   * @param turnCard
+   * @param flopCard1 first of three flop cards
+   * @param flopCard2 second of three flop cards
+   * @param flopCard3 third of three flop cards
+   * @param turnCard card dealt in the "turn" (third round)
    */
   public Board(Card flopCard1, Card flopCard2, Card flopCard3, Card turnCard) {
     this(flopCard1, flopCard2, flopCard3, turnCard, null);
@@ -59,11 +59,11 @@ public class Board {
   /**
    * Initializing constructor.
    *
-   * @param flopCard1
-   * @param flopCard2
-   * @param flopCard3
-   * @param turnCard
-   * @param riverCard
+   * @param flopCard1 first of three flop cards
+   * @param flopCard2 second of three flop cards
+   * @param flopCard3 third of three flop cards
+   * @param turnCard card dealt in the "turn" (third round)
+   * @param riverCard card dealt on the "river" (fourth round)
    */
   public Board(Card flopCard1, Card flopCard2, Card flopCard3, Card turnCard, Card riverCard) {
     this.flopCard1 = flopCard1;
@@ -119,16 +119,16 @@ public class Board {
    * class. For example, in {@link Board#equals(Object)}.
    *
    * @param board instance from which to retrieve a Card member variable.
-   * @param n an integer in the range [0, 4]. A value of 0 represents the first flop card and a
-   *        value of 4 represents the river card.
+   * @param index an integer "n" in the range [0, 4]. A value of 0 represents the first flop card
+   *        and a value of 4 represents the river card.
    * @return the "nth" {@link Card} instance from {@code board}
    */
-  static protected Card getNthCard(Board board, int n) {
+  protected static Card getNthCard(Board board, int index) {
     Card result = null;
     if (board == null) {
       throw new IllegalArgumentException("Argument 'board' must be non-null");
     }
-    switch (n) {
+    switch (index) {
       case 0:
         result = board.flopCard1;
         break;
@@ -145,18 +145,18 @@ public class Board {
         result = board.riverCard;
         break;
       default:
-        throw new IllegalArgumentException("Argument 'n' must be in range [0, 4]");
+        throw new IllegalArgumentException("Argument 'index' must be in range [0, 4]");
     }
     return result;
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(Object object) {
     boolean result = false;
-    if (o instanceof Board) {
-      Board thatBoard = (Board) o;
+    if (object instanceof Board) {
+      Board thatBoard = (Board) object;
       result = true;
-      for (int i = 0 ; i < 5; ++i) {
+      for (int i = 0; i < 5; ++i) {
         Card thisCard = Board.getNthCard(this, i);
         Card thatCard = Board.getNthCard(thatBoard, i);
         if (thisCard == null && thatCard == null) {

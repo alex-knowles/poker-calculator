@@ -9,6 +9,7 @@ public class CardFactory {
 
   /**
    * Creates a {@link Card} object given a two-character string (e.g. "2c" for the Two of Clubs).
+   *
    * <p>
    * First character represents rank:
    * <ul>
@@ -25,7 +26,9 @@ public class CardFactory {
    * <li> 4 (Four)
    * <li> 3 (Three)
    * <li> 2 (Two)
-   * </ul><p>
+   * </ul>
+   *
+   * <p>
    * Second character represents suit (must be lower-case):
    * <ul>
    * <li> s (Spades)
@@ -33,14 +36,13 @@ public class CardFactory {
    * <li> d (Diamonds)
    * <li> c (Clubs)
    * </ul>
-   * 
+   *
    * @param card two-character string representation of a card
    * @return a new {@link Card}
    * @throws InvalidCardFormatException if {@code cardString} is formatted incorrectly.
    */
   public static Card createCardFromString(String card) throws InvalidCardFormatException {
     // Sanity checks
-    Card result = null;
     if (card == null) {
       throw new InvalidCardFormatException();
     } else if (StringUtils.isBlank(card)) {
@@ -67,14 +69,13 @@ public class CardFactory {
       // Re-throw with 2-char string
       throw new InvalidCardFormatException(cardStripped);
     }
-    result = new Card(rank, suit);
-    return result;
+    return new Card(rank, suit);
   }
 
   /**
    * Map a single character to a playing card rank.
    *
-   * @param rank
+   * @param rank playing card rank
    * @return {@link Rank} matching {@code rank}
    * @throws InvalidCardFormatException if {@code rank} is not one of the 13 expected characters
    */
@@ -101,7 +102,7 @@ public class CardFactory {
   /**
    * Map a single character to a playing card suit.
    *
-   * @param suit
+   * @param suit playing card suit
    * @return {@link Suit} matching {@code suit}
    * @throws InvalidCardFormatException if {@code suit} is not one of the 4 expected characters
    */
