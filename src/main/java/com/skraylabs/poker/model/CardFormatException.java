@@ -3,7 +3,7 @@ package com.skraylabs.poker.model;
 /**
  * A checked exception thrown when a string cannot be resolved to the expected {@link Card} format.
  */
-public class InvalidCardFormatException extends Exception {
+public class CardFormatException extends PokerFormatException {
   /**
    * Generated serial ID.
    */
@@ -22,14 +22,9 @@ public class InvalidCardFormatException extends Exception {
       "The string <\"%s\"> could not be resolved to a Card format.";
 
   /**
-   * Invalid string representation of a {@link Card}.
-   */
-  private String invalidString;
-
-  /**
    * Default constructor.
    */
-  public InvalidCardFormatException() {
+  public CardFormatException() {
     super(MSG_DEFAULT);
   }
 
@@ -38,21 +33,10 @@ public class InvalidCardFormatException extends Exception {
    *
    * @param invalidString offending string
    */
-  public InvalidCardFormatException(String invalidString) {
-    // Use 1 of 2 message formats depending on whether or not invalidString argument is empty/null.
-    super((invalidString == null) ? MSG_DEFAULT
-        : String.format(MSG_WITH_INVALID_STRING, invalidString));
+  public CardFormatException(String invalidString) {
+    super(formatMessageForInvalidString(MSG_DEFAULT, MSG_WITH_INVALID_STRING, invalidString));
     if (invalidString != null) {
       this.invalidString = invalidString;
     }
-  }
-
-  /**
-   * Accessor: string with invalid format.
-   *
-   * @return the invalidString
-   */
-  public String getInvalidString() {
-    return invalidString;
   }
 }

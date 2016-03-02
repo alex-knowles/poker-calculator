@@ -22,120 +22,113 @@ public class CardFactoryTest {
   public void tearDown() throws Exception {}
 
   @Test
-  public void testInvalidInput_null() throws InvalidCardFormatException {
+  public void testInvalidInput_null() throws CardFormatException {
     // Verify
-    exception.expect(InvalidCardFormatException.class);
-    exception.expectMessage(InvalidCardFormatException.MSG_DEFAULT);
+    exception.expect(CardFormatException.class);
+    exception.expectMessage(CardFormatException.MSG_DEFAULT);
     // Exercise
     CardFactory.createCardFromString(null);
   }
 
   @Test
-  public void testInvalidInput_empty() throws InvalidCardFormatException {
+  public void testInvalidInput_empty() throws CardFormatException {
     // Verify
-    String expectedMessage = String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, "");
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, "");
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString("");
   }
 
   @Test
-  public void testInvalidInput_blank() throws InvalidCardFormatException {
+  public void testInvalidInput_blank() throws CardFormatException {
     // Verify
-    String expectedMessage = String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, " ");
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, " ");
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(" ");
   }
 
   @Test
-  public void testInvalidInput_tooFewChars() throws InvalidCardFormatException {
+  public void testInvalidInput_tooFewChars() throws CardFormatException {
     // Set up
     final String cardInput = "A";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
   }
 
   @Test
-  public void testInvalidInput_tooManyChars() throws InvalidCardFormatException {
+  public void testInvalidInput_tooManyChars() throws CardFormatException {
     // Set up
     final String cardInput = "Ask";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
   }
 
   @Test
-  public void testInvalidInput_extraWhitespace() throws InvalidCardFormatException {
+  public void testInvalidInput_extraWhitespace() throws CardFormatException {
     // Set up
     final String cardInput = "  Fc ";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, "Fc");
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, "Fc");
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
   }
 
   @Test
-  public void testInvalidInput_badRank1() throws InvalidCardFormatException {
+  public void testInvalidInput_badRank1() throws CardFormatException {
     // Set up
     final String cardInput = "1s";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
   }
 
   @Test
-  public void testInvalidInput_badRank2() throws InvalidCardFormatException {
+  public void testInvalidInput_badRank2() throws CardFormatException {
     // Set up
     final String cardInput = "as";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
   }
 
   @Test
-  public void testInvalidInput_badSuit1() throws InvalidCardFormatException {
+  public void testInvalidInput_badSuit1() throws CardFormatException {
     // Set up
     final String cardInput = "Kx";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
   }
 
   @Test
-  public void testInvalidInput_badSuit2() throws InvalidCardFormatException {
+  public void testInvalidInput_badSuit2() throws CardFormatException {
     // Set up
     final String cardInput = "KC";
     // Verify
-    String expectedMessage =
-        String.format(InvalidCardFormatException.MSG_WITH_INVALID_STRING, cardInput);
-    exception.expect(InvalidCardFormatException.class);
+    String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, cardInput);
+    exception.expect(CardFormatException.class);
     exception.expectMessage(expectedMessage);
     // Exercise
     CardFactory.createCardFromString(cardInput);
@@ -147,7 +140,7 @@ public class CardFactoryTest {
     Card card = null;
     try {
       card = CardFactory.createCardFromString("As");
-    } catch (InvalidCardFormatException e) {
+    } catch (CardFormatException e) {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify
@@ -160,7 +153,7 @@ public class CardFactoryTest {
     Card card = null;
     try {
       card = CardFactory.createCardFromString("8c");
-    } catch (InvalidCardFormatException e) {
+    } catch (CardFormatException e) {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify
@@ -173,7 +166,7 @@ public class CardFactoryTest {
     Card card = null;
     try {
       card = CardFactory.createCardFromString("   As ");
-    } catch (InvalidCardFormatException e) {
+    } catch (CardFormatException e) {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify

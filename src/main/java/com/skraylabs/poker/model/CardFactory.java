@@ -39,18 +39,18 @@ public class CardFactory {
    *
    * @param card two-character string representation of a card
    * @return a new {@link Card}
-   * @throws InvalidCardFormatException if {@code cardString} is formatted incorrectly.
+   * @throws CardFormatException if {@code cardString} is formatted incorrectly.
    */
-  public static Card createCardFromString(String card) throws InvalidCardFormatException {
+  public static Card createCardFromString(String card) throws CardFormatException {
     // Sanity checks
     if (card == null) {
-      throw new InvalidCardFormatException();
+      throw new CardFormatException();
     } else if (StringUtils.isBlank(card)) {
-      throw new InvalidCardFormatException(card);
+      throw new CardFormatException(card);
     }
     final String cardStripped = StringUtils.strip(card);
     if (cardStripped.length() != 2) {
-      throw new InvalidCardFormatException(cardStripped);
+      throw new CardFormatException(cardStripped);
     }
 
     // It is safe to assume cardStripped is exactly 2 chars long
@@ -58,16 +58,16 @@ public class CardFactory {
     Rank rank;
     try {
       rank = parseRank(cardStripped.charAt(0));
-    } catch (InvalidCardFormatException e) {
+    } catch (CardFormatException e) {
       // Re-throw with 2-char string
-      throw new InvalidCardFormatException(cardStripped);
+      throw new CardFormatException(cardStripped);
     }
     Suit suit;
     try {
       suit = parseSuit(cardStripped.charAt(1));
-    } catch (InvalidCardFormatException e) {
+    } catch (CardFormatException e) {
       // Re-throw with 2-char string
-      throw new InvalidCardFormatException(cardStripped);
+      throw new CardFormatException(cardStripped);
     }
     return new Card(rank, suit);
   }
@@ -77,9 +77,9 @@ public class CardFactory {
    *
    * @param rank playing card rank
    * @return {@link Rank} matching {@code rank}
-   * @throws InvalidCardFormatException if {@code rank} is not one of the 13 expected characters
+   * @throws CardFormatException if {@code rank} is not one of the 13 expected characters
    */
-  static Rank parseRank(char rank) throws InvalidCardFormatException {
+  static Rank parseRank(char rank) throws CardFormatException {
     switch (rank) {
       case 'A': return Rank.Ace;
       case 'K': return Rank.King;
@@ -95,7 +95,7 @@ public class CardFactory {
       case '3': return Rank.Three;
       case '2': return Rank.Two;
       default:
-        throw new InvalidCardFormatException();
+        throw new CardFormatException();
     }
   }
 
@@ -104,16 +104,16 @@ public class CardFactory {
    *
    * @param suit playing card suit
    * @return {@link Suit} matching {@code suit}
-   * @throws InvalidCardFormatException if {@code suit} is not one of the 4 expected characters
+   * @throws CardFormatException if {@code suit} is not one of the 4 expected characters
    */
-  static Suit parseSuit(char suit) throws InvalidCardFormatException {
+  static Suit parseSuit(char suit) throws CardFormatException {
     switch (suit) {
       case 's': return Suit.Spades;
       case 'h': return Suit.Hearts;
       case 'd': return Suit.Diamonds;
       case 'c': return Suit.Clubs;
       default:
-        throw new InvalidCardFormatException();
+        throw new CardFormatException();
     }
   }
 }
