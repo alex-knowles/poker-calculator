@@ -1,7 +1,6 @@
 package com.skraylabs.poker.model;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.skraylabs.poker.model.PokerFormatExceptionTest.assertMessageAndInvalidString;
 
 import org.junit.After;
 import org.junit.Before;
@@ -56,19 +55,5 @@ public class CardFormatExceptionTest {
     // Verify
     String expectedMessage = String.format(CardFormatException.MSG_WITH_INVALID_STRING, " ");
     assertMessageAndInvalidString(exception, expectedMessage, " ");
-  }
-
-  /**
-   * Test utility to assert values of {@link CardFormatException#getMessage()} and
-   * {@link CardFormatException#getInvalidString()}.
-   *
-   * @param exception system under test
-   * @param message expected value of detail message
-   * @param invalidString expected value of invalid string
-   */
-  static void assertMessageAndInvalidString(CardFormatException exception, String message,
-      String invalidString) {
-    assertThat(exception.getMessage(), equalTo(message));
-    assertThat(exception.getInvalidString(), equalTo(invalidString));
   }
 }
