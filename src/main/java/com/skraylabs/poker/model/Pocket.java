@@ -70,10 +70,10 @@ public class Pocket {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(Object object) {
     boolean result = false;
-    if (o instanceof Pocket) {
-      Pocket thatPocket = (Pocket) o;
+    if (object instanceof Pocket) {
+      Pocket thatPocket = (Pocket) object;
       boolean card1Equals = cardsAreEqual(this.card1, thatPocket.card1);
       boolean card2Equals = cardsAreEqual(this.card2, thatPocket.card2);
       result = card1Equals && card2Equals;
