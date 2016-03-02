@@ -41,10 +41,10 @@ class Card {
    * @return true if {@code o} is a Card with the same rank and suit; false otherwise.
    */
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(Object object) {
     boolean result = false;
-    if (o instanceof Card) {
-      Card card = (Card) o;
+    if (object instanceof Card) {
+      Card card = (Card) object;
       if (card.rank == this.rank && card.suit == this.suit) {
         result = true;
       }
