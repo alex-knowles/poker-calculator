@@ -17,8 +17,8 @@ class Card {
   /**
    * Constructor.
    *
-   * @param rank
-   * @param suit
+   * @param rank playing card rank
+   * @param suit playing card suit
    */
   Card(Rank rank, Suit suit) {
     this.rank = rank;
