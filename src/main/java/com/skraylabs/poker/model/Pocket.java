@@ -21,7 +21,7 @@ public class Pocket {
   }
 
   /**
-   * Initializing constructor
+   * Initializing constructor.
    *
    * @param card1 first of two cards
    * @param card2 second of two cards
@@ -55,8 +55,8 @@ public class Pocket {
    * Helper method to determine if two Card objects are equivalent. Both objects being null is
    * considered equal.
    *
-   * @param card1
-   * @param card2
+   * @param card1 first card to compare for equality
+   * @param card2 second card to compare for equality
    * @return true if the cards are equal (or both are null); false otherwise
    */
   static boolean cardsAreEqual(Card card1, Card card2) {
