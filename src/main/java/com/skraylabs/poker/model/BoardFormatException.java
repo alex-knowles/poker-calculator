@@ -27,6 +27,7 @@ public class BoardFormatException extends PokerFormatException {
    * Default constructor.
    */
   public BoardFormatException() {
+    super(MSG_DEFAULT);
   }
 
   /**
@@ -35,5 +36,9 @@ public class BoardFormatException extends PokerFormatException {
    * @param invalidString offending string
    */
   public BoardFormatException(String invalidString) {
+    super(formatMessageForInvalidString(MSG_DEFAULT, MSG_WITH_INVALID_STRING, invalidString));
+    if (invalidString != null) {
+      this.invalidString = invalidString;
+    }
   }
 }
