@@ -36,9 +36,9 @@ public class Board {
   /**
    * Initializing constructor.
    *
-   * @param flopCard1
-   * @param flopCard2
-   * @param flopCard3
+   * @param flopCard1 first of three flop cards
+   * @param flopCard2 second of three flop cards
+   * @param flopCard3 third of three flop cards
    */
   public Board(Card flopCard1, Card flopCard2, Card flopCard3) {
     this(flopCard1, flopCard2, flopCard3, null);
@@ -47,10 +47,10 @@ public class Board {
   /**
    * Initializing constructor.
    *
-   * @param flopCard1
-   * @param flopCard2
-   * @param flopCard3
-   * @param turnCard
+   * @param flopCard1 first of three flop cards
+   * @param flopCard2 second of three flop cards
+   * @param flopCard3 third of three flop cards
+   * @param turnCard card dealt in the "turn" (third round)
    */
   public Board(Card flopCard1, Card flopCard2, Card flopCard3, Card turnCard) {
     this(flopCard1, flopCard2, flopCard3, turnCard, null);
@@ -59,11 +59,11 @@ public class Board {
   /**
    * Initializing constructor.
    *
-   * @param flopCard1
-   * @param flopCard2
-   * @param flopCard3
-   * @param turnCard
-   * @param riverCard
+   * @param flopCard1 first of three flop cards
+   * @param flopCard2 second of three flop cards
+   * @param flopCard3 third of three flop cards
+   * @param turnCard card dealt in the "turn" (third round)
+   * @param riverCard card dealt on the "river" (fourth round)
    */
   public Board(Card flopCard1, Card flopCard2, Card flopCard3, Card turnCard, Card riverCard) {
     this.flopCard1 = flopCard1;
