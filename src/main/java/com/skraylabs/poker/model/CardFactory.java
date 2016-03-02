@@ -43,7 +43,6 @@ public class CardFactory {
    */
   public static Card createCardFromString(String card) throws InvalidCardFormatException {
     // Sanity checks
-    Card result = null;
     if (card == null) {
       throw new InvalidCardFormatException();
     } else if (StringUtils.isBlank(card)) {
@@ -70,8 +69,7 @@ public class CardFactory {
       // Re-throw with 2-char string
       throw new InvalidCardFormatException(cardStripped);
     }
-    result = new Card(rank, suit);
-    return result;
+    return new Card(rank, suit);
   }
 
   /**
