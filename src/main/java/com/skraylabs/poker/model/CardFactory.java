@@ -75,7 +75,7 @@ public class CardFactory {
   /**
    * Map a single character to a playing card rank.
    *
-   * @param rank
+   * @param rank playing card rank
    * @return {@link Rank} matching {@code rank}
    * @throws InvalidCardFormatException if {@code rank} is not one of the 13 expected characters
    */
@@ -102,7 +102,7 @@ public class CardFactory {
   /**
    * Map a single character to a playing card suit.
    *
-   * @param suit
+   * @param suit playing card suit
    * @return {@link Suit} matching {@code suit}
    * @throws InvalidCardFormatException if {@code suit} is not one of the 4 expected characters
    */
