@@ -9,6 +9,7 @@ public class CardFactory {
 
   /**
    * Creates a {@link Card} object given a two-character string (e.g. "2c" for the Two of Clubs).
+   *
    * <p>
    * First character represents rank:
    * <ul>
@@ -25,7 +26,9 @@ public class CardFactory {
    * <li> 4 (Four)
    * <li> 3 (Three)
    * <li> 2 (Two)
-   * </ul><p>
+   * </ul>
+   *
+   * <p>
    * Second character represents suit (must be lower-case):
    * <ul>
    * <li> s (Spades)
@@ -33,7 +36,7 @@ public class CardFactory {
    * <li> d (Diamonds)
    * <li> c (Clubs)
    * </ul>
-   * 
+   *
    * @param card two-character string representation of a card
    * @return a new {@link Card}
    * @throws InvalidCardFormatException if {@code cardString} is formatted incorrectly.
