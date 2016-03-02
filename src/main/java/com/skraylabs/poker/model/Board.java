@@ -151,12 +151,12 @@ public class Board {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(Object object) {
     boolean result = false;
-    if (o instanceof Board) {
-      Board thatBoard = (Board) o;
+    if (object instanceof Board) {
+      Board thatBoard = (Board) object;
       result = true;
-      for (int i = 0 ; i < 5; ++i) {
+      for (int i = 0; i < 5; ++i) {
         Card thisCard = Board.getNthCard(this, i);
         Card thatCard = Board.getNthCard(thatBoard, i);
         if (thisCard == null && thatCard == null) {
