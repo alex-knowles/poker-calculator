@@ -119,16 +119,16 @@ public class Board {
    * class. For example, in {@link Board#equals(Object)}.
    *
    * @param board instance from which to retrieve a Card member variable.
-   * @param n an integer in the range [0, 4]. A value of 0 represents the first flop card and a
-   *        value of 4 represents the river card.
+   * @param index an integer "n" in the range [0, 4]. A value of 0 represents the first flop card
+   *        and a value of 4 represents the river card.
    * @return the "nth" {@link Card} instance from {@code board}
    */
-  static protected Card getNthCard(Board board, int n) {
+  static protected Card getNthCard(Board board, int index) {
     Card result = null;
     if (board == null) {
       throw new IllegalArgumentException("Argument 'board' must be non-null");
     }
-    switch (n) {
+    switch (index) {
       case 0:
         result = board.flopCard1;
         break;
@@ -145,7 +145,7 @@ public class Board {
         result = board.riverCard;
         break;
       default:
-        throw new IllegalArgumentException("Argument 'n' must be in range [0, 4]");
+        throw new IllegalArgumentException("Argument 'index' must be in range [0, 4]");
     }
     return result;
   }
