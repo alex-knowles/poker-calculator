@@ -5,9 +5,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class CardTest {
+
+  @Rule public ExpectedException exception = ExpectedException.none();
 
   /**
    * Test fixture card.
@@ -43,6 +47,23 @@ public class CardTest {
     Suit suit = fixedCard.getSuit();
     // Verify
     assertThat(suit, equalTo(fixedSuit));
+  }
+
+  @Test
+  public void testCopyConstructor_null() {
+    // Verify
+    exception.expect(NullPointerException.class);
+    // Exercise
+    @SuppressWarnings("unused")
+    Card card = new Card(null);
+  }
+
+  @Test
+  public void testCopyConstructor_success() {
+    // Exercise
+    Card card = new Card(fixedCard);
+    // Verify
+    assertThat(card, equalTo(fixedCard));
   }
 
   @Test

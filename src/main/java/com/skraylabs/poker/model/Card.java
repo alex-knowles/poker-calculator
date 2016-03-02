@@ -26,6 +26,15 @@ class Card {
   }
 
   /**
+   * Copy constructor.
+   *
+   * @param card non-null Card from which to copy member values.
+   */
+  Card(Card card) {
+    this(card.rank, card.suit);
+  }
+
+  /**
    * Test equality with another object. Other object must be a Card with identical {link Rank} and
    * {@link Suit} values.
    *
