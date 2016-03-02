@@ -27,6 +27,7 @@ public class PocketFormatException extends PokerFormatException {
    * Default constructor.
    */
   public PocketFormatException() {
+    super(MSG_DEFAULT);
   }
 
   /**
@@ -35,5 +36,9 @@ public class PocketFormatException extends PokerFormatException {
    * @param invalidString offending string
    */
   public PocketFormatException(String invalidString) {
+    super(formatMessageForInvalidString(MSG_DEFAULT, MSG_WITH_INVALID_STRING, invalidString));
+    if (invalidString != null) {
+      this.invalidString = invalidString;
+    }
   }
 }
