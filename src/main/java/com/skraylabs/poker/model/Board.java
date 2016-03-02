@@ -123,7 +123,7 @@ public class Board {
    *        and a value of 4 represents the river card.
    * @return the "nth" {@link Card} instance from {@code board}
    */
-  static protected Card getNthCard(Board board, int index) {
+  protected static Card getNthCard(Board board, int index) {
     Card result = null;
     if (board == null) {
       throw new IllegalArgumentException("Argument 'board' must be non-null");
