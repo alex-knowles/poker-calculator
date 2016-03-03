@@ -28,6 +28,7 @@ public class GameStateFormatException extends PokerFormatException {
    * Default constructor.
    */
   public GameStateFormatException() {
+    super(MSG_DEFAULT);
   }
 
   /**
@@ -36,5 +37,6 @@ public class GameStateFormatException extends PokerFormatException {
    * @param message detail message
    */
   public GameStateFormatException(String message) {
+    super(message);
   }
 }
