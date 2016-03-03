@@ -25,6 +25,21 @@ public class GameStateFormatException extends PokerFormatException {
       "The string <\"%s\"> could not be resolved to a GameState format.";
 
   /**
+   * Detail message used when the input has zero Pockets. At least one Pocket must be provided.
+   */
+  public static final String MSG_MIN_POCKET_NUM = "A GameState must have at least 1 Pocket.";
+
+  /**
+   * Detail message used when the input has too many Pockets."
+   */
+  public static final String MSG_MAX_POCKET_NUM = "A GameState must have no more than 10 Pockets.";
+
+  /**
+   * Detail message used when the input is null.
+   */
+  public static final String MSG_NULL_INPUT = "A GameState cannot be created from null input.";
+
+  /**
    * Default constructor.
    */
   public GameStateFormatException() {
