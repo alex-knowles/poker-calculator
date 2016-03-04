@@ -73,6 +73,17 @@ public class CardFactory {
   }
 
   /**
+   * Serializes a {@link Card} into a String representation.
+   *
+   * @param card non-null instance to serialize with non-null {@link Rank} and {@link Suit} values
+   * @return a String representation of {@code card}
+   */
+  public static String createStringFromCard(Card card) {
+    // TODO: implement me!
+    return null;
+  }
+
+  /**
    * Map a single character to a playing card rank.
    *
    * @param rank playing card rank
