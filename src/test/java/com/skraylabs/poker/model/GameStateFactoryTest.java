@@ -52,6 +52,27 @@ public class GameStateFactoryTest {
     GameStateFactory.createGameStateFromString(input);
   }
 
+  @Test
+  public void testInvalidInput_tooManyPockets() throws PokerFormatException {
+    // Setup
+    // Create a game state with 11 pockets
+    StringBuilder builder = new StringBuilder();
+    builder.append(String.format("%s%n", validBoard_3Cards));
+    for (int i = 0; i < 11; ++i) {
+      Card card1 = cardFromNumber(i * 2);
+      Card card2 = cardFromNumber(i * 2 + 1 );
+      String cardInput1 = CardFactory.createStringFromCard(card1);
+      String cardInput2 = CardFactory.createStringFromCard(card2);
+      builder.append(String.format("%s %s%n", cardInput1, cardInput2));
+    }
+    String input = builder.toString();
+    // Verify
+    exception.expect(GameStateFormatException.class);
+    exception.expectMessage(GameStateFormatException.MSG_MAX_POCKET_NUM);
+    // Exercise
+    GameStateFactory.createGameStateFromString(input);
+  }
+
   /**
    * Test helper that returns a card based on a number in the range [0, 51].
    *
