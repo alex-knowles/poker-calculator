@@ -40,6 +40,13 @@ public class GameStateFormatException extends PokerFormatException {
   public static final String MSG_NULL_INPUT = "A GameState cannot be created from null input.";
 
   /**
+   * Detail message used when the input contains more than one copy of a Card. Expects one String
+   * argument.
+   */
+  public static final String MSG_DUPLICATE_CARD =
+      "All cards in a GameState must be unique. Duplicate card value: <\"%s\">.";
+
+  /**
    * Default constructor.
    */
   public GameStateFormatException() {

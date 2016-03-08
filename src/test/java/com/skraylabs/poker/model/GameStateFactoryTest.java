@@ -73,6 +73,22 @@ public class GameStateFactoryTest {
     GameStateFactory.createGameStateFromString(input);
   }
 
+  @Test
+  public void testInvalidInput_duplicateCards() throws PokerFormatException {
+    // Setup
+    String input = "2c 5h 7s Qc%n";
+    input += "8s 8h%n";
+    input += "%n";
+    input += "As 2c";
+    String duplicate = "2c";
+    // Verify
+    String expectedMessage = String.format(GameStateFormatException.MSG_DUPLICATE_CARD, duplicate);
+    exception.expect(GameStateFormatException.class);
+    exception.expectMessage(expectedMessage);
+    // Exercise
+    GameStateFactory.createGameStateFromString(input);
+  }
+
   /**
    * Test helper that returns a card based on a number in the range [0, 51].
    *
