@@ -79,8 +79,14 @@ public class CardFactory {
    * @return a String representation of {@code card}
    */
   public static String createStringFromCard(Card card) {
-    // TODO: implement me!
-    return null;
+    if (card == null || card.rank == null || card.suit == null) {
+      throw new IllegalArgumentException();
+    }
+    // Assign rank
+    char rank = toChar(card.rank);
+    // Assign suit
+    char suit = toChar(card.suit);
+    return String.format("%s%s", rank, suit);
   }
 
   /**
@@ -126,5 +132,93 @@ public class CardFactory {
       default:
         throw new CardFormatException();
     }
+  }
+
+  /**
+   * Represent a {@link Rank} value as a single character.
+   *
+   * @param rank instance to convert
+   * @return a single character based on {@code rank}
+   */
+  static char toChar(Rank rank) {
+    if (rank == null) {
+      throw new IllegalArgumentException("Argument must be non-null");
+    }
+    char result = '?';
+    switch (rank) {
+      case Ace:
+        result = 'A';
+        break;
+      case King:
+        result = 'K';
+        break;
+      case Queen:
+        result = 'Q';
+        break;
+      case Jack:
+        result = 'J';
+        break;
+      case Ten:
+        result = 'T';
+        break;
+      case Nine:
+        result = '9';
+        break;
+      case Eight:
+        result = '8';
+        break;
+      case Seven:
+        result = '7';
+        break;
+      case Six:
+        result = '6';
+        break;
+      case Five:
+        result = '5';
+        break;
+      case Four:
+        result = '4';
+        break;
+      case Three:
+        result = '3';
+        break;
+      case Two:
+        result = '2';
+        break;
+      default:
+        throw new RuntimeException("Logic error");
+    }
+    return result;
+  }
+
+
+  /**
+   * Represent a {@link Suit} value as a single character.
+   *
+   * @param suit instance to convert
+   * @return a single character based on {@code suit}
+   */
+  static char toChar(Suit suit) {
+    if (suit == null) {
+      throw new IllegalArgumentException("Argument must be non-null");
+    }
+    char result = '?';
+    switch (suit) {
+      case Spades:
+        result = 's';
+        break;
+      case Hearts:
+        result = 'h';
+        break;
+      case Diamonds:
+        result = 'd';
+        break;
+      case Clubs:
+        result = 'c';
+        break;
+      default:
+        throw new RuntimeException("Logic error");
+    }
+    return result;
   }
 }
