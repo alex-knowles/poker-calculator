@@ -18,7 +18,7 @@ public class GameStateFactoryTest {
    * Formatted string for a valid Board with 3 Card values. Consists of card #s 49, 50, and 51 --
    * see {@link #cardFromNumber(int)}.
    */
-  String validBoard3Cards;
+  String threeCardBoardInput;
 
   /**
    * Set up shared text fixture.
@@ -33,7 +33,7 @@ public class GameStateFactoryTest {
     String input1 = CardFactory.createStringFromCard(card49);
     String input2 = CardFactory.createStringFromCard(card50);
     String input3 = CardFactory.createStringFromCard(card51);
-    validBoard3Cards = String.format("%s %s %s", input1, input2, input3);
+    threeCardBoardInput = String.format("%s %s %s", input1, input2, input3);
   }
 
   @Test
@@ -66,7 +66,7 @@ public class GameStateFactoryTest {
   @Test
   public void testInvalidInput_noPockets() throws PokerFormatException {
     // Setup
-    String input = String.format("%s%n", validBoard3Cards);
+    String input = String.format("%s%n", threeCardBoardInput);
     // Verify
     exception.expect(GameStateFormatException.class);
     exception.expectMessage(GameStateFormatException.MSG_MIN_POCKET_NUM);
@@ -79,7 +79,7 @@ public class GameStateFactoryTest {
     // Setup
     // Create a game state with 11 pockets
     StringBuilder builder = new StringBuilder();
-    builder.append(String.format("%s%n", validBoard3Cards));
+    builder.append(String.format("%s%n", threeCardBoardInput));
     for (int i = 0; i < 11; ++i) {
       Card card1 = cardFromNumber(i * 2);
       Card card2 = cardFromNumber(i * 2 + 1 );
