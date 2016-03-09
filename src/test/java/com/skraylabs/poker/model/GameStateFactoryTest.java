@@ -1,5 +1,6 @@
 package com.skraylabs.poker.model;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -139,6 +140,19 @@ public class GameStateFactoryTest {
     exception.expect(CardFormatException.class);
     // Exercise
     GameStateFactory.createGameStateFromString(input);
+  }
+
+  @Test
+  public void testValidInput_emptyBoard() throws PokerFormatException {
+    // Set up
+    String input = "%n";
+    input += "As Ac";
+    // Exercise
+    GameState sut = GameStateFactory.createGameStateFromString(input);
+    // Verify
+    Board expectedBoard = new Board();
+    Board sutBoard = sut.getBoard();
+    assertThat(sutBoard, equalTo(expectedBoard));
   }
 
   /**
