@@ -120,6 +120,17 @@ public class GameStateFactoryTest {
     GameStateFactory.createGameStateFromString(input);
   }
 
+  @Test
+  public void testInvalidInput_pocket() throws PokerFormatException {
+    // Set up
+    String input = "5h 7s Th%n";
+    input += "As";
+    // Verify
+    exception.expect(PocketFormatException.class);
+    // Exercise
+    GameStateFactory.createGameStateFromString(input);
+  }
+
   /**
    * Test helper that returns a card based on a number in the range [0, 51].
    *
