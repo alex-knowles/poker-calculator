@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -12,7 +13,27 @@ public class GameStateFactoryTest {
   
   @Rule public ExpectedException exception = ExpectedException.none();
 
-  static final String validBoard_3Cards = "As 5d 7h";
+  /**
+   * Formatted string for a valid Board with 3 Card values. Consists of card #s 49, 50, and 51 --
+   * see {@link #cardFromNumber(int)}.
+   */
+  String validBoard3Cards;
+
+  /**
+   * Set up shared text fixture.
+   *
+   * @throws Exception shouldn't happen.
+   */
+  @Before
+  public void setUp() throws Exception {
+    Card card49 = cardFromNumber(49);
+    Card card50 = cardFromNumber(50);
+    Card card51 = cardFromNumber(51);
+    String input1 = CardFactory.createStringFromCard(card49);
+    String input2 = CardFactory.createStringFromCard(card50);
+    String input3 = CardFactory.createStringFromCard(card51);
+    validBoard3Cards = String.format("%s %s %s", input1, input2, input3);
+  }
 
   @Test
   public void testInvalidInput_null() throws PokerFormatException {
@@ -44,7 +65,7 @@ public class GameStateFactoryTest {
   @Test
   public void testInvalidInput_noPockets() throws PokerFormatException {
     // Setup
-    String input = String.format("%s%n", validBoard_3Cards);
+    String input = String.format("%s%n", validBoard3Cards);
     // Verify
     exception.expect(GameStateFormatException.class);
     exception.expectMessage(GameStateFormatException.MSG_MIN_POCKET_NUM);
@@ -57,7 +78,7 @@ public class GameStateFactoryTest {
     // Setup
     // Create a game state with 11 pockets
     StringBuilder builder = new StringBuilder();
-    builder.append(String.format("%s%n", validBoard_3Cards));
+    builder.append(String.format("%s%n", validBoard3Cards));
     for (int i = 0; i < 11; ++i) {
       Card card1 = cardFromNumber(i * 2);
       Card card2 = cardFromNumber(i * 2 + 1 );
