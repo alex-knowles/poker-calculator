@@ -21,6 +21,11 @@ public class GameStateFactoryTest {
   String threeCardBoardInput;
 
   /**
+   * Serialized version of {@link #threeCardBoardInput}.
+   */
+  Board threeCardBoard;
+
+  /**
    * Set up shared text fixture.
    *
    * @throws Exception shouldn't happen.
@@ -34,6 +39,7 @@ public class GameStateFactoryTest {
     String input2 = CardFactory.createStringFromCard(card50);
     String input3 = CardFactory.createStringFromCard(card51);
     threeCardBoardInput = String.format("%s %s %s", input1, input2, input3);
+    threeCardBoard = new Board(card49, card50, card51);
   }
 
   @Test
