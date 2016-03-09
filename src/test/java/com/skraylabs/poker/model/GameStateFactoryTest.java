@@ -11,8 +11,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class GameStateFactoryTest {
-  
-  @Rule public ExpectedException exception = ExpectedException.none();
+
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   /**
    * Formatted string for a valid Board with 3 Card values. Consists of card #s 49, 50, and 51 --
@@ -88,7 +89,7 @@ public class GameStateFactoryTest {
     builder.append(String.format("%s%n", threeCardBoardInput));
     for (int i = 0; i < 11; ++i) {
       Card card1 = cardFromNumber(i * 2);
-      Card card2 = cardFromNumber(i * 2 + 1 );
+      Card card2 = cardFromNumber(i * 2 + 1);
       String cardInput1 = CardFactory.createStringFromCard(card1);
       String cardInput2 = CardFactory.createStringFromCard(card2);
       builder.append(String.format("%s %s%n", cardInput1, cardInput2));
@@ -171,7 +172,7 @@ public class GameStateFactoryTest {
     if (number < 0 || number > 51) {
       throw new IllegalArgumentException("Parameter \"number\" must be in range [0, 51]");
     }
-    Card result  = new Card(null, null);
+    Card result = new Card(null, null);
     // Assign suit
     switch (number / 13) {
       case 0:
