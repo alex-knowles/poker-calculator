@@ -162,6 +162,34 @@ public class GameStateFactoryTest {
     assertThat(sutBoard, equalTo(expectedBoard));
   }
 
+  @Test
+  public void testValidInput_maxPockets() throws PokerFormatException {
+    // Setup
+    // Create a game state with 10 pockets
+    StringBuilder builder = new StringBuilder();
+    builder.append(String.format("%s%n", threeCardBoardInput));
+    Pocket[] expectedPockets = new Pocket[GameState.MAX_PLAYERS];
+    for (int i = 0; i < GameState.MAX_PLAYERS; ++i) {
+      Card card1 = cardFromNumber(i * 2);
+      Card card2 = cardFromNumber(i * 2 + 1);
+      expectedPockets[i] = new Pocket(card1, card2);
+      String cardInput1 = CardFactory.createStringFromCard(card1);
+      String cardInput2 = CardFactory.createStringFromCard(card2);
+      builder.append(String.format("%s %s%n", cardInput1, cardInput2));
+    }
+    String input = builder.toString();
+    // Exercise
+    GameState sut = GameStateFactory.createGameStateFromString(input);
+    // Verify
+    Board expectedBoard = threeCardBoard;
+    Board sutBoard = sut.getBoard();
+    assertThat(sutBoard, equalTo(expectedBoard));
+    Pocket[] sutPockets = sut.getPockets();
+    for (int i = 0; i < GameState.MAX_PLAYERS; ++i) {
+      assertThat(sutPockets[i], equalTo(expectedPockets[i]));
+    }
+  }
+
   /**
    * Test helper that returns a card based on a number in the range [0, 51].
    *
