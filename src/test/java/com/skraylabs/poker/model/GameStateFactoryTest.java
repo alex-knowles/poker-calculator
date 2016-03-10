@@ -3,6 +3,7 @@ package com.skraylabs.poker.model;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Before;
@@ -160,6 +161,31 @@ public class GameStateFactoryTest {
     Board expectedBoard = new Board();
     Board sutBoard = sut.getBoard();
     assertThat(sutBoard, equalTo(expectedBoard));
+  }
+
+  @Test
+  public void testValidInput_minPockets() throws PokerFormatException {
+    // Setup
+    // Create a game state with 1 pocket
+    String input = String.format("%s%n", threeCardBoardInput);
+    input += "As Ac";
+    // Exercise
+    GameState sut = GameStateFactory.createGameStateFromString(input);
+    // Verify
+    Board expectedBoard = threeCardBoard;
+    Board sutBoard = sut.getBoard();
+    assertThat(sutBoard, equalTo(expectedBoard));
+    Pocket expectedPocket0 =
+        new Pocket(new Card(Rank.Ace, Suit.Spades), new Card(Rank.Ace, Suit.Clubs));
+    Pocket[] sutPockets = sut.getPockets();
+    for (int i = 0; i < GameState.MAX_PLAYERS; ++i) {
+      Pocket sutPocket = sutPockets[i];
+      if (i == 0) {
+        assertThat(sutPocket, equalTo(expectedPocket0));
+      } else {
+        assertThat(sutPocket, is(nullValue()));
+      }
+    }
   }
 
   @Test
