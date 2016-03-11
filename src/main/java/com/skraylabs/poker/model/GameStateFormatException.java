@@ -69,6 +69,6 @@ public class GameStateFormatException extends PokerFormatException {
    * @param cause the cause (which can be retrieved by {@link #getCause()})
    */
   public GameStateFormatException(String message, Throwable cause) {
-    // TODO: implement me!
+    super(message, cause);
   }
 }
