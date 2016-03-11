@@ -1,6 +1,8 @@
 package com.skraylabs.poker.model;
 
 import static com.skraylabs.poker.model.PokerFormatExceptionTest.assertMessageAndInvalidString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Test;
 
@@ -46,6 +48,19 @@ public class GameStateFormatExceptionTest {
     GameStateFormatException exception = new GameStateFormatException(" ");
     // Verify
     assertMessageAndInvalidString(exception, " ", null);
+  }
+
+  @Test
+  public void testInitializingConstructor_cause() {
+    // Set up
+    String expectedMessage = "foo";
+    Exception expectedCause = new RuntimeException("bar");
+    // Exercise
+    GameStateFormatException exception =
+        new GameStateFormatException(expectedMessage, expectedCause);
+    // Verify
+    assertMessageAndInvalidString(exception, expectedMessage, null);
+    assertThat(exception.getCause(), equalTo(expectedCause));
   }
 
 }

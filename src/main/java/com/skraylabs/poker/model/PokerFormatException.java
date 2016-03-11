@@ -43,6 +43,16 @@ abstract class PokerFormatException extends Exception {
   }
 
   /**
+   * Initializing constructor.
+   *
+   * @param message detail message for Exception
+   * @param cause the cause (which can be retrieved by {@link #getCause()})
+   */
+  public PokerFormatException(String message, Throwable cause) {
+    super(message, cause);
+  }
+
+  /**
    * Helper method to determine message based on a given invalidString parameter.
    *
    * <p>
