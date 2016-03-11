@@ -2,6 +2,12 @@ package com.skraylabs.poker.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 /**
  * Factory class for constructing a {@link GameState} instance from a formatted string/input stream.
  */
@@ -49,7 +55,102 @@ public class GameStateFactory {
     } else if (StringUtils.isBlank(input)) {
       throw new GameStateFormatException(GameStateFormatException.MSG_MIN_POCKET_NUM);
     }
-    GameState result = null;
+    GameState result = new GameState();
+    BufferedReader reader = new BufferedReader(new StringReader(input));
+    // Create the Board
+    String boardInput;
+    try {
+      boardInput = reader.readLine();
+    } catch (IOException e) {
+      throw new GameStateFormatException(GameStateFormatException.MSG_DEFAULT, e);
+    }
+    Board board = parseBoard(boardInput);
+    result.setBoard(board);
+    // Create Pockets
+    int playerIndex = 0;
+    try {
+      String pocketInput = reader.readLine();
+      while (pocketInput != null) {
+        if (playerIndex >= GameState.MAX_PLAYERS) {
+          throw new GameStateFormatException(GameStateFormatException.MSG_MAX_POCKET_NUM);
+        }
+        Pocket pocket = parsePocket(pocketInput);
+        result.setPocketForPlayer(playerIndex++, pocket);
+        pocketInput = reader.readLine();
+      }
+    } catch (IOException e) {
+      throw new GameStateFormatException(GameStateFormatException.MSG_DEFAULT, e);
+    }
+    if (playerIndex == 0) {
+      throw new GameStateFormatException(GameStateFormatException.MSG_MIN_POCKET_NUM);
+    }
+    return result;
+  }
+
+  /**
+   * Helper method to parse a line of formatted input into a {@link Board}.
+   *
+   * @param input formatted String to parse
+   * @return a Board
+   * @throws CardFormatException if a Card is formatted incorrectly
+   * @throws BoardFormatException if the Board is formatted incorrectly
+   */
+  static Board parseBoard(String input) throws CardFormatException, BoardFormatException {
+    Board result = null;
+    StringTokenizer tokenizer = new StringTokenizer(input, " ");
+    ArrayList<Card> cards = new ArrayList<Card>();
+    while (tokenizer.hasMoreTokens()) {
+      String cardInput = tokenizer.nextToken();
+      Card card = CardFactory.createCardFromString(cardInput);
+      cards.add(card);
+    }
+    switch (cards.size()) {
+      case 0:
+        result = new Board();
+        break;
+      case 3:
+        result = new Board(cards.get(0), cards.get(1), cards.get(2));
+        break;
+      case 4:
+        result = new Board(cards.get(0), cards.get(1), cards.get(2), cards.get(3));
+        break;
+      case 5:
+        result = new Board(cards.get(0), cards.get(1), cards.get(2), cards.get(3), cards.get(4));
+        break;
+      default:
+        throw new BoardFormatException(input);
+    }
+    return result;
+  }
+
+  /**
+   * Helper method to parse a line of formatted input into a {@link Pocket}.
+   *
+   * @param input formatted String to parse
+   * @return a Pocket
+   * @throws CardFormatException if a Card is formatted incorrectly
+   * @throws BoardFormatException if the Board is formatted incorrectly
+   */
+  static Pocket parsePocket(String input) throws CardFormatException, PocketFormatException {
+    Pocket result = null;
+    StringTokenizer tokenizer = new StringTokenizer(input, " ");
+    ArrayList<Card> cards = new ArrayList<Card>();
+    while (tokenizer.hasMoreTokens()) {
+      String cardInput = tokenizer.nextToken();
+      Card card = CardFactory.createCardFromString(cardInput);
+      cards.add(card);
+    }
+    switch (cards.size()) {
+      case 0:
+        // 0 cards is acceptable
+        result = null;
+        break;
+      case 2:
+        result = new Pocket(cards.get(0), cards.get(1));
+        break;
+      default:
+        throw new PocketFormatException(input);
+    }
     return result;
   }
 }
