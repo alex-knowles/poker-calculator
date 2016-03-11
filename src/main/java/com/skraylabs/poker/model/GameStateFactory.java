@@ -1,5 +1,7 @@
 package com.skraylabs.poker.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Factory class for constructing a {@link GameState} instance from a formatted string/input stream.
  */
@@ -42,8 +44,12 @@ public class GameStateFactory {
    */
   public static GameState createGameStateFromString(String input) throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
-    // TODO: Implement me!
-    GameState result = new GameState();
+    if (input == null) {
+      throw new GameStateFormatException(GameStateFormatException.MSG_NULL_INPUT);
+    } else if (StringUtils.isBlank(input)) {
+      throw new GameStateFormatException(GameStateFormatException.MSG_MIN_POCKET_NUM);
+    }
+    GameState result = null;
     return result;
   }
 }
