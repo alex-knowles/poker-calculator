@@ -74,7 +74,7 @@ public class GameStateFactoryTest {
   @Test
   public void testInvalidInput_noPockets() throws PokerFormatException {
     // Setup
-    String input = String.format("%s%n", threeCardBoardInput);
+    String input = String.format("%s\n", threeCardBoardInput);
     // Verify
     exception.expect(GameStateFormatException.class);
     exception.expectMessage(GameStateFormatException.MSG_MIN_POCKET_NUM);
@@ -87,13 +87,13 @@ public class GameStateFactoryTest {
     // Setup
     // Create a game state with 11 pockets
     StringBuilder builder = new StringBuilder();
-    builder.append(String.format("%s%n", threeCardBoardInput));
+    builder.append(String.format("%s\n", threeCardBoardInput));
     for (int i = 0; i < 11; ++i) {
       Card card1 = cardFromNumber(i * 2);
       Card card2 = cardFromNumber(i * 2 + 1);
       String cardInput1 = CardFactory.createStringFromCard(card1);
       String cardInput2 = CardFactory.createStringFromCard(card2);
-      builder.append(String.format("%s %s%n", cardInput1, cardInput2));
+      builder.append(String.format("%s %s\n", cardInput1, cardInput2));
     }
     String input = builder.toString();
     // Verify
@@ -106,9 +106,9 @@ public class GameStateFactoryTest {
   @Test
   public void testInvalidInput_duplicateCards() throws PokerFormatException {
     // Setup
-    String input = "2c 5h 7s Qc%n";
-    input += "8s 8h%n";
-    input += "%n";
+    String input = "2c 5h 7s Qc\n";
+    input += "8s 8h\n";
+    input += "\n";
     input += "As 2c";
     String duplicate = "2c";
     // Verify
@@ -132,7 +132,7 @@ public class GameStateFactoryTest {
   @Test
   public void testInvalidInput_pocket() throws PokerFormatException {
     // Set up
-    String input = "5h 7s Th%n";
+    String input = "5h 7s Th\n";
     input += "As";
     // Verify
     exception.expect(PocketFormatException.class);
@@ -143,7 +143,7 @@ public class GameStateFactoryTest {
   @Test
   public void testInvalidInput_card() throws PokerFormatException {
     // Set up
-    String input = "5h 7s TH%n";
+    String input = "5h 7s TH\n";
     // Verify
     exception.expect(CardFormatException.class);
     // Exercise
@@ -153,7 +153,7 @@ public class GameStateFactoryTest {
   @Test
   public void testValidInput_emptyBoard() throws PokerFormatException {
     // Set up
-    String input = "%n";
+    String input = "\n";
     input += "As Ac";
     // Exercise
     GameState sut = GameStateFactory.createGameStateFromString(input);
@@ -167,7 +167,7 @@ public class GameStateFactoryTest {
   public void testValidInput_minPockets() throws PokerFormatException {
     // Setup
     // Create a game state with 1 pocket
-    String input = String.format("%s%n", threeCardBoardInput);
+    String input = String.format("%s\n", threeCardBoardInput);
     input += "As Ac";
     // Exercise
     GameState sut = GameStateFactory.createGameStateFromString(input);
@@ -193,7 +193,7 @@ public class GameStateFactoryTest {
     // Setup
     // Create a game state with 10 pockets
     StringBuilder builder = new StringBuilder();
-    builder.append(String.format("%s%n", threeCardBoardInput));
+    builder.append(String.format("%s\n", threeCardBoardInput));
     Pocket[] expectedPockets = new Pocket[GameState.MAX_PLAYERS];
     for (int i = 0; i < GameState.MAX_PLAYERS; ++i) {
       Card card1 = cardFromNumber(i * 2);
@@ -201,7 +201,7 @@ public class GameStateFactoryTest {
       expectedPockets[i] = new Pocket(card1, card2);
       String cardInput1 = CardFactory.createStringFromCard(card1);
       String cardInput2 = CardFactory.createStringFromCard(card2);
-      builder.append(String.format("%s %s%n", cardInput1, cardInput2));
+      builder.append(String.format("%s %s\n", cardInput1, cardInput2));
     }
     String input = builder.toString();
     // Exercise
