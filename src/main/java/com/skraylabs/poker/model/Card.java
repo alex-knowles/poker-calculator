@@ -3,7 +3,7 @@ package com.skraylabs.poker.model;
 /**
  * A playing card.
  */
-class Card {
+class Card implements Comparable<Card> {
   /**
    * Playing card rank (A, K, Q, J, 10-2).
    */
@@ -50,6 +50,12 @@ class Card {
       }
     }
     return result;
+  }
+
+  @Override
+  public int compareTo(Card other) {
+    // TODO Auto-generated method stub
+    return 0;
   }
 
   /**
