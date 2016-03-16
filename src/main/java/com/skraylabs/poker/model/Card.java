@@ -52,6 +52,11 @@ class Card {
     return result;
   }
 
+  @Override
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   /**
    * Accessor: Playing card rank (A, K, Q, J, 10-2).
    * @return the rank

@@ -116,4 +116,15 @@ public class CardTest {
     assertThat(equals, is(true));
   }
 
+  @Test
+  public void testHashCode_equalsEquals() {
+    // Set up
+    Card equivalentCard = new Card(fixedRank, fixedSuit);
+    assertThat(fixedCard, equalTo(equivalentCard)); // guard assertion
+    // Exercise
+    int hashCode1 = fixedCard.hashCode();
+    int hashCode2 = equivalentCard.hashCode();
+    // Verify
+    assertThat(hashCode1, equalTo(hashCode2));
+  }
 }
