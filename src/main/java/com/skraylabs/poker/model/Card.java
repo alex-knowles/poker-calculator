@@ -54,8 +54,30 @@ class Card implements Comparable<Card> {
 
   @Override
   public int compareTo(Card other) {
-    // TODO Auto-generated method stub
-    return 0;
+    if (other == null) {
+      throw new NullPointerException("Argument must be non-null.");
+    }
+    // Check rank
+    int result = 0;
+    int myRank = this.rank.aceHighValue();
+    int otherRank = other.rank.aceHighValue(); 
+    if (myRank > otherRank) {
+      result = 1;
+    } else if (myRank < otherRank) {
+      result = -1;
+    } else if (myRank == otherRank) {
+      // Check suit
+      int mySuit = evaluateSuit(this.suit);
+      int otherSuit = evaluateSuit(other.suit);
+      if (mySuit == otherSuit) {
+        result = 0;
+      } else if (mySuit > otherSuit) {
+        result = 1;
+      } else if (mySuit < otherSuit) {
+        result = -1;
+      }
+    }
+    return result;
   }
 
   /**
