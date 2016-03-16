@@ -59,6 +59,34 @@ class Card implements Comparable<Card> {
   }
 
   /**
+   * Helper method to place Suits in descending order: spades, hearts, diamonds, clubs.
+   *
+   * @param suit to evaluate
+   * @return 4 for spades, 3 for hearts, 2 diamonds, 1 for clubs
+   */
+  protected static int evaluateSuit(Suit suit) {
+    int result = -1;
+    switch (suit) {
+      case Spades:
+        result = 4;
+        break;
+      case Hearts:
+        result = 3;
+        break;
+      case Diamonds:
+        result = 2;
+        break;
+      case Clubs:
+        result = 1;
+        break;
+      default:
+        // This shouldn't happen
+        throw new RuntimeException("Logic error.");
+    }
+    return result;
+  }
+
+  /**
    * Accessor: Playing card rank (A, K, Q, J, 10-2).
    * @return the rank
    */
