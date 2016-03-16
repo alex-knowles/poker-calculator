@@ -54,7 +54,8 @@ class Card {
 
   @Override
   public int hashCode() {
-    return super.hashCode();
+    String hashString = CardFactory.createStringFromCard(this);
+    return hashString.hashCode();
   }
 
   /**
