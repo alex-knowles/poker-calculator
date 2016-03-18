@@ -216,6 +216,24 @@ public class GameStateFactoryTest {
     }
   }
 
+  @Test
+  public void testValidInput_emptyPocket() throws PokerFormatException {
+    // Setup
+    Card card0 = cardFromNumber(0);
+    Card card1 = cardFromNumber(1);
+    String input = this.threeCardBoardInput + "\n";
+    input += "\n";
+    input += String.format("%s %s", CardFactory.createStringFromCard(card0),
+        CardFactory.createStringFromCard(card1));
+    // Exercise
+    GameState sut = GameStateFactory.createGameStateFromString(input);
+    // Verify
+    Pocket expectedPocket1 = new Pocket(card0, card1);
+    Pocket[] pockets = sut.getPockets();
+    assertThat(pockets[0], is(nullValue()));
+    assertThat(pockets[1], is(expectedPocket1));
+  }
+
   /**
    * Test helper that returns a card based on a number in the range [0, 51].
    *
