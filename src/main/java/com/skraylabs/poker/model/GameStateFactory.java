@@ -6,6 +6,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -84,6 +88,14 @@ public class GameStateFactory {
     if (playerIndex == 0) {
       throw new GameStateFormatException(GameStateFormatException.MSG_MIN_POCKET_NUM);
     }
+    // Check for duplicates
+    ArrayList<Card> duplicateCards = findDuplicateCards(result);
+    if (duplicateCards.size() > 0) {
+      String duplicateCardString = CardFactory.createStringFromCard(duplicateCards.get(0));
+      String message =
+          String.format(GameStateFormatException.MSG_DUPLICATE_CARD, duplicateCardString);
+      throw new GameStateFormatException(message);
+    }
     return result;
   }
 
@@ -150,6 +162,92 @@ public class GameStateFactory {
         break;
       default:
         throw new PocketFormatException(input);
+    }
+    return result;
+  }
+
+  /**
+   * Helper method to scan a GameState for multiple instances of a Card.
+   *
+   * @param gameState to scan.
+   * @return a list of duplicate Cards. Results are kept in the order they were discovered. If Card
+   *         appears more than twice in the game state, it will appear multiple times in the result.
+   *         For example, if the Ace of Spades appears 4 times, it will be included 3 times in the
+   *         results.
+   */
+  static ArrayList<Card> findDuplicateCards(GameState gameState) {
+    Collection<Card> cards = collectCards(gameState.getBoard());
+    List<Pocket> pockets = Arrays.asList(gameState.getPockets());
+    for (Pocket pocket : pockets) {
+      cards.addAll(collectCards(pocket));
+    }
+    HashSet<Card> cardSet = new HashSet<Card>();
+    ArrayList<Card> result = new ArrayList<Card>();
+    for (Card card : cards) {
+      boolean firstTimeAdded = cardSet.add(card);
+      if (!firstTimeAdded) {
+        // Duplicate found!
+        result.add(card);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Helper method to collect all cards from a given {@link Board}.
+   *
+   * @param board from which to collect
+   * @return collection of cards found in {@code board}
+   */
+  static Collection<Card> collectCards(Board board) {
+    ArrayList<Card> result = new ArrayList<Card>();
+    if (board == null) {
+      return result;
+    }
+    for (int i = 0; i < 5; ++i) {
+      Card card;
+      switch (i) {
+        case 0:
+          card = board.flopCard1;
+          break;
+        case 1:
+          card = board.flopCard2;
+          break;
+        case 2:
+          card = board.flopCard3;
+          break;
+        case 3:
+          card = board.turnCard;
+          break;
+        case 4:
+          card = board.riverCard;
+          break;
+        default:
+          throw new RuntimeException("Logic error.");
+      }
+      if (card != null) {
+        result.add(card);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Helper method to collect cards from a given {@link Pocket}.
+   *
+   * @param pocket from which to collect
+   * @return collection of cards from {@code pocket}
+   */
+  static Collection<Card> collectCards(Pocket pocket) {
+    ArrayList<Card> result = new ArrayList<Card>();
+    if (pocket == null) {
+      return result;
+    }
+    if (pocket.card1 != null) {
+      result.add(pocket.card1);
+    }
+    if (pocket.card2 != null) {
+      result.add(pocket.card2);
     }
     return result;
   }
