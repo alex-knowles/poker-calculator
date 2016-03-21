@@ -11,6 +11,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
+
 public class GameStateFactoryTest {
 
   @Rule
@@ -232,6 +234,33 @@ public class GameStateFactoryTest {
     Pocket[] pockets = sut.getPockets();
     assertThat(pockets[0], is(nullValue()));
     assertThat(pockets[1], is(expectedPocket1));
+  }
+
+  @Test
+  public void testFindDuplicateCards_multiplicity() {
+    // Setup
+    // Place 4 copies of the same card in the Game
+    Card duplicateCard = cardFromNumber(0);
+    GameState gameState = new GameState();
+    Board board = new Board(duplicateCard, cardFromNumber(1), duplicateCard);
+    gameState.setBoard(board);
+    Pocket pocket0 = new Pocket(cardFromNumber(2), duplicateCard);
+    Pocket pocket1 = new Pocket(cardFromNumber(3), cardFromNumber(4));
+    Pocket pocket2 = new Pocket(duplicateCard, cardFromNumber(5));
+    gameState.setPocketForPlayer(0, pocket0);
+    gameState.setPocketForPlayer(1, pocket1);
+    gameState.setPocketForPlayer(2, pocket2);
+    // Exercise
+    ArrayList<Card> duplicates = GameStateFactory.findDuplicateCards(gameState);
+    // Verify
+    // For n duplicates, there should be n-1 copies in the return value
+    int duplicateCount = 0;
+    for (Card card : duplicates) {
+      if (card.equals(duplicateCard)) {
+        ++duplicateCount;
+      }
+    }
+    assertThat(duplicateCount, is(3));
   }
 
   /**
