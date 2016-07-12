@@ -263,6 +263,41 @@ public class GameStateFactoryTest {
     assertThat(duplicateCount, is(3));
   }
 
+  @Test
+  public void testFindDuplicateCards_order() {
+    // Setup
+    // Place duplicate cards in an expected order
+    Card duplicateCard0 = cardFromNumber(0);
+    Card duplicateCard3 = cardFromNumber(3);
+    Card duplicateCard4 = cardFromNumber(4);
+    Card duplicateCard6 = cardFromNumber(6);
+    Card duplicateCard9 = cardFromNumber(9);
+    Board board = new Board(duplicateCard0, duplicateCard9, duplicateCard0);
+    Pocket pocket0 = new Pocket(duplicateCard4, cardFromNumber(1));
+    Pocket pocket1 = new Pocket(cardFromNumber(2), duplicateCard3);
+    Pocket pocket2 = new Pocket(duplicateCard3, duplicateCard4);
+    Pocket pocket3 = new Pocket(cardFromNumber(5), duplicateCard6);
+    Pocket pocket4 = new Pocket(cardFromNumber(7), duplicateCard6);
+    Pocket pocket5 = new Pocket(duplicateCard9, cardFromNumber(8));
+    GameState gameState = new GameState();
+    gameState.setBoard(board);
+    gameState.setPocketForPlayer(0, pocket0);
+    gameState.setPocketForPlayer(1, pocket1);
+    gameState.setPocketForPlayer(2, pocket2);
+    gameState.setPocketForPlayer(3, pocket3);
+    gameState.setPocketForPlayer(4, pocket4);
+    gameState.setPocketForPlayer(5, pocket5);
+    // Exercise
+    ArrayList<Card> duplicates = GameStateFactory.findDuplicateCards(gameState);
+    // Verify
+    assertThat(duplicates.size(), is(5));
+    assertThat(duplicates.get(0), equalTo(duplicateCard0));
+    assertThat(duplicates.get(1), equalTo(duplicateCard3));
+    assertThat(duplicates.get(2), equalTo(duplicateCard4));
+    assertThat(duplicates.get(3), equalTo(duplicateCard6));
+    assertThat(duplicates.get(4), equalTo(duplicateCard9));
+  }
+
   /**
    * Test helper that returns a card based on a number in the range [0, 51].
    *
