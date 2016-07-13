@@ -52,6 +52,12 @@ class Card {
     return result;
   }
 
+  @Override
+  public int hashCode() {
+    String hashString = CardFactory.createStringFromCard(this);
+    return hashString.hashCode();
+  }
+
   /**
    * Accessor: Playing card rank (A, K, Q, J, 10-2).
    * @return the rank

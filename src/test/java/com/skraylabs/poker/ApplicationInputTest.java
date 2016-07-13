@@ -81,7 +81,7 @@ public class ApplicationInputTest implements ApplicationTestInterface {
   @Test
   public void testAbortMalformedInput() {
     // Set up
-    final String input = "5h 7d Tr%n";
+    final String input = "5h 7d Tr\n";
     app.inputString = input;
     // Exercise
     app.execute("foo");
@@ -92,8 +92,8 @@ public class ApplicationInputTest implements ApplicationTestInterface {
   @Test
   public void testValidInput() {
     // Set up
-    final String input = "5h 7d Ts Kc 2d%n"
-        + "5d 5s%n";
+    final String input = "5h 7d Ts Kc 2d\n"
+        + "5d 5s\n";
     app.inputString = input;
     // Exercise
     app.execute("foo.txt");
