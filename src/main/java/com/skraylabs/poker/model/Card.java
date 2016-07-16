@@ -3,7 +3,7 @@ package com.skraylabs.poker.model;
 /**
  * A playing card.
  */
-class Card {
+public class Card {
   /**
    * Playing card rank (A, K, Q, J, 10-2).
    */
