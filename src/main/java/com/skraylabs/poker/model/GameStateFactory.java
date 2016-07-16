@@ -6,10 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -176,11 +174,7 @@ public class GameStateFactory {
    *         results.
    */
   static ArrayList<Card> findDuplicateCards(GameState gameState) {
-    Collection<Card> cards = CardUtils.collectCards(gameState.getBoard());
-    List<Pocket> pockets = Arrays.asList(gameState.getPockets());
-    for (Pocket pocket : pockets) {
-      cards.addAll(CardUtils.collectCards(pocket));
-    }
+    Collection<Card> cards = CardUtils.collectCards(gameState);
     HashSet<Card> cardSet = new HashSet<Card>();
     ArrayList<Card> result = new ArrayList<Card>();
     for (Card card : cards) {

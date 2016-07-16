@@ -1,9 +1,27 @@
 package com.skraylabs.poker.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class CardUtils {
+
+  /**
+   * Helper method to collect cards from a given {@link GameState}.
+   *
+   * @param state from which to collect
+   * @return collection of cards from {@code state}
+   */
+  public static Collection<Card> collectCards(GameState state) {
+    Collection<Card> result = CardUtils.collectCards(state.getBoard());
+    List<Pocket> pockets = Arrays.asList(state.getPockets());
+    for (Pocket pocket : pockets) {
+      result.addAll(CardUtils.collectCards(pocket));
+    }
+    return result;
+  }
+
 
   /**
    * Helper method to collect all cards from a given {@link Board}.
