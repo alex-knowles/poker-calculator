@@ -15,7 +15,7 @@ import org.junit.Test;
 public class OddsCalculatorTest {
 
   @Test
-  public void completeBoardYieldsZeroProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void onTheRiverYieldsZeroProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
 
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
@@ -27,7 +27,7 @@ public class OddsCalculatorTest {
   }
 
   @Test
-  public void completeBoardYieldsFullProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void onTheRiverYieldsFullProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Jd\n" + "2d 7c");
     OddsCalculator calculator = new OddsCalculator(state);
