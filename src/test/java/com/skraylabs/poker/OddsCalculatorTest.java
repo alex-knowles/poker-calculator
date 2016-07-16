@@ -26,4 +26,14 @@ public class OddsCalculatorTest {
     assertThat(probability, equalTo(0.0));
   }
 
+  @Test
+  public void completeBoardYieldsFullProbabilityOfTwoOfAKind() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
+    GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Jd\n" + "2d 7c");
+    OddsCalculator calculator = new OddsCalculator(state);
+
+    double probability = calculator.twoOfAKindForPlayer(0);
+
+    assertThat(probability, equalTo(1.0));
+  }
 }
