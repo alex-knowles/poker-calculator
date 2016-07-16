@@ -1,5 +1,6 @@
 package com.skraylabs.poker;
 
+import com.skraylabs.poker.model.Board;
 import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.CardUtils;
 import com.skraylabs.poker.model.GameState;
@@ -32,7 +33,8 @@ class OddsCalculator {
     double result = 0.0;
     Pocket[] pockets = gameState.getPockets();
     Pocket pocket = pockets[playerIndex];
-    Collection<Card> cards = CardUtils.collectCards(gameState.getBoard());
+    Board board = gameState.getBoard();
+    Collection<Card> cards = CardUtils.collectCards(board);
     cards.addAll(CardUtils.collectCards(pocket));
     Map<Rank, Long> countByRank =
         cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
@@ -41,6 +43,12 @@ class OddsCalculator {
         result = 1.0;
         break;
       }
+    }
+    if (result < 1.0) {
+      int numberOfCardsToBeDealt = 5 - board.size();
+      double numberOfOuts = numberOfCardsToBeDealt * cards.size() * 3;
+      double numberOfRemainingCards = 52 - cards.size();
+      result = numberOfOuts / numberOfRemainingCards;
     }
     return result;
   }

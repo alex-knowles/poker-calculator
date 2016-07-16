@@ -36,4 +36,15 @@ public class OddsCalculatorTest {
 
     assertThat(probability, equalTo(1.0));
   }
+
+  @Test
+  public void onTheTurnYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
+    GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
+    OddsCalculator calculator = new OddsCalculator(state);
+
+    double probability = calculator.twoOfAKindForPlayer(0);
+
+    assertThat(probability, equalTo(18.0 / 46.0));
+  }
 }
