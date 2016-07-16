@@ -179,4 +179,13 @@ public class Board {
     }
     return result;
   }
+
+  /**
+   * Returns the number of Cards in this Board.
+   *
+   * @return number of Cards in this Board.
+   */
+  public int size() {
+    return CardUtils.collectCards(this).size();
+  }
 } // end of class Board
