@@ -176,10 +176,10 @@ public class GameStateFactory {
    *         results.
    */
   static ArrayList<Card> findDuplicateCards(GameState gameState) {
-    Collection<Card> cards = collectCards(gameState.getBoard());
+    Collection<Card> cards = CardUtils.collectCards(gameState.getBoard());
     List<Pocket> pockets = Arrays.asList(gameState.getPockets());
     for (Pocket pocket : pockets) {
-      cards.addAll(collectCards(pocket));
+      cards.addAll(CardUtils.collectCards(pocket));
     }
     HashSet<Card> cardSet = new HashSet<Card>();
     ArrayList<Card> result = new ArrayList<Card>();
@@ -189,65 +189,6 @@ public class GameStateFactory {
         // Duplicate found!
         result.add(card);
       }
-    }
-    return result;
-  }
-
-  /**
-   * Helper method to collect all cards from a given {@link Board}.
-   *
-   * @param board from which to collect
-   * @return collection of cards found in {@code board}
-   */
-  static Collection<Card> collectCards(Board board) {
-    ArrayList<Card> result = new ArrayList<Card>();
-    if (board == null) {
-      return result;
-    }
-    for (int i = 0; i < 5; ++i) {
-      Card card;
-      switch (i) {
-        case 0:
-          card = board.flopCard1;
-          break;
-        case 1:
-          card = board.flopCard2;
-          break;
-        case 2:
-          card = board.flopCard3;
-          break;
-        case 3:
-          card = board.turnCard;
-          break;
-        case 4:
-          card = board.riverCard;
-          break;
-        default:
-          throw new RuntimeException("Logic error.");
-      }
-      if (card != null) {
-        result.add(card);
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Helper method to collect cards from a given {@link Pocket}.
-   *
-   * @param pocket from which to collect
-   * @return collection of cards from {@code pocket}
-   */
-  static Collection<Card> collectCards(Pocket pocket) {
-    ArrayList<Card> result = new ArrayList<Card>();
-    if (pocket == null) {
-      return result;
-    }
-    if (pocket.card1 != null) {
-      result.add(pocket.card1);
-    }
-    if (pocket.card2 != null) {
-      result.add(pocket.card2);
     }
     return result;
   }
