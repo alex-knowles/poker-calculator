@@ -82,4 +82,80 @@ public class CardUtils {
     return result;
   }
 
+
+  /**
+   * Helper that returns a card based on a number in the range [0, 51].
+   *
+   * @param number integer in range [0, 51]
+   * @return a Card
+   */
+  public static Card cardFromNumber(int number) {
+    if (number < 0 || number > 51) {
+      throw new IllegalArgumentException("Parameter \"number\" must be in range [0, 51]");
+    }
+    Card result = new Card(null, null);
+    // Assign suit
+    switch (number / 13) {
+      case 0:
+        result.suit = Suit.Spades;
+        break;
+      case 1:
+        result.suit = Suit.Hearts;
+        break;
+      case 2:
+        result.suit = Suit.Diamonds;
+        break;
+      case 3:
+        result.suit = Suit.Clubs;
+        break;
+      default:
+        throw new RuntimeException("Logic error!");
+    }
+    // Assign rank
+    switch (number % 13) {
+      case 0:
+        result.rank = Rank.Ace;
+        break;
+      case 1:
+        result.rank = Rank.King;
+        break;
+      case 2:
+        result.rank = Rank.Queen;
+        break;
+      case 3:
+        result.rank = Rank.Jack;
+        break;
+      case 4:
+        result.rank = Rank.Ten;
+        break;
+      case 5:
+        result.rank = Rank.Nine;
+        break;
+      case 6:
+        result.rank = Rank.Eight;
+        break;
+      case 7:
+        result.rank = Rank.Seven;
+        break;
+      case 8:
+        result.rank = Rank.Six;
+        break;
+      case 9:
+        result.rank = Rank.Five;
+        break;
+      case 10:
+        result.rank = Rank.Four;
+        break;
+      case 11:
+        result.rank = Rank.Three;
+        break;
+      case 12:
+        result.rank = Rank.Two;
+        break;
+      default:
+        throw new RuntimeException("Logic error!");
+    }
+    return result;
+  }
+
 }
