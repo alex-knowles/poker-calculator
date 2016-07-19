@@ -13,7 +13,7 @@ public class CardUtilsTest {
   public ExpectedException exception = ExpectedException.none();
 
   @Test
-  public void testCardFromNumber_tooLow() {
+  public void tooLowNumberCausesException() {
     // Verify
     exception.expect(IllegalArgumentException.class);
     // Exercise
@@ -21,7 +21,7 @@ public class CardUtilsTest {
   }
 
   @Test
-  public void testCardFromNumber_tooHigh() {
+  public void tooHighNumberCausesException() {
     // Verify
     exception.expect(IllegalArgumentException.class);
     // Exercise
@@ -29,7 +29,7 @@ public class CardUtilsTest {
   }
 
   @Test
-  public void testCardFromNumber_noDuplicates() {
+  public void fullRangeOfNumbersYieldsNoCardDuplicates() {
     // Exercise
     Card[] cards = new Card[52];
     for (int i = 0; i < 52; ++i) {
