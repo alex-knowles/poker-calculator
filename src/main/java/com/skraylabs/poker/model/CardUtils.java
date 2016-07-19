@@ -158,4 +158,74 @@ public class CardUtils {
     return result;
   }
 
+  /**
+   * Helper method that does the inverse of {@link #cardFromNumber(int)}.
+   *
+   * @param card to convert to a number
+   * @return number corresponding to card; integer in range [0, 51]
+   */
+  public static int numberFromCard(Card card) {
+    int number = 0;
+    switch (card.suit) {
+      case Spades:
+        number = 13 * 0;
+        break;
+      case Hearts:
+        number = 13 * 1;
+        break;
+      case Diamonds:
+        number = 13 * 2;
+        break;
+      case Clubs:
+        number = 13 * 3;
+        break;
+      default:
+        throw new RuntimeException("Logic error!");
+    }
+    switch (card.rank) {
+      case Ace:
+        number += 0;
+        break;
+      case King:
+        number += 1;
+        break;
+      case Queen:
+        number += 2;
+        break;
+      case Jack:
+        number += 3;
+        break;
+      case Ten:
+        number += 4;
+        break;
+      case Nine:
+        number += 5;
+        break;
+      case Eight:
+        number += 6;
+        break;
+      case Seven:
+        number += 7;
+        break;
+      case Six:
+        number += 8;
+        break;
+      case Five:
+        number += 9;
+        break;
+      case Four:
+        number += 10;
+        break;
+      case Three:
+        number += 11;
+        break;
+      case Two:
+        number += 12;
+        break;
+      default:
+        throw new RuntimeException("Logic error!");
+    }
+    return number;
+  }
+
 }

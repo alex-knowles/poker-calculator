@@ -49,4 +49,16 @@ public class CardUtilsTest {
       assertThat(numCardsLikeMe, is(1));
     }
   }
+
+  @Test
+  public void cardGeneratedByNumberYieldsTheSameNumber() {
+    for (int i = 0; i < 52; ++i) {
+      int expectedNumber = i;
+      Card card = CardUtils.cardFromNumber(i);
+
+      int number = CardUtils.numberFromCard(card);
+
+      assertThat(number, is(expectedNumber));
+    }
+  }
 }
