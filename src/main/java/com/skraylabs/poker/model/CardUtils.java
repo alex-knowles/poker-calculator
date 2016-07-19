@@ -166,7 +166,9 @@ public class CardUtils {
    */
   public static int numberFromCard(Card card) {
     if (card == null) {
-      throw new IllegalArgumentException("Parameter \"card\" must be non-null and initialized!");
+      throw new IllegalArgumentException("Parameter \"card\" must be non-null!");
+    } else if (card.rank == null || card.suit == null) {
+      throw new IllegalArgumentException("Parameter \"card\" must have non-null rank and suit!");
     }
     int number = 0;
     switch (card.suit) {

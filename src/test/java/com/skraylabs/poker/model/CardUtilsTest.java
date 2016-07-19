@@ -55,6 +55,13 @@ public class CardUtilsTest {
   }
 
   @Test
+  public void emptyCardCausesException() {
+    exception.expect(IllegalArgumentException.class);
+
+    CardUtils.numberFromCard(new Card(null, null));
+  }
+
+  @Test
   public void cardGeneratedByNumberYieldsTheSameNumber() {
     for (int i = 0; i < 52; ++i) {
       int expectedNumber = i;
