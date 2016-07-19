@@ -4,13 +4,19 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.skraylabs.poker.model.BoardFormatException;
+import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.CardFormatException;
+import com.skraylabs.poker.model.CardUtils;
 import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.PocketFormatException;
 
 import org.junit.Test;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class OddsCalculatorTest {
 
@@ -57,5 +63,29 @@ public class OddsCalculatorTest {
     double probability = calculator.twoOfAKindForPlayer(0);
 
     assertThat(probability, equalTo(633.0 / 1081.0));
+  }
+
+  @Test
+  public void tenChooseTwoYieldsFortyFiveCombinations() {
+    Card[] cards = new Card[15];
+    for (int i = 0; i < cards.length; ++i) {
+      cards[i] = CardUtils.cardFromNumber(i);
+    }
+    Collection<Card> boardWithThreeCards = new ArrayList<Card>();
+    for (int i = 0; i < 3; ++i) {
+      boardWithThreeCards.add(cards[i]);
+    }
+    Collection<Card> pocket = new ArrayList<Card>();
+    pocket.add(cards[3]);
+    pocket.add(cards[4]);
+    Collection<Card> deckWithTenCards = new ArrayList<Card>();
+    for (int i = 5; i < cards.length; ++i) {
+      deckWithTenCards.add(cards[i]);
+    }
+
+    Point count =
+        OddsCalculator.countTwoOfAKindOutcomes(boardWithThreeCards, pocket, deckWithTenCards);
+
+    assertThat(count.y, equalTo(45));
   }
 }

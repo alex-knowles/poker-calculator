@@ -7,6 +7,7 @@ import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.Pocket;
 import com.skraylabs.poker.model.Rank;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -31,27 +32,59 @@ class OddsCalculator {
    * @return the probability of getting a Two Of A Kind.
    */
   public double twoOfAKindForPlayer(int playerIndex) {
-    double result = 0.0;
-    Pocket[] pockets = gameState.getPockets();
-    Pocket pocket = pockets[playerIndex];
-    Board board = gameState.getBoard();
-    Collection<Card> cards = CardUtils.collectCards(board);
-    cards.addAll(CardUtils.collectCards(pocket));
-    Map<Rank, Long> countByRank =
-        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-    for (Long count : countByRank.values()) {
-      if (count >= 2) {
-        result = 1.0;
-        break;
+    Collection<Card> dealtCards = CardUtils.collectCards(gameState);
+    // Make a deck of undealt cards
+    ArrayList<Card> deck = new ArrayList<Card>();
+    for (int i = 0; i < 52; i++) {
+      Card card = CardUtils.cardFromNumber(i);
+      if (!dealtCards.contains(card)) {
+        deck.add(card);
       }
     }
-    if (result < 1.0) {
-      int numberOfCardsToBeDealt = 5 - board.size();
-      double numberOfOuts = numberOfCardsToBeDealt * cards.size() * 3;
-      double numberOfRemainingCards = 52 - cards.size();
-      result = numberOfOuts / numberOfRemainingCards;
+    // Iterate through every possible GameState branch
+    Board board = gameState.getBoard();
+    Pocket pocket = gameState.getPockets()[playerIndex];
+    Point count = countTwoOfAKindOutcomes(CardUtils.collectCards(board),
+        CardUtils.collectCards(pocket), deck);
+    return ((double) count.x) / count.y;
+  }
+
+  /**
+   * Helper method that evaluates all the remaining combinations for a given set of board cards and
+   * counts how many of them contain at least one Two of a Kind.
+   *
+   * @param board cards collected from a {@link Board}
+   * @param pocket cards collected from a {@link Pocket}
+   * @param undealtCards collection of cards that have yet to be dealt
+   * @return a pair of numbers (x, y) where x is the number of Two of a Kind outcomes, and y is the
+   *         total number of outcomes
+   */
+  static Point countTwoOfAKindOutcomes(Collection<Card> board, Collection<Card> pocket,
+      Collection<Card> undealtCards) {
+    int winOutcomes = 0;
+    int totalOutcomes = 0;
+    if (board.size() == 5) {
+      // Board is complete
+      if (hasTwoOfAKind(board, pocket)) {
+        winOutcomes++;
+      }
+      totalOutcomes++;
+    } else {
+      // Board is incomplete
+      // Recurse on all possible cards that could be dealt next
+      Collection<Card> dealtCards = new ArrayList<Card>();
+      for (Card card : undealtCards) {
+        Collection<Card> nextBoard = new ArrayList<Card>(board);
+        nextBoard.add(card);
+        dealtCards.add(card);
+        Collection<Card> nextUndealtCards = new ArrayList<Card>(undealtCards);
+        nextUndealtCards.removeAll(dealtCards);
+        Point nextCount = countTwoOfAKindOutcomes(nextBoard, pocket, nextUndealtCards);
+        winOutcomes += nextCount.x;
+        totalOutcomes += nextCount.y;
+      }
     }
-    return result;
+    return new Point(winOutcomes, totalOutcomes);
   }
 
   /**

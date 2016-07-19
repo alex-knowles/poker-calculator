@@ -20,7 +20,7 @@ public class Card {
    * @param rank playing card rank
    * @param suit playing card suit
    */
-  Card(Rank rank, Suit suit) {
+  public Card(Rank rank, Suit suit) {
     this.rank = rank;
     this.suit = suit;
   }
