@@ -14,28 +14,25 @@ public class CardUtilsTest {
 
   @Test
   public void tooLowNumberCausesException() {
-    // Verify
     exception.expect(IllegalArgumentException.class);
-    // Exercise
+
     CardUtils.cardFromNumber(-1);
   }
 
   @Test
   public void tooHighNumberCausesException() {
-    // Verify
     exception.expect(IllegalArgumentException.class);
-    // Exercise
+
     CardUtils.cardFromNumber(52);
   }
 
   @Test
   public void fullRangeOfNumbersYieldsNoCardDuplicates() {
-    // Exercise
     Card[] cards = new Card[52];
     for (int i = 0; i < 52; ++i) {
       cards[i] = CardUtils.cardFromNumber(i);
     }
-    // Verify
+
     for (int i = 0; i < 52; ++i) {
       Card card = cards[i];
       assertThat(card.rank, notNullValue());
