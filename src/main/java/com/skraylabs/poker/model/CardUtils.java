@@ -165,6 +165,9 @@ public class CardUtils {
    * @return number corresponding to card; integer in range [0, 51]
    */
   public static int numberFromCard(Card card) {
+    if (card == null) {
+      throw new IllegalArgumentException("Parameter \"card\" must be non-null and initialized!");
+    }
     int number = 0;
     switch (card.suit) {
       case Spades:
