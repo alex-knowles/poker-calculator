@@ -113,4 +113,17 @@ class ProbabilityCalculator {
     }
     return result;
   }
+
+  /**
+   * Helper method that determines if a Full House exists on a given combination of board and pocket
+   * cards.
+   *
+   * @param board cards collected from a {@link Board}
+   * @param pocket cards collected from a {@link Pocket}
+   * @return {@code true} if there is a Full House; {@code false} otherwise
+   */
+  static boolean hasFullHouse(Collection<Card> board, Collection<Card> pocket) {
+    boolean result = false;
+    return result;
+  }
 }

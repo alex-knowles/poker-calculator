@@ -140,4 +140,16 @@ public class ProbabilityCalculatorTest {
 
     assertThat(count.y, equalTo(45));
   }
+
+  @Test
+  public void handWithNoFullHouseReturnsFalse() throws CardFormatException, BoardFormatException,
+      PocketFormatException, GameStateFormatException {
+    GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "2d 7c\n");
+    Collection<Card> board = CardUtils.collectCards(state.getBoard());
+    Collection<Card> pocket = CardUtils.collectCards(state.getPockets()[0]);
+
+    boolean result = ProbabilityCalculator.hasFullHouse(board, pocket);
+
+    assertThat(result, equalTo(false));
+  }
 }
