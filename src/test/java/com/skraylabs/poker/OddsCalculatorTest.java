@@ -36,6 +36,18 @@ public class OddsCalculatorTest {
   }
 
   @Test
+  public void invalidPlayerIndexYieldsCommunityProbabilityForTwoOfAKind()
+      throws CardFormatException, BoardFormatException, PocketFormatException,
+      GameStateFormatException {
+    GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
+    OddsCalculator calculator = new OddsCalculator(state);
+
+    double probability = calculator.twoOfAKindForPlayer(5);
+
+    assertThat(probability, equalTo(12.0 / 46.0));
+  }
+
+  @Test
   public void onTheRiverYieldsZeroProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
 
