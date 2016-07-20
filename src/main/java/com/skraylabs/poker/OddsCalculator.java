@@ -32,6 +32,10 @@ class OddsCalculator {
    * @return the probability of getting a Two Of A Kind.
    */
   public double twoOfAKindForPlayer(int playerIndex) {
+    if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
+      throw new IllegalArgumentException(String
+          .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
+    }
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
     // Make a deck of undealt cards
     ArrayList<Card> deck = new ArrayList<Card>();

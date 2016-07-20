@@ -13,13 +13,27 @@ import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.PocketFormatException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class OddsCalculatorTest {
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
+
+  @Test
+  public void outOfRangePlayerIndexCausesException() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
+    exception.expect(IllegalArgumentException.class);
+    GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
+    OddsCalculator calculator = new OddsCalculator(state);
+
+    calculator.twoOfAKindForPlayer(GameState.MAX_PLAYERS);
+  }
 
   @Test
   public void onTheRiverYieldsZeroProbabilityOfTwoOfAKind() throws CardFormatException,
