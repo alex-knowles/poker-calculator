@@ -5,7 +5,7 @@ package com.skraylabs.poker.model;
  */
 public class GameState {
 
-  static final int MAX_PLAYERS = 10;
+  public static final int MAX_PLAYERS = 10;
 
   /**
    * The "board". Community cards.

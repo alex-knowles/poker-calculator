@@ -3,7 +3,7 @@ package com.skraylabs.poker.model;
 /**
  * A playing card.
  */
-class Card {
+public class Card {
   /**
    * Playing card rank (A, K, Q, J, 10-2).
    */
@@ -20,7 +20,7 @@ class Card {
    * @param rank playing card rank
    * @param suit playing card suit
    */
-  Card(Rank rank, Suit suit) {
+  public Card(Rank rank, Suit suit) {
     this.rank = rank;
     this.suit = suit;
   }
