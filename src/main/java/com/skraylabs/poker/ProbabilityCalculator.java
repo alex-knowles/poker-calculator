@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
  * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome odds for each
  * Player.
  */
-class OddsCalculator {
+class ProbabilityCalculator {
 
   private GameState gameState;
 
-  public OddsCalculator(GameState gameState) {
+  public ProbabilityCalculator(GameState gameState) {
     this.gameState = gameState;
   }
 

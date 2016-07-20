@@ -21,7 +21,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class OddsCalculatorTest {
+public class ProbabilityCalculatorTest {
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
@@ -30,7 +30,7 @@ public class OddsCalculatorTest {
       BoardFormatException, PocketFormatException, GameStateFormatException {
     exception.expect(IllegalArgumentException.class);
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     calculator.twoOfAKindForPlayer(GameState.MAX_PLAYERS);
   }
@@ -40,7 +40,7 @@ public class OddsCalculatorTest {
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(5);
 
@@ -52,7 +52,7 @@ public class OddsCalculatorTest {
       BoardFormatException, PocketFormatException, GameStateFormatException {
 
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -63,7 +63,7 @@ public class OddsCalculatorTest {
   public void onTheRiverYieldsFullProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Jd\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -74,7 +74,7 @@ public class OddsCalculatorTest {
   public void onTheTurnYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -85,7 +85,7 @@ public class OddsCalculatorTest {
   public void onTheFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -96,7 +96,7 @@ public class OddsCalculatorTest {
   public void preFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("\n" + "2d 7c");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -110,7 +110,7 @@ public class OddsCalculatorTest {
       GameStateFormatException {
     GameState state = GameStateFactory
         .createGameStateFromString("Ah Kh Qh\n" + "2d 7c\n" + "7h 7d\n" + "Ad Kc\n" + "8c 8d");
-    OddsCalculator calculator = new OddsCalculator(state);
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -135,8 +135,8 @@ public class OddsCalculatorTest {
       deckWithTenCards.add(cards[i]);
     }
 
-    Point count =
-        OddsCalculator.countTwoOfAKindOutcomes(boardWithThreeCards, pocket, deckWithTenCards);
+    Point count = ProbabilityCalculator.countTwoOfAKindOutcomes(boardWithThreeCards, pocket,
+        deckWithTenCards);
 
     assertThat(count.y, equalTo(45));
   }
