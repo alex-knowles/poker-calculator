@@ -2,6 +2,7 @@ package com.skraylabs.poker;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import com.skraylabs.poker.model.BoardFormatException;
 import com.skraylabs.poker.model.Card;
@@ -63,6 +64,18 @@ public class OddsCalculatorTest {
     double probability = calculator.twoOfAKindForPlayer(0);
 
     assertThat(probability, equalTo(633.0 / 1081.0));
+  }
+
+  @Test
+  public void preFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
+    GameState state = GameStateFactory.createGameStateFromString("\n" + "2d 7c");
+    OddsCalculator calculator = new OddsCalculator(state);
+
+    double probability = calculator.twoOfAKindForPlayer(0);
+
+    assertTrue(probability > 0);
+    assertTrue(probability < 1.0);
   }
 
   @Test
