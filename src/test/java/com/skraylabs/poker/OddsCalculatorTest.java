@@ -105,6 +105,19 @@ public class OddsCalculatorTest {
   }
 
   @Test
+  public void withMoreThanOnePlayerPreFlopYieldsPartialProbabilityOfTwoOfAKind()
+      throws CardFormatException, BoardFormatException, PocketFormatException,
+      GameStateFormatException {
+    GameState state = GameStateFactory
+        .createGameStateFromString("Ah Kh Qh\n" + "2d 7c\n" + "7h 7d\n" + "Ad Kc\n" + "8c 8d");
+    OddsCalculator calculator = new OddsCalculator(state);
+
+    double probability = calculator.twoOfAKindForPlayer(0);
+
+    assertThat(probability, equalTo(428.0 / 820.0));
+  }
+
+  @Test
   public void tenChooseTwoYieldsFortyFiveCombinations() {
     Card[] cards = new Card[15];
     for (int i = 0; i < cards.length; ++i) {
