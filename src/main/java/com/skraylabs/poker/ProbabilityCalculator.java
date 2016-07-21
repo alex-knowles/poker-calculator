@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -48,29 +49,31 @@ class ProbabilityCalculator {
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
     Pocket pocket = gameState.getPockets()[playerIndex];
-    Point count = countTwoOfAKindOutcomes(CardUtils.collectCards(board),
+    Point count = countOutcomes(ProbabilityCalculator::hasTwoOfAKind, CardUtils.collectCards(board),
         CardUtils.collectCards(pocket), deck);
     return ((double) count.x) / count.y;
   }
 
   /**
    * Helper method that evaluates all the remaining combinations for a given set of board cards and
-   * counts how many of them contain at least one Two of a Kind.
+   * counts how many of contain a given Poker type (e.g. Two of a Kind).
    *
+   * @param evaulator tests if a Card Collection contains a specific Poker hand (e.g. Two of a
+   *        Kind).
    * @param board cards collected from a {@link Board}
    * @param pocket cards collected from a {@link Pocket}
    * @param undealtCards collection of cards that have yet to be dealt
    * @return a pair of numbers (x, y) where x is the number of Two of a Kind outcomes, and y is the
    *         total number of outcomes
    */
-  static Point countTwoOfAKindOutcomes(Collection<Card> board, Collection<Card> pocket,
-      Collection<Card> undealtCards) {
+  static Point countOutcomes(Function<Collection<Card>, Boolean> evaluator, Collection<Card> board,
+      Collection<Card> pocket, Collection<Card> undealtCards) {
     int winOutcomes = 0;
     int totalOutcomes = 0;
     if (board.size() == 5) {
       // Board is complete
       Collection<Card> cards = collectHandCards(board, pocket);
-      if (hasTwoOfAKind(cards)) {
+      if (evaluator.apply(cards)) {
         winOutcomes++;
       }
       totalOutcomes++;
@@ -84,7 +87,7 @@ class ProbabilityCalculator {
         dealtCards.add(card);
         Collection<Card> nextUndealtCards = new ArrayList<Card>(undealtCards);
         nextUndealtCards.removeAll(dealtCards);
-        Point nextCount = countTwoOfAKindOutcomes(nextBoard, pocket, nextUndealtCards);
+        Point nextCount = countOutcomes(evaluator, nextBoard, pocket, nextUndealtCards);
         winOutcomes += nextCount.x;
         totalOutcomes += nextCount.y;
       }
