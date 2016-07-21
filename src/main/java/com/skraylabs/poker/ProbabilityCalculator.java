@@ -69,7 +69,8 @@ class ProbabilityCalculator {
     int totalOutcomes = 0;
     if (board.size() == 5) {
       // Board is complete
-      if (hasTwoOfAKind(board, pocket)) {
+      Collection<Card> cards = collectHandCards(board, pocket);
+      if (hasTwoOfAKind(cards)) {
         winOutcomes++;
       }
       totalOutcomes++;
@@ -92,17 +93,28 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Helper method to gather cards that could form a player's hand -- the combination of community
+   * cards (Board) and Pocket cards.
+   *
+   * @param board Board cards
+   * @param pocket Pocket cards
+   * @return Collection of cards drawn from {@code board} and {@code pocket}
+   */
+  static Collection<Card> collectHandCards(Collection<Card> board, Collection<Card> pocket) {
+    Collection<Card> cards = new ArrayList<Card>(board);
+    cards.addAll(pocket);
+    return cards;
+  }
+
+  /**
    * Helper method that determines if a Two of a Kind exists on a given combination of board and
    * pocket cards.
    *
-   * @param board cards collected from a {@link Board}
-   * @param pocket cards collected from a {@link Pocket}
+   * @param cards combined cards from a player's Pocket and the community Board
    * @return {@code true} if there is at least one Two of a Kind; {@code false} otherwise
    */
-  static boolean hasTwoOfAKind(Collection<Card> board, Collection<Card> pocket) {
+  static boolean hasTwoOfAKind(Collection<Card> cards) {
     boolean result = false;
-    Collection<Card> cards = new ArrayList<>(board);
-    cards.addAll(pocket);
     Map<Rank, Long> countByRank =
         cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
     for (Long count : countByRank.values()) {
@@ -118,14 +130,11 @@ class ProbabilityCalculator {
    * Helper method that determines if a Three of a Kind exists on a given combination of board and
    * pocket cards.
    *
-   * @param board cards collected from a {@link Board}
-   * @param pocket cards collected from a {@link Pocket}
+   * @param cards combined cards from a player's Pocket and the community Board
    * @return {@code true} if there is a Three of a Kind; {@code false} otherwise
    */
-  static boolean hasThreeOfAKind(Collection<Card> board, Collection<Card> pocket) {
+  static boolean hasThreeOfAKind(Collection<Card> cards) {
     boolean result = false;
-    Collection<Card> cards = new ArrayList<>(board);
-    cards.addAll(pocket);
     Map<Rank, Long> countByRank =
         cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
     for (Long count : countByRank.values()) {

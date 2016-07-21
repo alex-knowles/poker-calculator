@@ -148,8 +148,9 @@ public class ProbabilityCalculatorTest {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "2d 7c");
     Collection<Card> board = CardUtils.collectCards(state.getBoard());
     Collection<Card> pocket = CardUtils.collectCards(state.getPockets()[0]);
+    Collection<Card> cards = ProbabilityCalculator.collectHandCards(board, pocket);
 
-    boolean result = ProbabilityCalculator.hasThreeOfAKind(board, pocket);
+    boolean result = ProbabilityCalculator.hasThreeOfAKind(cards);
 
     assertThat(result, is(false));
   }
@@ -160,8 +161,9 @@ public class ProbabilityCalculatorTest {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "Qd Qc");
     Collection<Card> board = CardUtils.collectCards(state.getBoard());
     Collection<Card> pocket = CardUtils.collectCards(state.getPockets()[0]);
+    Collection<Card> cards = ProbabilityCalculator.collectHandCards(board, pocket);
 
-    boolean result = ProbabilityCalculator.hasThreeOfAKind(board, pocket);
+    boolean result = ProbabilityCalculator.hasThreeOfAKind(cards);
 
     assertThat(result, is(true));
   }
