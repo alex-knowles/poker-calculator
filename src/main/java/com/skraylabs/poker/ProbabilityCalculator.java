@@ -113,4 +113,27 @@ class ProbabilityCalculator {
     }
     return result;
   }
+
+  /**
+   * Helper method that determines if a Three of a Kind exists on a given combination of board and
+   * pocket cards.
+   *
+   * @param board cards collected from a {@link Board}
+   * @param pocket cards collected from a {@link Pocket}
+   * @return {@code true} if there is a Three of a Kind; {@code false} otherwise
+   */
+  static boolean hasThreeOfAKind(Collection<Card> board, Collection<Card> pocket) {
+    boolean result = false;
+    Collection<Card> cards = new ArrayList<>(board);
+    cards.addAll(pocket);
+    Map<Rank, Long> countByRank =
+        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+    for (Long count : countByRank.values()) {
+      if (count >= 3) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
 }
