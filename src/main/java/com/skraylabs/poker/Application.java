@@ -75,6 +75,7 @@ public class Application {
 
   /**
    * Terminate execution with a given error code.
+   *
    * @param errorCode nonzero for abnormal termination.
    */
   public void exit(int errorCode) {
