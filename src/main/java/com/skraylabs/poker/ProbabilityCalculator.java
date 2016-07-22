@@ -15,8 +15,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome odds for each
- * Player.
+ * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome probability for
+ * each Player.
  */
 class ProbabilityCalculator {
 
@@ -27,7 +27,7 @@ class ProbabilityCalculator {
   }
 
   /**
-   * Report the odds of a player getting a Two Of A Kind.
+   * Report the probability of a player getting a Two Of A Kind.
    *
    * @param playerIndex index of Player in the GameState. A number in range [0, 9].
    * @return the probability of getting a Two Of A Kind.
@@ -58,13 +58,13 @@ class ProbabilityCalculator {
    * Helper method that evaluates all the remaining combinations for a given set of board cards and
    * counts how many of contain a given Poker type (e.g. Two of a Kind).
    *
-   * @param evaulator tests if a Card Collection contains a specific Poker hand (e.g. Two of a
-   *        Kind).
+   * @param evaulator tests if a Card Collection contains a target Poker hand (e.g. Two of a Kind,
+   *        Full House, etc...)
    * @param board cards collected from a {@link Board}
    * @param pocket cards collected from a {@link Pocket}
    * @param undealtCards collection of cards that have yet to be dealt
-   * @return a pair of numbers (x, y) where x is the number of Two of a Kind outcomes, and y is the
-   *         total number of outcomes
+   * @return a pair of numbers (x, y) where x is the number of target outcomes, and y is the total
+   *         number of outcomes
    */
   static Point countOutcomes(Function<Collection<Card>, Boolean> evaluator, Collection<Card> board,
       Collection<Card> pocket, Collection<Card> undealtCards) {
