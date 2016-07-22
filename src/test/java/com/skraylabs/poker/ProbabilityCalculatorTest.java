@@ -37,9 +37,8 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void invalidPlayerIndexYieldsCommunityProbabilityForTwoOfAKind()
-      throws CardFormatException, BoardFormatException, PocketFormatException,
-      GameStateFormatException {
+  public void invalidPlayerIndexYieldsCommunityProbabilityCalculation() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
@@ -49,7 +48,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheRiverYieldsZeroProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withNoMoreChancesBadHandCalculatesAsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
 
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
@@ -61,7 +60,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheRiverYieldsFullProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void madeHandCalculatesAsFullProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Jd\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -72,7 +71,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheTurnYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withOneChanceBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -83,7 +82,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withTwoChancesBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -94,7 +93,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void preFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withFiveChancesBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -106,7 +105,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void withMoreThanOnePlayerPreFlopYieldsPartialProbabilityOfTwoOfAKind()
+  public void withTwoChancesAndFourPlayersBadHandCalculatesAsWorseProbability()
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
     GameState state = GameStateFactory
