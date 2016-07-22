@@ -116,4 +116,18 @@ public class Application {
     return result;
   }
 
+  /**
+   * Helper method to format calculated output values for a specified player.
+   *
+   * <p>
+   * Probability is expressed as percentages rounded to the nearest ones place. -- e.g. 0.855 is
+   * formatted as "86%"
+   *
+   * @param calculator initialized with the {@link GameState} to evaluate.
+   * @param playerIndex in the range [0, 9]
+   * @return formatted string describing the probability for each poker hand
+   */
+  static String formatOutputForPlayer(ProbabilityCalculator calculator, int playerIndex) {
+    return "";
+  }
 }
