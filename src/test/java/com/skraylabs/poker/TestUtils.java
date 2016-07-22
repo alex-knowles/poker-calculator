@@ -4,6 +4,11 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.skraylabs.poker.model.Board;
+import com.skraylabs.poker.model.Card;
+
+import java.util.ArrayList;
+
 /**
  * Collection of useful Test Helpers.
  */
@@ -36,4 +41,32 @@ class TestUtils {
     assertAbort(testClass, Application.ERROR_CODE_BAD_ARGS, errorMessage);
   }
 
+  /**
+   * Helper method that constructs a {@link Board} from an array of {@link Card} objects.
+   *
+   * @param cards an array of 0, 3, 4, or 5 Cards
+   * @return a board composed from {@code cards}
+   */
+  static Board toBoard(ArrayList<Card> cards) {
+    final int size = cards.size();
+    // Sanity check
+    if (size > 5) {
+      return null;
+    }
+
+    Board result = null;
+    if (size == 0) {
+      result = new Board();
+    }
+    if (size >= 3) {
+      result = new Board(cards.get(0), cards.get(1), cards.get(2));
+    }
+    if (size >= 4) {
+      result.turnCard = cards.get(3);
+    }
+    if (size == 5) {
+      result.riverCard = cards.get(4);
+    }
+    return result;
+  }
 }
