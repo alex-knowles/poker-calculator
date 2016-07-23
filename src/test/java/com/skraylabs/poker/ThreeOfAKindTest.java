@@ -6,18 +6,28 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.skraylabs.poker.model.BoardFormatException;
 import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.CardFormatException;
+import com.skraylabs.poker.model.CardUtils;
+import com.skraylabs.poker.model.GameState;
+import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.PocketFormatException;
-import com.skraylabs.poker.model.Rank;
-import com.skraylabs.poker.model.Suit;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class ThreeOfAKindTest {
+
+  /**
+   * Test game.
+   * <p>
+   * Ah Kh Jh<br>
+   * 2d 7c<br>
+   * Qd Qc<br>
+   * As Js
+   */
+  GameState game;
 
   /**
    * Test board.
@@ -44,35 +54,25 @@ public class ThreeOfAKindTest {
   Collection<Card> pocketQueens;
 
   /**
-   * Set up test board.
+   * Test pocket.
+   *
+   * <p>
+   * As Js
    */
-  @Before
-  public void setUpBoardAceKingQueenJack() {
-    boardAceKingQueenJack = new ArrayList<Card>();
-    boardAceKingQueenJack.add(new Card(Rank.Ace, Suit.Hearts));
-    boardAceKingQueenJack.add(new Card(Rank.King, Suit.Hearts));
-    boardAceKingQueenJack.add(new Card(Rank.Queen, Suit.Hearts));
-    boardAceKingQueenJack.add(new Card(Rank.Jack, Suit.Hearts));
-  }
+  Collection<Card> pocketAceJack;
 
   /**
-   * Set up test pocket.
+   * Set up test fixture.
    */
   @Before
-  public void setUpPocketTwoSeven() {
-    pocketTwoSeven = new ArrayList<Card>();
-    pocketTwoSeven.add(new Card(Rank.Two, Suit.Diamonds));
-    pocketTwoSeven.add(new Card(Rank.Seven, Suit.Clubs));
-  }
-
-  /**
-   * Set up test pocket.
-   */
-  @Before
-  public void setUpPocketQueens() {
-    pocketQueens = new ArrayList<Card>();
-    pocketQueens.add(new Card(Rank.Queen, Suit.Diamonds));
-    pocketQueens.add(new Card(Rank.Queen, Suit.Clubs));
+  public void setUp() throws CardFormatException, BoardFormatException,
+      PocketFormatException, GameStateFormatException {
+    game = GameStateFactory
+        .createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c\n" + "Qd Qc\n" + "As Js");
+    boardAceKingQueenJack = CardUtils.collectCards(game.getBoard());
+    pocketTwoSeven = CardUtils.collectCards(game.getPockets()[0]);
+    pocketQueens = CardUtils.collectCards(game.getPockets()[1]);
+    pocketAceJack = CardUtils.collectCards(game.getPockets()[2]);
   }
 
   @Test
