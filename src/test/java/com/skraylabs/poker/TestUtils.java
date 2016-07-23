@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.skraylabs.poker.model.Board;
 import com.skraylabs.poker.model.Card;
+import com.skraylabs.poker.model.Pocket;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,23 @@ class TestUtils {
     }
     if (size == 5) {
       result.riverCard = cards.get(4);
+    }
+    return result;
+  }
+
+  /**
+   * Helper method that constructs a {@link Pocket} from an array of {@link Card} objects.
+   *
+   * @param cards an array of 0 or 2 Cards
+   * @return a pocket composed from {@code cards}
+   */
+  static Pocket toPocket(ArrayList<Card> cards) {
+    Pocket result = null;
+    if (cards.size() == 0) {
+      result = new Pocket();
+    }
+    if (cards.size() == 2) {
+      result = new Pocket(cards.get(0), cards.get(1));
     }
     return result;
   }
