@@ -27,12 +27,14 @@ class ProbabilityCalculator {
   }
 
   /**
-   * Report the probability of a player getting a Two Of A Kind.
+   * Generic helper method that calculates a given outcome for a given player.
    *
+   * @param outcomeEvaluator evaluates if a hand meets the criteria of a categorical poker outcome
+   *        (Two Of Kind, Full House, etc...)
    * @param playerIndex index of Player in the GameState. A number in range [0, 9].
-   * @return the probability of getting a Two Of A Kind.
+   * @return the probability of getting the specified poker outcome
    */
-  public double twoOfAKindForPlayer(int playerIndex) {
+  double outcomeForAPlayer(Function<Collection<Card>, Boolean> outcomeEvaluator, int playerIndex) {
     if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
       throw new IllegalArgumentException(String
           .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
@@ -49,35 +51,7 @@ class ProbabilityCalculator {
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
     Pocket pocket = gameState.getPockets()[playerIndex];
-    Point count = countOutcomes(ProbabilityCalculator::hasTwoOfAKind, CardUtils.collectCards(board),
-        CardUtils.collectCards(pocket), deck);
-    return ((double) count.x) / count.y;
-  }
-
-  /**
-   * Report the probability of a player getting a Three Of A Kind.
-   *
-   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
-   * @return the probability of getting a Three Of A Kind.
-   */
-  public double threeOfAKindForPlayer(int playerIndex) {
-    if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
-      throw new IllegalArgumentException(String
-          .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
-    }
-    Collection<Card> dealtCards = CardUtils.collectCards(gameState);
-    // Make a deck of undealt cards
-    ArrayList<Card> deck = new ArrayList<Card>();
-    for (int i = 0; i < 52; i++) {
-      Card card = CardUtils.cardFromNumber(i);
-      if (!dealtCards.contains(card)) {
-        deck.add(card);
-      }
-    }
-    // Iterate through every possible GameState branch
-    Board board = gameState.getBoard();
-    Pocket pocket = gameState.getPockets()[playerIndex];
-    Point count = countOutcomes(ProbabilityCalculator::hasThreeOfAKind, CardUtils.collectCards(board),
+    Point count = countOutcomes(outcomeEvaluator, CardUtils.collectCards(board),
         CardUtils.collectCards(pocket), deck);
     return ((double) count.x) / count.y;
   }
@@ -135,6 +109,26 @@ class ProbabilityCalculator {
     Collection<Card> cards = new ArrayList<Card>(board);
     cards.addAll(pocket);
     return cards;
+  }
+
+  /**
+   * Report the probability of a player getting a Two Of A Kind.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Two Of A Kind.
+   */
+  public double twoOfAKindForPlayer(int playerIndex) {
+    return outcomeForAPlayer(ProbabilityCalculator::hasTwoOfAKind, playerIndex);
+  }
+
+  /**
+   * Report the probability of a player getting a Three Of A Kind.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Three Of A Kind.
+   */
+  public double threeOfAKindForPlayer(int playerIndex) {
+    return outcomeForAPlayer(ProbabilityCalculator::hasThreeOfAKind, playerIndex);
   }
 
   /**
