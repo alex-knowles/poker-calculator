@@ -61,7 +61,25 @@ class ProbabilityCalculator {
    * @return the probability of getting a Three Of A Kind.
    */
   public double threeOfAKindForPlayer(int playerIndex) {
-    return 0.0;
+    if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
+      throw new IllegalArgumentException(String
+          .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
+    }
+    Collection<Card> dealtCards = CardUtils.collectCards(gameState);
+    // Make a deck of undealt cards
+    ArrayList<Card> deck = new ArrayList<Card>();
+    for (int i = 0; i < 52; i++) {
+      Card card = CardUtils.cardFromNumber(i);
+      if (!dealtCards.contains(card)) {
+        deck.add(card);
+      }
+    }
+    // Iterate through every possible GameState branch
+    Board board = gameState.getBoard();
+    Pocket pocket = gameState.getPockets()[playerIndex];
+    Point count = countOutcomes(ProbabilityCalculator::hasThreeOfAKind, CardUtils.collectCards(board),
+        CardUtils.collectCards(pocket), deck);
+    return ((double) count.x) / count.y;
   }
 
   /**
