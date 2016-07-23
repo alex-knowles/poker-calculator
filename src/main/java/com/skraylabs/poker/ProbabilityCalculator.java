@@ -122,6 +122,16 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Report the probability of a player getting a Two Pair.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Two Pair.
+   */
+  public double twoPairForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
    * Report the probability of a player getting a Three Of A Kind.
    *
    * @param playerIndex index of Player in the GameState. A number in range [0, 9].
@@ -129,6 +139,66 @@ class ProbabilityCalculator {
    */
   public double threeOfAKindForPlayer(int playerIndex) {
     return outcomeForAPlayer(ProbabilityCalculator::hasThreeOfAKind, playerIndex);
+  }
+
+  /**
+   * Report the probability of a player getting a Straight.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Straight.
+   */
+  public double straightForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
+   * Report the probability of a player getting a Flush.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Flush.
+   */
+  public double flushForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
+   * Report the probability of a player getting a Full House.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Full House.
+   */
+  public double fullHouseForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
+   * Report the probability of a player getting a Four Of A Kind.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Four Of A Kind.
+   */
+  public double fourOfAKindForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
+   * Report the probability of a player getting a Straight Flush.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Straight Flush.
+   */
+  public double straightFlushForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
+   * Report the probability of a player getting a Royal Flush.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Royal Flush.
+   */
+  public double royalFlushForPlayer(int playerIndex) {
+    return 0.0;
   }
 
   /**
