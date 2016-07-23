@@ -128,6 +128,36 @@ public class Application {
    * @return formatted string describing the probability for each poker hand
    */
   static String formatOutputForPlayer(ProbabilityCalculator calculator, int playerIndex) {
-    return "";
+    StringBuilder builder = new StringBuilder();
+
+    long probability = Math.round(100 * calculator.royalFlushForPlayer(playerIndex));
+    builder.append(String.format("Royal Flush: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.straightFlushForPlayer(playerIndex));
+    builder.append(String.format("Straight Flush: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.fourOfAKindForPlayer(playerIndex));
+    builder.append(String.format("Four of a Kind: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.fullHouseForPlayer(playerIndex));
+    builder.append(String.format("Full House: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.flushForPlayer(playerIndex));
+    builder.append(String.format("Flush: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.straightForPlayer(playerIndex));
+    builder.append(String.format("Straight: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.threeOfAKindForPlayer(playerIndex));
+    builder.append(String.format("Three of a Kind: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.twoPairForPlayer(playerIndex));
+    builder.append(String.format("Two Pair: %d%%\n", probability));
+
+    probability = Math.round(100 * calculator.twoOfAKindForPlayer(playerIndex));
+    builder.append(String.format("Two of a Kind: %d%%", probability));
+
+
+    return builder.toString();
   }
 }
