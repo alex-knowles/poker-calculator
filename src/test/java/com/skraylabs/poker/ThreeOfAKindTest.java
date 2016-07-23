@@ -23,12 +23,12 @@ public class ThreeOfAKindTest {
    * Test board.
    *
    * <p>
-   * Ah Kh Qh
+   * Ah Kh Qh Jh
    */
-  Collection<Card> boardAceKingQueen;
+  Collection<Card> boardAceKingQueenJack;
 
   /**
-   * Test pocket. No Three of a Kind with {@link #boardAceKingQueen}.
+   * Test pocket. No Three of a Kind with {@link #boardAceKingQueenJack}.
    *
    * <p>
    * 2d 7c
@@ -36,7 +36,7 @@ public class ThreeOfAKindTest {
   Collection<Card> pocketTwoSeven;
 
   /**
-   * Test pocket. Makes triple queens with {@link #boardAceKingQueen}.
+   * Test pocket. Makes triple queens with {@link #boardAceKingQueenJack}.
    *
    * <p>
    * Qd Qc
@@ -47,11 +47,12 @@ public class ThreeOfAKindTest {
    * Set up test board.
    */
   @Before
-  public void setUpBoardAceKingQueen() {
-    boardAceKingQueen = new ArrayList<Card>();
-    boardAceKingQueen.add(new Card(Rank.Ace, Suit.Hearts));
-    boardAceKingQueen.add(new Card(Rank.King, Suit.Hearts));
-    boardAceKingQueen.add(new Card(Rank.Queen, Suit.Hearts));
+  public void setUpBoardAceKingQueenJack() {
+    boardAceKingQueenJack = new ArrayList<Card>();
+    boardAceKingQueenJack.add(new Card(Rank.Ace, Suit.Hearts));
+    boardAceKingQueenJack.add(new Card(Rank.King, Suit.Hearts));
+    boardAceKingQueenJack.add(new Card(Rank.Queen, Suit.Hearts));
+    boardAceKingQueenJack.add(new Card(Rank.Jack, Suit.Hearts));
   }
 
   /**
@@ -77,7 +78,7 @@ public class ThreeOfAKindTest {
   @Test
   public void handWithNoThreeOfAKindReturnsFalse() {
     Collection<Card> cards =
-        ProbabilityCalculator.collectHandCards(boardAceKingQueen, pocketTwoSeven);
+        ProbabilityCalculator.collectHandCards(boardAceKingQueenJack, pocketTwoSeven);
 
     boolean result = ProbabilityCalculator.hasThreeOfAKind(cards);
 
@@ -88,7 +89,7 @@ public class ThreeOfAKindTest {
   public void handWithThreeOfAKindReturnsTrue() throws CardFormatException, BoardFormatException,
       PocketFormatException, GameStateFormatException {
     Collection<Card> cards =
-        ProbabilityCalculator.collectHandCards(boardAceKingQueen, pocketQueens);
+        ProbabilityCalculator.collectHandCards(boardAceKingQueenJack, pocketQueens);
 
     boolean result = ProbabilityCalculator.hasThreeOfAKind(cards);
 
