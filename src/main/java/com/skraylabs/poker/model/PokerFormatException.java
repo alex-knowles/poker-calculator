@@ -3,7 +3,7 @@ package com.skraylabs.poker.model;
 /**
  * Generic Exception class for input format errors related to poker game states.
  */
-abstract class PokerFormatException extends Exception {
+public abstract class PokerFormatException extends Exception {
   /**
    * Generated serial ID.
    */
