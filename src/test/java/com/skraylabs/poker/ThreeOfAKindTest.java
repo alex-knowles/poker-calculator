@@ -1,5 +1,6 @@
 package com.skraylabs.poker;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,6 +22,7 @@ public class ThreeOfAKindTest {
 
   /**
    * Test game.
+   *
    * <p>
    * Ah Kh Jh<br>
    * 2d 7c<br>
@@ -62,17 +64,23 @@ public class ThreeOfAKindTest {
   Collection<Card> pocketAceJack;
 
   /**
+   * System under test.
+   */
+  ProbabilityCalculator calculator;
+
+  /**
    * Set up test fixture.
    */
   @Before
-  public void setUp() throws CardFormatException, BoardFormatException,
-      PocketFormatException, GameStateFormatException {
+  public void setUp() throws CardFormatException, BoardFormatException, PocketFormatException,
+      GameStateFormatException {
     game = GameStateFactory
         .createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c\n" + "Qd Qc\n" + "As Js");
     boardAceKingQueenJack = CardUtils.collectCards(game.getBoard());
     pocketTwoSeven = CardUtils.collectCards(game.getPockets()[0]);
     pocketQueens = CardUtils.collectCards(game.getPockets()[1]);
     pocketAceJack = CardUtils.collectCards(game.getPockets()[2]);
+    calculator = new ProbabilityCalculator(game);
   }
 
   @Test
@@ -96,4 +104,24 @@ public class ThreeOfAKindTest {
     assertThat(result, is(true));
   }
 
+  @Test
+  public void givenHandWithZeroOutsProbabilityIsZero() {
+    double probability = calculator.threeOfAKindForPlayer(0);
+
+    assertThat(probability, equalTo(0.0));
+  }
+
+  @Test
+  public void givenMadeHandProbabilityIsOne() {
+    double probability = calculator.threeOfAKindForPlayer(1);
+
+    assertThat(probability, equalTo(1.0));
+  }
+
+  @Test
+  public void givenHandWithSomeOutsProbabilityIsCorrect() {
+    double probability = calculator.threeOfAKindForPlayer(2);
+
+    assertThat(probability, equalTo(4.0 / 42.0));
+  }
 }

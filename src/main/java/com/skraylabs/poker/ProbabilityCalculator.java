@@ -55,6 +55,16 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Report the probability of a player getting a Three Of A Kind.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting a Three Of A Kind.
+   */
+  public double threeOfAKindForPlayer(int playerIndex) {
+    return 0.0;
+  }
+
+  /**
    * Helper method that evaluates all the remaining combinations for a given set of board cards and
    * counts how many of contain a given Poker type (e.g. Two of a Kind).
    *
