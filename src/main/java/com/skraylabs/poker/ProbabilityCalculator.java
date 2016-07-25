@@ -6,6 +6,7 @@ import com.skraylabs.poker.model.CardUtils;
 import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.Pocket;
 import com.skraylabs.poker.model.Rank;
+import com.skraylabs.poker.model.Suit;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -269,6 +270,18 @@ class ProbabilityCalculator {
    * @return {@code true} if there are 5 or more cards of the same Suit; {@code false} otherwise
    */
   static boolean hasFlush(Collection<Card> cards) {
-    return false;
+    if (cards == null) {
+      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
+    }
+    boolean result = false;
+    Map<Suit, Long> countBySuit =
+        cards.stream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
+    for (Long count : countBySuit.values()) {
+      if (count >= 5) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   }
 }

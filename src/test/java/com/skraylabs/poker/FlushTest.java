@@ -27,4 +27,18 @@ public class FlushTest {
     assertThat(result, is(false));
   }
 
+  @Test
+  public void givenFiveOfASuitReturnsTrue() {
+    Collection<Card> cards = new ArrayList<Card>();
+    cards.add(new Card(Rank.Ace, Suit.Hearts));
+    cards.add(new Card(Rank.Two, Suit.Hearts));
+    cards.add(new Card(Rank.Three, Suit.Hearts));
+    cards.add(new Card(Rank.Four, Suit.Hearts));
+    cards.add(new Card(Rank.Five, Suit.Hearts));
+
+    boolean result = ProbabilityCalculator.hasFlush(cards);
+
+    assertThat(result, is(true));
+  }
+
 }
