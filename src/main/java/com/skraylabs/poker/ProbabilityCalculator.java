@@ -210,6 +210,9 @@ class ProbabilityCalculator {
    * @return {@code true} if there is are {@code number} or more cards of the same rank.
    */
   static boolean hasNOfAKind(Collection<Card> cards, int number) {
+    if (number <= 0) {
+      throw new IllegalArgumentException("Parameter \"number\" must be a positive value.");
+    }
     boolean result = false;
     Map<Rank, Long> countByRank =
         cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
