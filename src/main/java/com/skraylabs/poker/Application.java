@@ -48,6 +48,7 @@ public class Application {
       System.out.println(errorMessage);
       System.out.println(MSG_USAGE);
       exit(ERROR_CODE_BAD_ARGS);
+      return;
     } else {
       // Create input stream from filepath
       this.filepath = args[0];
@@ -58,6 +59,7 @@ public class Application {
         errorMessage = String.format(MSG_FILE_NOT_OPENED, filepath);
         System.out.println(errorMessage);
         exit(ERROR_FILE_NOT_OPENED);
+        return;
       }
 
       // TODO: process input from file
