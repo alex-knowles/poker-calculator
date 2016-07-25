@@ -202,6 +202,27 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Helper method that determines if an <i>n</i> of a Kind exists on a given combination of board
+   * and pocket cards -- e.g. for n = 3, it will determine if there is a Three of a Kind.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @param number a positive integer <i>n</i>
+   * @return {@code true} if there is are {@code number} or more cards of the same rank.
+   */
+  static boolean hasNOfAKind(Collection<Card> cards, int number) {
+    boolean result = false;
+    Map<Rank, Long> countByRank =
+        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+    for (Long count : countByRank.values()) {
+      if (count >= number) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Helper method that determines if a Two of a Kind exists on a given combination of board and
    * pocket cards.
    *
@@ -209,16 +230,7 @@ class ProbabilityCalculator {
    * @return {@code true} if there is at least one Two of a Kind; {@code false} otherwise
    */
   static boolean hasTwoOfAKind(Collection<Card> cards) {
-    boolean result = false;
-    Map<Rank, Long> countByRank =
-        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-    for (Long count : countByRank.values()) {
-      if (count >= 2) {
-        result = true;
-        break;
-      }
-    }
-    return result;
+    return hasNOfAKind(cards, 2);
   }
 
   /**
@@ -229,16 +241,7 @@ class ProbabilityCalculator {
    * @return {@code true} if there is a Three of a Kind; {@code false} otherwise
    */
   static boolean hasThreeOfAKind(Collection<Card> cards) {
-    boolean result = false;
-    Map<Rank, Long> countByRank =
-        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-    for (Long count : countByRank.values()) {
-      if (count >= 3) {
-        result = true;
-        break;
-      }
-    }
-    return result;
+    return hasNOfAKind(cards, 3);
   }
 
   /**
@@ -249,15 +252,6 @@ class ProbabilityCalculator {
    * @return {@code true} if there is a Four of a Kind; {@code false} otherwise
    */
   static boolean hasFourOfAKind(Collection<Card> cards) {
-    boolean result = false;
-    Map<Rank, Long> countByRank =
-        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-    for (Long count : countByRank.values()) {
-      if (count >= 4) {
-        result = true;
-        break;
-      }
-    }
-    return result;
+    return hasNOfAKind(cards, 4);
   }
 }
