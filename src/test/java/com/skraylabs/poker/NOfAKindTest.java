@@ -20,4 +20,12 @@ public class NOfAKindTest {
 
     ProbabilityCalculator.hasNOfAKind(cards, -1);
   }
+
+  @Test
+  public void zeroNumberCausesException() {
+    exception.expect(IllegalArgumentException.class);
+    Collection<Card> cards = new ArrayList<Card>();
+
+    ProbabilityCalculator.hasNOfAKind(cards, 0);
+  }
 }
