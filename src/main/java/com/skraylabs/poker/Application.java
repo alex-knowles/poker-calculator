@@ -1,12 +1,23 @@
 package com.skraylabs.poker;
 
+import com.skraylabs.poker.model.BoardFormatException;
+import com.skraylabs.poker.model.CardFormatException;
+import com.skraylabs.poker.model.GameState;
+import com.skraylabs.poker.model.GameStateFactory;
+import com.skraylabs.poker.model.GameStateFormatException;
+import com.skraylabs.poker.model.Pocket;
+import com.skraylabs.poker.model.PocketFormatException;
+
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 public class Application {
 
@@ -62,7 +73,29 @@ public class Application {
         return;
       }
 
-      // TODO: process input from file
+      // Process input from file
+      BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+      String inputString = reader.lines().collect(Collectors.joining("\n"));
+      GameState gameState = null;
+      try {
+        gameState = GameStateFactory.createGameStateFromString(inputString);
+      } catch (CardFormatException | BoardFormatException | PocketFormatException
+          | GameStateFormatException exception) {
+        errorMessage = MSG_INVALID_INPUT;
+        System.out.println(errorMessage);
+        exit(ERROR_INVALID_INPUT);
+        return;
+      }
+      ProbabilityCalculator calculator = new ProbabilityCalculator(gameState);
+      Pocket[] pockets = gameState.getPockets();
+      for (int i = 0; i < pockets.length; ++i) {
+        Pocket pocket = pockets[i];
+        if (pocket != null) {
+          System.out.println(String.format("Player %d:", i + 1));
+          System.out.println(formatOutputForPlayer(calculator, i));
+          System.out.println();
+        }
+      }
 
       // Close input stream
       if (input != null) {
