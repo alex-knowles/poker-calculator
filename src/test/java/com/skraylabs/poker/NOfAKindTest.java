@@ -28,4 +28,11 @@ public class NOfAKindTest {
 
     ProbabilityCalculator.hasNOfAKind(cards, 0);
   }
+
+  @Test
+  public void nullCardsCausesException() {
+    exception.expect(IllegalArgumentException.class);
+
+    ProbabilityCalculator.hasNOfAKind(null, 1);
+  }
 }

@@ -210,6 +210,9 @@ class ProbabilityCalculator {
    * @return {@code true} if there is are {@code number} or more cards of the same rank.
    */
   static boolean hasNOfAKind(Collection<Card> cards, int number) {
+    if (cards == null) {
+      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
+    }
     if (number <= 0) {
       throw new IllegalArgumentException("Parameter \"number\" must be a positive value.");
     }
