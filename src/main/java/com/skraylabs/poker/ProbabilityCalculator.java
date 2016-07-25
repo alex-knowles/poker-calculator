@@ -178,7 +178,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Four Of A Kind.
    */
   public double fourOfAKindForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasFourOfAKind, playerIndex);
   }
 
   /**
@@ -234,6 +234,26 @@ class ProbabilityCalculator {
         cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
     for (Long count : countByRank.values()) {
       if (count >= 3) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Helper method that determines if a Four of a Kind exists on a given combination of board and
+   * pocket cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there is a Four of a Kind; {@code false} otherwise
+   */
+  static boolean hasFourOfAKind(Collection<Card> cards) {
+    boolean result = false;
+    Map<Rank, Long> countByRank =
+        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+    for (Long count : countByRank.values()) {
+      if (count >= 4) {
         result = true;
         break;
       }
