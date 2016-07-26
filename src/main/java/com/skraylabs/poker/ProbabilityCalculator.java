@@ -5,8 +5,6 @@ import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.CardUtils;
 import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.Pocket;
-import com.skraylabs.poker.model.Rank;
-import com.skraylabs.poker.model.Suit;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -203,6 +201,37 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Helper method that determines if an <i>n</i> of a Type exists on a given combination of board
+   * and pocket cards -- e.g. for n = 3 and T = Rank, it will determine if there is a Three of a
+   * Kind.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @param number a positive integer <i>n</i>
+   * @param typeFunction a Function that derives a Type from a {@link Card} -- in practice this
+   *        function should return either {@link Rank} or {@link Suit}
+   * @return {@code true} if there is are {@code number} or more cards of the same type.
+   */
+  private static <T> boolean hasNOfAType(Collection<Card> cards, int number,
+      Function<Card, T> typeFunction) {
+    if (cards == null) {
+      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
+    }
+    if (number <= 0) {
+      throw new IllegalArgumentException("Parameter \"number\" must be a positive value.");
+    }
+    boolean result = false;
+    Map<T, Long> countByType =
+        cards.stream().collect(Collectors.groupingBy(typeFunction, Collectors.counting()));
+    for (Long count : countByType.values()) {
+      if (count >= number) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Helper method that determines if an <i>n</i> of a Kind exists on a given combination of board
    * and pocket cards -- e.g. for n = 3, it will determine if there is a Three of a Kind.
    *
@@ -211,22 +240,7 @@ class ProbabilityCalculator {
    * @return {@code true} if there is are {@code number} or more cards of the same rank.
    */
   static boolean hasNOfAKind(Collection<Card> cards, int number) {
-    if (cards == null) {
-      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
-    }
-    if (number <= 0) {
-      throw new IllegalArgumentException("Parameter \"number\" must be a positive value.");
-    }
-    boolean result = false;
-    Map<Rank, Long> countByRank =
-        cards.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
-    for (Long count : countByRank.values()) {
-      if (count >= number) {
-        result = true;
-        break;
-      }
-    }
-    return result;
+    return hasNOfAType(cards, number, Card::getRank);
   }
 
   /**
@@ -270,18 +284,6 @@ class ProbabilityCalculator {
    * @return {@code true} if there are 5 or more cards of the same Suit; {@code false} otherwise
    */
   static boolean hasFlush(Collection<Card> cards) {
-    if (cards == null) {
-      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
-    }
-    boolean result = false;
-    Map<Suit, Long> countBySuit =
-        cards.stream().collect(Collectors.groupingBy(Card::getSuit, Collectors.counting()));
-    for (Long count : countBySuit.values()) {
-      if (count >= 5) {
-        result = true;
-        break;
-      }
-    }
-    return result;
+    return hasNOfAType(cards, 5, Card::getSuit);
   }
 }
