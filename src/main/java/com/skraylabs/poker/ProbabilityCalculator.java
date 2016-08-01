@@ -255,6 +255,17 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Helper method that determines if a Two Pair exists on a given combination of board and pocket
+   * cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there is a Two Pair; {@code false} otherwise
+   */
+  static boolean hasTwoPair(Collection<Card> cards) {
+    return false;
+  }
+
+  /**
    * Helper method that determines if a Three of a Kind exists on a given combination of board and
    * pocket cards.
    *
