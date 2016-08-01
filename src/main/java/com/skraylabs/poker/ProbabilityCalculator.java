@@ -157,7 +157,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Flush.
    */
   public double flushForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasFlush, playerIndex);
   }
 
   /**
