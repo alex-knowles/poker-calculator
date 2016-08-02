@@ -130,7 +130,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Two Pair.
    */
   public double twoPairForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasTwoPair, playerIndex);
   }
 
   /**
