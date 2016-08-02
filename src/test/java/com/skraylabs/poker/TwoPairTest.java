@@ -15,11 +15,24 @@ import java.util.Collection;
 public class TwoPairTest {
 
   @Test
-  public void givenNotATwoPairReturnsFalse() {
+  public void givenLessThanFourCardsReturnsFalse() {
     Collection<Card> cards = new ArrayList<Card>();
     cards.add(new Card(Rank.Ace, Suit.Hearts));
     cards.add(new Card(Rank.Ace, Suit.Spades));
     cards.add(new Card(Rank.King, Suit.Hearts));
+
+    boolean result = ProbabilityCalculator.hasTwoPair(cards);
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenFourUnpairedCardsReturnsFalse() {
+    Collection<Card> cards = new ArrayList<Card>();
+    cards.add(new Card(Rank.Ace, Suit.Hearts));
+    cards.add(new Card(Rank.King, Suit.Hearts));
+    cards.add(new Card(Rank.Queen, Suit.Hearts));
+    cards.add(new Card(Rank.Jack, Suit.Hearts));
 
     boolean result = ProbabilityCalculator.hasTwoPair(cards);
 
