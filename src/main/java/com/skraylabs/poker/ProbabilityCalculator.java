@@ -5,10 +5,13 @@ import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.CardUtils;
 import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.Pocket;
+import com.skraylabs.poker.model.Rank;
+import com.skraylabs.poker.model.Suit;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -203,6 +206,31 @@ class ProbabilityCalculator {
   /**
    * Helper method that determines if an <i>n</i> of a Type exists on a given combination of board
    * and pocket cards -- e.g. for n = 3 and T = Rank, it will determine if there is a Three of a
+   * Kind. A single collection of cards matching this criteria is returned.
+   *
+   * @param cards combined cards form a player's Pocket and the community Board
+   * @param number a positive integer <i>n</i>
+   * @param typeFunction a Function that derives a Type from a {@link Card} -- in practice this
+   *        function should return either {@link Rank} or {@link Suit}
+   * @return a collection of <i>n</i> or more cards of the same Type, if found; otherwise, an empty
+   *         collection
+   */
+  private static <T> Collection<Card> collectNOfAType(Collection<Card> cards, int number,
+      Function<Card, T> typeFunction) {
+    List<Card> result = new ArrayList<Card>();
+    Map<T, List<Card>> cardsByType = cards.stream().collect(Collectors.groupingBy(typeFunction));
+    for (T key : cardsByType.keySet()) {
+      List<Card> cardsOfType = cardsByType.get(key);
+      if (cardsOfType.size() >= number) {
+        result = cardsOfType;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Helper method that determines if an <i>n</i> of a Type exists on a given combination of board
+   * and pocket cards -- e.g. for n = 3 and T = Rank, it will determine if there is a Three of a
    * Kind.
    *
    * @param cards combined cards from a player's Pocket and the community Board
@@ -262,7 +290,19 @@ class ProbabilityCalculator {
    * @return {@code true} if there is a Two Pair; {@code false} otherwise
    */
   static boolean hasTwoPair(Collection<Card> cards) {
-    return false;
+    boolean result = false;
+    if (cards.size() >= 4) {
+      Collection<Card> cardsCopy = new ArrayList<Card>(cards);
+      Collection<Card> firstPair = collectNOfAType(cardsCopy, 2, Card::getRank);
+      if (!firstPair.isEmpty()) {
+        cardsCopy.removeAll(firstPair);
+        Collection<Card> secondPair = collectNOfAType(cardsCopy, 2, Card::getRank);
+        if (!secondPair.isEmpty()) {
+          result = true;
+        }
+      }
+    }
+    return result;
   }
 
   /**
