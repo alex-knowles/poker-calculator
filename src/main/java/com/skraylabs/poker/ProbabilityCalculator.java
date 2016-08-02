@@ -170,7 +170,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Full House.
    */
   public double fullHouseForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasFullHouse, playerIndex);
   }
 
   /**
