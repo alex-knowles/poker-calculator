@@ -317,6 +317,17 @@ class ProbabilityCalculator {
   }
 
   /**
+   * Helper method that determines if a Straight exists on a given combination of board and
+   * pocket cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there is a Straight; {@code false} otherwise
+   */
+  static boolean hasStraight(Collection<Card> cards) {
+    return false;
+  }
+
+  /**
    * Helper method that determines if a Four of a Kind exists on a given combination of board and
    * pocket cards.
    *
