@@ -337,4 +337,28 @@ class ProbabilityCalculator {
   static boolean hasFlush(Collection<Card> cards) {
     return hasNOfAType(cards, 5, Card::getSuit);
   }
+
+  /**
+   * Helper method that determines if a Full House exists on a given combination of board and pocket
+   * cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there are 3 or more cards of the same Suit and 2 or more cards of a
+   *         different Suit; {@code false} otherwise
+   */
+  static boolean hasFullHouse(Collection<Card> cards) {
+    boolean result = false;
+    if (cards.size() >= 5) {
+      Collection<Card> cardsCopy = new ArrayList<Card>(cards);
+      Collection<Card> threeOfAKind = collectNOfAType(cardsCopy, 3, Card::getRank);
+      if (!threeOfAKind.isEmpty()) {
+        cardsCopy.removeAll(threeOfAKind);
+        Collection<Card> pair = collectNOfAType(cardsCopy, 2, Card::getRank);
+        if (!pair.isEmpty()) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
 }
