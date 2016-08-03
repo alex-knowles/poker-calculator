@@ -151,7 +151,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Straight.
    */
   public double straightForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasStraight, playerIndex);
   }
 
   /**
