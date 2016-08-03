@@ -426,4 +426,28 @@ class ProbabilityCalculator {
   static boolean hasFourOfAKind(Collection<Card> cards) {
     return hasNOfAKind(cards, 4);
   }
+
+  /**
+   * Helper method that determines if a Straight Flush exists on a given combination of board and
+   * pocket cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there is a Straight Flush; {@code false} otherwise
+   */
+  static boolean hasStraightFlush(Collection<Card> cards) {
+    boolean result = false;
+    if (cards.size() >= 5) {
+      Map<Suit, List<Card>> cardsBySuit =
+          cards.stream().collect(Collectors.groupingBy(Card::getSuit));
+      for (List<Card> suitedCards : cardsBySuit.values()) {
+        if (suitedCards.size() >= 5) {
+          if (hasStraight(suitedCards)) {
+            result = true;
+            break;
+          }
+        }
+      }
+    }
+    return result;
+  }
 }
