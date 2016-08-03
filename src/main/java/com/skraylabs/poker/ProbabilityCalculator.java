@@ -11,6 +11,7 @@ import com.skraylabs.poker.model.Suit;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -316,15 +317,56 @@ class ProbabilityCalculator {
     return hasNOfAKind(cards, 3);
   }
 
+  static class AceLowRankComparator implements Comparator<Card> {
+    @Override
+    public int compare(Card card1, Card card2) {
+      int rank1 = card1.getRank().aceLowValue();
+      int rank2 = card2.getRank().aceLowValue();
+      return rank1 - rank2;
+    }
+  }
+
   /**
-   * Helper method that determines if a Straight exists on a given combination of board and
-   * pocket cards.
+   * Helper method that determines if a Straight exists on a given combination of board and pocket
+   * cards.
    *
    * @param cards combined cards from a player's Pocket and the community Board
    * @return {@code true} if there is a Straight; {@code false} otherwise
    */
   static boolean hasStraight(Collection<Card> cards) {
-    return false;
+    boolean result = false;
+    if (cards.size() >= 5) {
+      ArrayList<Card> sortedCards = new ArrayList<Card>(cards);
+      sortedCards.sort(new AceLowRankComparator());
+
+      ArrayList<Card> cardSequence = new ArrayList<Card>();
+      for (Card card : sortedCards) {
+        if (cardSequence.isEmpty()) {
+          // Begin a sequence
+          cardSequence.add(card);
+        } else {
+          Card previousCard = cardSequence.get(cardSequence.size() - 1);
+          int cardRankValue = card.getRank().aceLowValue();
+          int previousCardRankValue = previousCard.getRank().aceLowValue();
+          int rankValueDelta = Math.abs(cardRankValue - previousCardRankValue);
+          if (rankValueDelta == 1) {
+            // Advance the sequence
+            cardSequence.add(card);
+            if (cardSequence.size() == 5) {
+              result = true;
+              break;
+            }
+          } else if (rankValueDelta > 1) {
+            // Restart the sequence
+            cardSequence.clear();
+            cardSequence.add(card);
+          } else if (rankValueDelta == 0) {
+            // Do nothing, the sequence already has one of this Rank
+          }
+        }
+      }
+    }
+    return result;
   }
 
   /**
