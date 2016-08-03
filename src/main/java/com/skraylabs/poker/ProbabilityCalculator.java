@@ -406,17 +406,6 @@ class ProbabilityCalculator {
   }
 
   /**
-   * Helper method that determines if a Four of a Kind exists on a given combination of board and
-   * pocket cards.
-   *
-   * @param cards combined cards from a player's Pocket and the community Board
-   * @return {@code true} if there is a Four of a Kind; {@code false} otherwise
-   */
-  static boolean hasFourOfAKind(Collection<Card> cards) {
-    return hasNOfAKind(cards, 4);
-  }
-
-  /**
    * Helper method that determines if a Flush exists on a given combination of board and pocket
    * cards.
    *
@@ -425,5 +414,16 @@ class ProbabilityCalculator {
    */
   static boolean hasFlush(Collection<Card> cards) {
     return hasNOfAType(cards, 5, Card::getSuit);
+  }
+
+  /**
+   * Helper method that determines if a Four of a Kind exists on a given combination of board and
+   * pocket cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there is a Four of a Kind; {@code false} otherwise
+   */
+  static boolean hasFourOfAKind(Collection<Card> cards) {
+    return hasNOfAKind(cards, 4);
   }
 }
