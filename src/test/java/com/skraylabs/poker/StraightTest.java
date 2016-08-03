@@ -57,4 +57,17 @@ public class StraightTest {
     assertThat(result, is(true));
   }
 
+  @Test
+  public void givenAHighAceStraightReturnsTrue() {
+    ArrayList<Card> cards = new ArrayList<Card>();
+    cards.add(new Card(Rank.Ace, Suit.Clubs));
+    cards.add(new Card(Rank.King, Suit.Clubs));
+    cards.add(new Card(Rank.Queen, Suit.Clubs));
+    cards.add(new Card(Rank.Jack, Suit.Clubs));
+    cards.add(new Card(Rank.Ten, Suit.Clubs));
+
+    boolean result = ProbabilityCalculator.hasStraight(cards);
+
+    assertThat(result, is(true));
+  }
 }

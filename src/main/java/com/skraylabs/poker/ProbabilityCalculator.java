@@ -365,7 +365,19 @@ class ProbabilityCalculator {
           }
         }
       }
+
+      // Check for Straight with Aces High
+      if (result == false && cardSequence.size() == 4) {
+        Card lastSequenceCard = cardSequence.get(cardSequence.size() - 1);
+        if (lastSequenceCard.getRank() == Rank.King) {
+          Card lowestCard = sortedCards.get(0);
+          if (lowestCard.getRank() == Rank.Ace) {
+            result = true;
+          }
+        }
+      }
     }
+
     return result;
   }
 
