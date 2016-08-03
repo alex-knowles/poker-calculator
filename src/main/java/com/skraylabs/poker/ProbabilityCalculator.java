@@ -191,7 +191,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Straight Flush.
    */
   public double straightFlushForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasStraightFlush, playerIndex);
   }
 
   /**
