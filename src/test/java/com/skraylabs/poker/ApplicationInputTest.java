@@ -79,7 +79,7 @@ public class ApplicationInputTest implements ApplicationTestInterface {
   }
 
   @Test
-  public void malformedInputProducesError() {
+  public void givenMalformedGameDataExecuteRaisesAnError() {
     final String input = "5h 7d Tr\n";
     app.inputString = input;
 
@@ -89,7 +89,7 @@ public class ApplicationInputTest implements ApplicationTestInterface {
   }
 
   @Test
-  public void validInputProducesValidOutput() {
+  public void givenValidGameDataExecutePrintsValidOutput() {
     final String input = "5h 7d Ts Kc 2d\n"
         + "5d 5s\n";
     app.inputString = input;
