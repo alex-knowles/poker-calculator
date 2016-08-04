@@ -202,7 +202,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Royal Flush.
    */
   public double royalFlushForPlayer(int playerIndex) {
-    return 0.0;
+    return outcomeForAPlayer(ProbabilityCalculator::hasRoyalFlush, playerIndex);
   }
 
   /**
