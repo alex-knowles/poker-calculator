@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -449,5 +450,20 @@ class ProbabilityCalculator {
       }
     }
     return result;
+  }
+
+  /**
+   * Helper method that determines if a Royal Flush exists on a given combination of board and
+   * pocket cards.
+   *
+   * @param cards combined cards from a player's Pocket and the community Board
+   * @return {@code true} if there is a Royal Flush; {@code false} otherwise
+   */
+  static boolean hasRoyalFlush(Collection<Card> cards) {
+    Predicate<Card> tenAndHigherFilter =
+        card -> card.getRank().aceHighValue() >= Rank.Ten.aceHighValue();
+    List<Card> topFiveRanks =
+        cards.stream().filter(tenAndHigherFilter).collect(Collectors.toList());
+    return hasStraightFlush(topFiveRanks);
   }
 }
