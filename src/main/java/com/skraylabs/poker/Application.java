@@ -81,7 +81,12 @@ public class Application {
         gameState = GameStateFactory.createGameStateFromString(inputString);
       } catch (CardFormatException | BoardFormatException | PocketFormatException
           | GameStateFormatException exception) {
-        errorMessage = MSG_INVALID_INPUT;
+        String invalidInput = exception.getInvalidString();
+        if (StringUtils.isEmpty(invalidInput)) {
+          errorMessage = MSG_INVALID_INPUT;
+        } else {
+          errorMessage = String.format("%s: %s", MSG_INVALID_INPUT, invalidInput);
+        }
         System.out.println(errorMessage);
         exit(ERROR_INVALID_INPUT);
         return;
