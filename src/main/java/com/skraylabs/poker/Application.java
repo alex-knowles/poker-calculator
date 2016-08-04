@@ -73,7 +73,7 @@ public class Application {
         return;
       }
 
-      // Process input from file
+      // Process input from file into a GameState
       BufferedReader reader = new BufferedReader(new InputStreamReader(input));
       String inputString = reader.lines().collect(Collectors.joining("\n"));
       GameState gameState = null;
@@ -91,6 +91,8 @@ public class Application {
         exit(ERROR_INVALID_INPUT);
         return;
       }
+
+      // Calculate outcome probabilities and print output
       ProbabilityCalculator calculator = new ProbabilityCalculator(gameState);
       Pocket[] pockets = gameState.getPockets();
       for (int i = 0; i < pockets.length; ++i) {
