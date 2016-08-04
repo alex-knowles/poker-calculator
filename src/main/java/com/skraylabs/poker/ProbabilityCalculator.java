@@ -318,15 +318,6 @@ class ProbabilityCalculator {
     return hasNOfAKind(cards, 3);
   }
 
-  static class AceLowRankComparator implements Comparator<Card> {
-    @Override
-    public int compare(Card card1, Card card2) {
-      int rank1 = card1.getRank().aceLowValue();
-      int rank2 = card2.getRank().aceLowValue();
-      return rank1 - rank2;
-    }
-  }
-
   /**
    * Helper method that determines if a Straight exists on a given combination of board and pocket
    * cards.
@@ -337,9 +328,13 @@ class ProbabilityCalculator {
   static boolean hasStraight(Collection<Card> cards) {
     boolean result = false;
     if (cards.size() >= 5) {
+      // Sort cards by Rank, with Aces Low
       ArrayList<Card> sortedCards = new ArrayList<Card>(cards);
-      sortedCards.sort(new AceLowRankComparator());
+      Comparator<Card> aceLowRankComparator =
+          (Card card1, Card card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue();
+      sortedCards.sort(aceLowRankComparator);
 
+      // Check for Straights with Aces Low
       ArrayList<Card> cardSequence = new ArrayList<Card>();
       for (Card card : sortedCards) {
         if (cardSequence.isEmpty()) {
