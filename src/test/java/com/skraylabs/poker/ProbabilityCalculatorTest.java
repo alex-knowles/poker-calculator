@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Function;
 
 public class ProbabilityCalculatorTest {
   @Rule
@@ -36,9 +37,8 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void invalidPlayerIndexYieldsCommunityProbabilityForTwoOfAKind()
-      throws CardFormatException, BoardFormatException, PocketFormatException,
-      GameStateFormatException {
+  public void invalidPlayerIndexYieldsCommunityProbabilityCalculation() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
 
@@ -48,7 +48,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheRiverYieldsZeroProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withNoMoreChancesBadHandCalculatesAsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
 
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
@@ -60,7 +60,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheRiverYieldsFullProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void madeHandCalculatesAsFullProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Jd\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -71,7 +71,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheTurnYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withOneChanceBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -82,7 +82,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void onTheFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withTwoChancesBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -93,7 +93,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void preFlopYieldsPartialProbabilityOfTwoOfAKind() throws CardFormatException,
+  public void withFiveChancesBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("\n" + "2d 7c");
     ProbabilityCalculator calculator = new ProbabilityCalculator(state);
@@ -105,7 +105,7 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
-  public void withMoreThanOnePlayerPreFlopYieldsPartialProbabilityOfTwoOfAKind()
+  public void withTwoChancesAndFourPlayersBadHandCalculatesAsWorseProbability()
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
     GameState state = GameStateFactory
@@ -134,8 +134,9 @@ public class ProbabilityCalculatorTest {
     for (int i = 5; i < cards.length; ++i) {
       deckWithTenCards.add(cards[i]);
     }
+    Function<Collection<Card>, Boolean> evaluator = (someCards) -> false;
 
-    Point count = ProbabilityCalculator.countTwoOfAKindOutcomes(boardWithThreeCards, pocket,
+    Point count = ProbabilityCalculator.countOutcomes(evaluator, boardWithThreeCards, pocket,
         deckWithTenCards);
 
     assertThat(count.y, equalTo(45));
