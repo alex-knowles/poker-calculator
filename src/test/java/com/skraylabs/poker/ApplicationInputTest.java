@@ -79,25 +79,23 @@ public class ApplicationInputTest implements ApplicationTestInterface {
   }
 
   @Test
-  public void malformedInputProducesError() {
-    // Set up
+  public void givenMalformedGameDataExecuteRaisesAnError() {
     final String input = "5h 7d Tr\n";
     app.inputString = input;
-    // Exercise
+
     app.execute("foo");
-    // Verify
+
     assertAbort(this, Application.ERROR_INVALID_INPUT, "Tr", Application.MSG_INVALID_INPUT);
   }
 
   @Test
-  public void validInputProducesValidOutput() {
-    // Set up
+  public void givenValidGameDataExecutePrintsValidOutput() {
     final String input = "5h 7d Ts Kc 2d\n"
         + "5d 5s\n";
     app.inputString = input;
-    // Exercise
+
     app.execute("foo.txt");
-    // Verify
+
     assertThat(app.errorCode, equalTo(0));
     String output = outputStream.toString();
     assertThat(output, containsString("Royal Flush: 0%"));
