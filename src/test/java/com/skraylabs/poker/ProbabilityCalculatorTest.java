@@ -20,6 +20,9 @@ import org.junit.rules.ExpectedException;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ProbabilityCalculatorTest {
   @Rule
@@ -117,6 +120,27 @@ public class ProbabilityCalculatorTest {
   }
 
   @Test
+  public void withFiveChancesAndBigSlickCalculatingAllOutcomesReturnsCorrectProbabilities()
+      throws CardFormatException, BoardFormatException, PocketFormatException,
+      GameStateFormatException {
+    GameState state = GameStateFactory.createGameStateFromString("\n" + "As Ks");
+    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    final double expectedTotalOutcomes = 2118760;
+
+    Map<Outcome, Double> probabilities = calculator.allOutcomesForAPlayer(0);
+
+    assertThat(probabilities.get(Outcome.RoyalFlush), equalTo(1084 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.StraightFlush), equalTo(1162 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.FourOfAKind), equalTo(2668 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.FullHouse), equalTo(47592 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.Flush), equalTo(139458 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.Straight), equalTo(71920 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.ThreeOfAKind), equalTo(144832 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.TwoPair), equalTo(534672 / expectedTotalOutcomes));
+    assertThat(probabilities.get(Outcome.TwoOfAKind), equalTo(1645672 / expectedTotalOutcomes));
+  }
+
+  @Test
   public void tenChooseTwoYieldsFortyFiveCombinations() {
     Card[] cards = new Card[15];
     for (int i = 0; i < cards.length; ++i) {
@@ -134,10 +158,15 @@ public class ProbabilityCalculatorTest {
       deckWithTenCards.add(cards[i]);
     }
     ProbabilityCalculator.HandEvaluator evaluator = (someCards) -> false;
+    Map<Outcome, ProbabilityCalculator.HandEvaluator> evaluators =
+        new HashMap<Outcome, ProbabilityCalculator.HandEvaluator>();
+    Outcome arbitraryKey = Outcome.Flush;
+    evaluators.put(arbitraryKey, evaluator);
 
-    Point count = ProbabilityCalculator.countOutcomes(evaluator, boardWithThreeCards, pocket,
-        deckWithTenCards);
+    Map<Outcome, Point> counts = ProbabilityCalculator.countOutcomes(evaluators,
+        boardWithThreeCards, pocket, deckWithTenCards);
 
+    Point count = counts.get(arbitraryKey);
     assertThat(count.y, equalTo(45));
   }
 }
