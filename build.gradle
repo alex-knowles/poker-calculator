@@ -4,7 +4,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
-version = '0.1-pre'
+version = '0.1'
 mainClassName = 'com.skraylabs.poker.Application'
 jar {
     manifest {
