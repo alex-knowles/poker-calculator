@@ -20,7 +20,6 @@ import org.junit.rules.ExpectedException;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.Function;
 
 public class ProbabilityCalculatorTest {
   @Rule
@@ -134,7 +133,7 @@ public class ProbabilityCalculatorTest {
     for (int i = 5; i < cards.length; ++i) {
       deckWithTenCards.add(cards[i]);
     }
-    Function<Collection<Card>, Boolean> evaluator = (someCards) -> false;
+    ProbabilityCalculator.HandEvaluator evaluator = (someCards) -> false;
 
     Point count = ProbabilityCalculator.countOutcomes(evaluator, boardWithThreeCards, pocket,
         deckWithTenCards);

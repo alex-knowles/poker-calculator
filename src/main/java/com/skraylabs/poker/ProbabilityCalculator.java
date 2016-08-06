@@ -31,6 +31,13 @@ class ProbabilityCalculator {
   }
 
   /**
+   * A Function that evaluates a collection of cards to see if it matches conditions for a type of
+   * Poker outcome (e.g. Two of Kind, Royal Flush, etc...).
+   */
+  interface HandEvaluator extends Function<Collection<Card>, Boolean> {
+  }
+
+  /**
    * Generic helper method that calculates a given outcome for a given player.
    *
    * @param outcomeEvaluator evaluates if a hand meets the criteria of a categorical poker outcome
@@ -38,7 +45,7 @@ class ProbabilityCalculator {
    * @param playerIndex index of Player in the GameState. A number in range [0, 9].
    * @return the probability of getting the specified poker outcome
    */
-  double outcomeForAPlayer(Function<Collection<Card>, Boolean> outcomeEvaluator, int playerIndex) {
+  double outcomeForAPlayer(HandEvaluator outcomeEvaluator, int playerIndex) {
     if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
       throw new IllegalArgumentException(String
           .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
@@ -72,7 +79,7 @@ class ProbabilityCalculator {
    * @return a pair of numbers (x, y) where x is the number of target outcomes, and y is the total
    *         number of outcomes
    */
-  static Point countOutcomes(Function<Collection<Card>, Boolean> evaluator, Collection<Card> board,
+  static Point countOutcomes(HandEvaluator evaluator, Collection<Card> board,
       Collection<Card> pocket, Collection<Card> undealtCards) {
     int winOutcomes = 0;
     int totalOutcomes = 0;
