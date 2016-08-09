@@ -44,7 +44,7 @@ public class Application {
     return filepath;
   }
 
-  public static void main(String... args) {
+  public static void main(String... args) throws Exception {
     app = new Application();
     app.execute(args);
   }
@@ -53,60 +53,43 @@ public class Application {
    * Execute application
    *
    * @param args should be exactly 1 string specifying the input filepath to read from.
+   * @throws IOException if there's an error closing the file
    */
-  public void execute(String... args) {
+  void execute(String... args) throws IOException {
     if (!validate(args)) {
       System.out.println(errorMessage);
       System.out.println(MSG_USAGE);
       exit(ERROR_CODE_BAD_ARGS);
-      return;
     } else {
       // Create input stream from filepath
       this.filepath = args[0];
-      InputStream input = null;
-      try {
-        input = createInputStream();
+      try (InputStream input = createInputStream()) {
+        // Process input from file into a GameState
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+        String inputString = reader.lines().collect(Collectors.joining("\n"));
+        GameState gameState = GameStateFactory.createGameStateFromString(inputString);
+
+        // Calculate outcome probabilities and print output
+        ProbabilityCalculator calculator = new ProbabilityCalculator(gameState);
+        Pocket[] pockets = gameState.getPockets();
+        for (int i = 0; i < pockets.length; ++i) {
+          Pocket pocket = pockets[i];
+          if (pocket != null) {
+            System.out.println(String.format("Player %d:", i + 1));
+            System.out.println(formatOutputForPlayer(calculator, i));
+            System.out.println();
+          }
+        }
       } catch (FileNotFoundException e) {
         errorMessage = String.format(MSG_FILE_NOT_OPENED, filepath);
         System.out.println(errorMessage);
         exit(ERROR_FILE_NOT_OPENED);
-        return;
-      }
-
-      // Process input from file into a GameState
-      BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-      String inputString = reader.lines().collect(Collectors.joining("\n"));
-      GameState gameState = null;
-      try {
-        gameState = GameStateFactory.createGameStateFromString(inputString);
       } catch (CardFormatException | BoardFormatException | PocketFormatException
-          | GameStateFormatException exception) {
+              | GameStateFormatException exception) {
         errorMessage = MSG_INVALID_INPUT;
         errorMessage = String.format("%s\n%s", MSG_INVALID_INPUT, exception.getMessage());
         System.out.println(errorMessage);
         exit(ERROR_INVALID_INPUT);
-        return;
-      }
-
-      // Calculate outcome probabilities and print output
-      ProbabilityCalculator calculator = new ProbabilityCalculator(gameState);
-      Pocket[] pockets = gameState.getPockets();
-      for (int i = 0; i < pockets.length; ++i) {
-        Pocket pocket = pockets[i];
-        if (pocket != null) {
-          System.out.println(String.format("Player %d:", i + 1));
-          System.out.println(formatOutputForPlayer(calculator, i));
-          System.out.println();
-        }
-      }
-
-      // Close input stream
-      if (input != null) {
-        try {
-          input.close();
-        } catch (IOException e) {
-          // Could not close input stream.
-        }
       }
     }
   }
