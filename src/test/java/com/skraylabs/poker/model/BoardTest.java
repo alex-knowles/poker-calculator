@@ -11,7 +11,8 @@ import org.junit.rules.ExpectedException;
 
 public class BoardTest {
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   Board fixedBoard;
   Card card1;
@@ -22,7 +23,8 @@ public class BoardTest {
   /**
    * Set up shared test fixture.
    *
-   * <p>Use common Board object with predictable Card objects populated.
+   * <p>
+   * Use common Board object with predictable Card objects populated.
    *
    * @throws Exception shouldn't happen.
    */
