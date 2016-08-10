@@ -22,7 +22,7 @@ public class StraightFlushTest {
 
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));
@@ -34,7 +34,7 @@ public class StraightFlushTest {
 
   @Test
   public void givenAFlushReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));
@@ -48,7 +48,7 @@ public class StraightFlushTest {
 
   @Test
   public void givenAStraightReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));
@@ -62,7 +62,7 @@ public class StraightFlushTest {
 
   @Test
   public void givenAStraightFlushReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));

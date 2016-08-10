@@ -22,7 +22,7 @@ public class RoyalFlushTest {
 
   @Test
   public void givenNotARoyalFlushReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.King, Suit.Clubs));
     cards.add(new Card(Rank.Queen, Suit.Clubs));
@@ -36,7 +36,7 @@ public class RoyalFlushTest {
 
   @Test
   public void givenAStraightFlushReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.King, Suit.Clubs));
     cards.add(new Card(Rank.Queen, Suit.Clubs));
     cards.add(new Card(Rank.Jack, Suit.Clubs));
@@ -50,7 +50,7 @@ public class RoyalFlushTest {
 
   @Test
   public void givenARoyalFlushReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.King, Suit.Clubs));
     cards.add(new Card(Rank.Queen, Suit.Clubs));

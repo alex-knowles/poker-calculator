@@ -45,7 +45,7 @@ class ProbabilityCalculator {
     }
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
     // Make a deck of undealt cards
-    ArrayList<Card> deck = new ArrayList<Card>();
+    ArrayList<Card> deck = new ArrayList<>();
     for (int i = 0; i < 52; i++) {
       Card card = CardUtils.cardFromNumber(i);
       if (!dealtCards.contains(card)) {
@@ -86,12 +86,12 @@ class ProbabilityCalculator {
     } else {
       // Board is incomplete
       // Recurse on all possible cards that could be dealt next
-      Collection<Card> dealtCards = new ArrayList<Card>();
+      Collection<Card> dealtCards = new ArrayList<>();
       for (Card card : undealtCards) {
-        Collection<Card> nextBoard = new ArrayList<Card>(board);
+        Collection<Card> nextBoard = new ArrayList<>(board);
         nextBoard.add(card);
         dealtCards.add(card);
-        Collection<Card> nextUndealtCards = new ArrayList<Card>(undealtCards);
+        Collection<Card> nextUndealtCards = new ArrayList<>(undealtCards);
         nextUndealtCards.removeAll(dealtCards);
         Point nextCount = countOutcomes(evaluator, nextBoard, pocket, nextUndealtCards);
         winOutcomes += nextCount.x;
@@ -110,7 +110,7 @@ class ProbabilityCalculator {
    * @return Collection of cards drawn from {@code board} and {@code pocket}
    */
   static Collection<Card> collectHandCards(Collection<Card> board, Collection<Card> pocket) {
-    Collection<Card> cards = new ArrayList<Card>(board);
+    Collection<Card> cards = new ArrayList<>(board);
     cards.addAll(pocket);
     return cards;
   }
@@ -219,7 +219,7 @@ class ProbabilityCalculator {
    */
   private static <T> Collection<Card> collectNOfAType(Collection<Card> cards, int number,
       Function<Card, T> typeFunction) {
-    List<Card> result = new ArrayList<Card>();
+    List<Card> result = new ArrayList<>();
     Map<T, List<Card>> cardsByType = cards.stream().collect(Collectors.groupingBy(typeFunction));
     for (T key : cardsByType.keySet()) {
       List<Card> cardsOfType = cardsByType.get(key);
@@ -294,7 +294,7 @@ class ProbabilityCalculator {
   static boolean hasTwoPair(Collection<Card> cards) {
     boolean result = false;
     if (cards.size() >= 4) {
-      Collection<Card> cardsCopy = new ArrayList<Card>(cards);
+      Collection<Card> cardsCopy = new ArrayList<>(cards);
       Collection<Card> firstPair = collectNOfAType(cardsCopy, 2, Card::getRank);
       if (!firstPair.isEmpty()) {
         cardsCopy.removeAll(firstPair);
@@ -329,13 +329,13 @@ class ProbabilityCalculator {
     boolean result = false;
     if (cards.size() >= 5) {
       // Sort cards by Rank, with Aces Low
-      ArrayList<Card> sortedCards = new ArrayList<Card>(cards);
+      ArrayList<Card> sortedCards = new ArrayList<>(cards);
       Comparator<Card> aceLowRankComparator =
           (Card card1, Card card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue();
       sortedCards.sort(aceLowRankComparator);
 
       // Check for Straights with Aces Low
-      ArrayList<Card> cardSequence = new ArrayList<Card>();
+      ArrayList<Card> cardSequence = new ArrayList<>();
       for (Card card : sortedCards) {
         if (cardSequence.isEmpty()) {
           // Begin a sequence
@@ -388,7 +388,7 @@ class ProbabilityCalculator {
   static boolean hasFullHouse(Collection<Card> cards) {
     boolean result = false;
     if (cards.size() >= 5) {
-      Collection<Card> cardsCopy = new ArrayList<Card>(cards);
+      Collection<Card> cardsCopy = new ArrayList<>(cards);
       Collection<Card> threeOfAKind = collectNOfAType(cardsCopy, 3, Card::getRank);
       if (!threeOfAKind.isEmpty()) {
         cardsCopy.removeAll(threeOfAKind);

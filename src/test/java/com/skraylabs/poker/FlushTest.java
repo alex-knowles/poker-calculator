@@ -23,7 +23,7 @@ public class FlushTest {
 
   @Test
   public void givenLessThanFiveOfASuitReturnsFalse() {
-    Collection<Card> cards = new ArrayList<Card>();
+    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Hearts));
     cards.add(new Card(Rank.Two, Suit.Hearts));
     cards.add(new Card(Rank.Three, Suit.Hearts));
@@ -36,7 +36,7 @@ public class FlushTest {
 
   @Test
   public void givenFiveOfASuitReturnsTrue() {
-    Collection<Card> cards = new ArrayList<Card>();
+    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Hearts));
     cards.add(new Card(Rank.Two, Suit.Hearts));
     cards.add(new Card(Rank.Three, Suit.Hearts));

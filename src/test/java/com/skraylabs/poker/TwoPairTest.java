@@ -23,7 +23,7 @@ public class TwoPairTest {
 
   @Test
   public void givenLessThanFourCardsReturnsFalse() {
-    Collection<Card> cards = new ArrayList<Card>();
+    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Hearts));
     cards.add(new Card(Rank.Ace, Suit.Spades));
     cards.add(new Card(Rank.King, Suit.Hearts));
@@ -35,7 +35,7 @@ public class TwoPairTest {
 
   @Test
   public void givenFourUnpairedCardsReturnsFalse() {
-    Collection<Card> cards = new ArrayList<Card>();
+    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Hearts));
     cards.add(new Card(Rank.King, Suit.Hearts));
     cards.add(new Card(Rank.Queen, Suit.Hearts));
@@ -48,7 +48,7 @@ public class TwoPairTest {
 
   @Test
   public void givenNotATwoPairReturnsTrue() {
-    Collection<Card> cards = new ArrayList<Card>();
+    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Hearts));
     cards.add(new Card(Rank.Ace, Suit.Spades));
     cards.add(new Card(Rank.King, Suit.Clubs));
