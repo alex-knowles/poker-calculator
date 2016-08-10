@@ -13,28 +13,28 @@ public class CardFactory {
    * <p>
    * First character represents rank:
    * <ul>
-   * <li> A (Ace)
-   * <li> K (King)
-   * <li> Q (Queen)
-   * <li> J (Jack)
-   * <li> T (Ten)
-   * <li> 9 (Nine)
-   * <li> 8 (Eight)
-   * <li> 7 (Seven)
-   * <li> 6 (Six)
-   * <li> 5 (Five)
-   * <li> 4 (Four)
-   * <li> 3 (Three)
-   * <li> 2 (Two)
+   * <li>A (Ace)
+   * <li>K (King)
+   * <li>Q (Queen)
+   * <li>J (Jack)
+   * <li>T (Ten)
+   * <li>9 (Nine)
+   * <li>8 (Eight)
+   * <li>7 (Seven)
+   * <li>6 (Six)
+   * <li>5 (Five)
+   * <li>4 (Four)
+   * <li>3 (Three)
+   * <li>2 (Two)
    * </ul>
    *
    * <p>
    * Second character represents suit (must be lower-case):
    * <ul>
-   * <li> s (Spades)
-   * <li> h (Hearts)
-   * <li> d (Diamonds)
-   * <li> c (Clubs)
+   * <li>s (Spades)
+   * <li>h (Hearts)
+   * <li>d (Diamonds)
+   * <li>c (Clubs)
    * </ul>
    *
    * @param card two-character string representation of a card
@@ -98,19 +98,32 @@ public class CardFactory {
    */
   static Rank parseRank(char rank) throws CardFormatException {
     switch (rank) {
-      case 'A': return Rank.Ace;
-      case 'K': return Rank.King;
-      case 'Q': return Rank.Queen;
-      case 'J': return Rank.Jack;
-      case 'T': return Rank.Ten;
-      case '9': return Rank.Nine;
-      case '8': return Rank.Eight;
-      case '7': return Rank.Seven;
-      case '6': return Rank.Six;
-      case '5': return Rank.Five;
-      case '4': return Rank.Four;
-      case '3': return Rank.Three;
-      case '2': return Rank.Two;
+      case 'A':
+        return Rank.Ace;
+      case 'K':
+        return Rank.King;
+      case 'Q':
+        return Rank.Queen;
+      case 'J':
+        return Rank.Jack;
+      case 'T':
+        return Rank.Ten;
+      case '9':
+        return Rank.Nine;
+      case '8':
+        return Rank.Eight;
+      case '7':
+        return Rank.Seven;
+      case '6':
+        return Rank.Six;
+      case '5':
+        return Rank.Five;
+      case '4':
+        return Rank.Four;
+      case '3':
+        return Rank.Three;
+      case '2':
+        return Rank.Two;
       default:
         throw new CardFormatException();
     }
@@ -125,10 +138,14 @@ public class CardFactory {
    */
   static Suit parseSuit(char suit) throws CardFormatException {
     switch (suit) {
-      case 's': return Suit.Spades;
-      case 'h': return Suit.Hearts;
-      case 'd': return Suit.Diamonds;
-      case 'c': return Suit.Clubs;
+      case 's':
+        return Suit.Spades;
+      case 'h':
+        return Suit.Hearts;
+      case 'd':
+        return Suit.Diamonds;
+      case 'c':
+        return Suit.Clubs;
       default:
         throw new CardFormatException();
     }

@@ -1,8 +1,7 @@
 package com.skraylabs.poker.model;
 
 /**
- * The "board" is the set of 5 community cards shared by all players in a game Texas Hold 'Em
- * Poker.
+ * The "board" is the set of 5 community cards shared by all players in a game Texas Hold 'Em Poker.
  */
 public class Board {
   /**
