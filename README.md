@@ -74,3 +74,7 @@ Player 3's hole cards:
 
 Upon completion, the program will print out the various
 outcomes and their probabilities for each player.
+
+Build instructions
+-----
+See [BUILDING.md](BUILDING.md).
