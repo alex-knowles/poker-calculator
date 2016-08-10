@@ -57,3 +57,9 @@ The Checkstyle rules (mentioned above) also specify in which order `import` stat
   4. javax
 
 Now you can use **Source** -> **Organize Imports** to automatically sort your `import` statements!
+
+### Adding, removing, or changing dependencies
+
+If you need to change the third-party libraries on which PokerCalculator depends, you will have to first modify the `build.gradle` configuration file.  For example, if you wanted to add a new dependency, use a newer version of an existing one, or remove a dependency altogether.
+
+Once the `build.gradle` changes have been made, you may need to run `gradle eclipse` to propogate those changes into your Eclipse workspace.  Any resultant changes to files such as `.classpath` should be committed to version control.
