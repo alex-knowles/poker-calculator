@@ -43,3 +43,17 @@ To import a companion Eclipse Formatter into your Workspace:
 `/config/eclipse/GoogleStyle.xml`
 
 Now you can use **Source** -> **Format** to automatically format your changes!
+
+### Organize imports
+
+The Checkstyle rules (mentioned above) also specify in which order `import` statements should be sorted.  To match these rules, do the following:
+
+1. Open Eclipse **Preferences**
+2. Navigate to **Java** -> **Code Style** -> **Organize Imports**
+3. Arrange the package prefixes like so:
+  1. com
+  2. org
+  3. java
+  4. javax
+
+Now you can use **Source** -> **Organize Imports** to automatically sort your `import` statements!
