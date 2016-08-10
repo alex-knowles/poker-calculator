@@ -58,7 +58,7 @@ class ProbabilityCalculator {
           .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
     }
 
-    Map<Outcome, Double> result = new HashMap<Outcome, Double>();
+    Map<Outcome, Double> result = new HashMap<>();
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
 
     // Make a deck of undealt cards
@@ -94,7 +94,7 @@ class ProbabilityCalculator {
    */
   double outcomeForAPlayer(HandEvaluator outcomeEvaluator, int playerIndex) {
     Outcome arbitraryKey = Outcome.Flush;
-    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<Outcome, HandEvaluator>();
+    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
     evaluators.put(arbitraryKey, outcomeEvaluator);
     Map<Outcome, Double> outcomes = outcomesForAPlayer(evaluators, playerIndex);
     return outcomes.get(arbitraryKey);
@@ -113,7 +113,7 @@ class ProbabilityCalculator {
    */
   static Map<Outcome, Point> countOutcomes(Map<Outcome, HandEvaluator> evaluators,
       Collection<Card> board, Collection<Card> pocket, Collection<Card> undealtCards) {
-    HashMap<Outcome, Point> result = new HashMap<Outcome, Point>();
+    HashMap<Outcome, Point> result = new HashMap<>();
     for (Outcome outcome : evaluators.keySet()) {
       result.put(outcome, new Point(0, 0));
     }
@@ -175,7 +175,7 @@ class ProbabilityCalculator {
    * @return a map o probabilities for each category of poker outcome.
    */
   public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
-    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<Outcome, HandEvaluator>();
+    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
     evaluators.put(Outcome.TwoOfAKind, ProbabilityCalculator::hasTwoOfAKind);
     evaluators.put(Outcome.TwoPair, ProbabilityCalculator::hasTwoPair);
     evaluators.put(Outcome.ThreeOfAKind, ProbabilityCalculator::hasThreeOfAKind);

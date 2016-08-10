@@ -19,7 +19,7 @@ public class ApplicationFormatOutputTest {
     ProbabilityCalculator calculator = new ProbabilityCalculator(null) {
       @Override
       public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
-        HashMap<Outcome, Double> allOutcomes = new HashMap<Outcome, Double>();
+        HashMap<Outcome, Double> allOutcomes = new HashMap<>();
         allOutcomes.put(Outcome.RoyalFlush, 0.0);
         allOutcomes.put(Outcome.StraightFlush, 0.222222);
         allOutcomes.put(Outcome.FourOfAKind, 0.3333333);

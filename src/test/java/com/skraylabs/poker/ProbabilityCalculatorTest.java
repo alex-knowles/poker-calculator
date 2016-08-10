@@ -159,8 +159,7 @@ public class ProbabilityCalculatorTest {
       deckWithTenCards.add(cards[i]);
     }
     ProbabilityCalculator.HandEvaluator evaluator = (someCards) -> false;
-    Map<Outcome, ProbabilityCalculator.HandEvaluator> evaluators =
-        new HashMap<Outcome, ProbabilityCalculator.HandEvaluator>();
+    Map<Outcome, ProbabilityCalculator.HandEvaluator> evaluators = new HashMap<>();
     Outcome arbitraryKey = Outcome.Flush;
     evaluators.put(arbitraryKey, evaluator);
 
