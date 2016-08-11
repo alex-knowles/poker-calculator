@@ -112,10 +112,8 @@ class ProbabilityCalculator {
    */
   static Map<Outcome, WinLossCounter> countOutcomes(Map<Outcome, HandEvaluator> evaluators,
       Collection<Card> board, Collection<Card> pocket, Collection<Card> undealtCards) {
-    HashMap<Outcome, WinLossCounter> result = new HashMap<>();
-    for (Outcome outcome : evaluators.keySet()) {
-      result.put(outcome, new WinLossCounter());
-    }
+    Map<Outcome, WinLossCounter> result = evaluators.keySet().stream()
+        .collect(Collectors.toMap(outcome -> outcome, outcome -> new WinLossCounter()));
     if (board.size() == 5) {
       // Board is complete
       Collection<Card> cards = collectHandCards(board, pocket);
