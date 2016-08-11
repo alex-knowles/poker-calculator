@@ -19,7 +19,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -163,10 +162,10 @@ public class ProbabilityCalculatorTest {
     Outcome arbitraryKey = Outcome.Flush;
     evaluators.put(arbitraryKey, evaluator);
 
-    Map<Outcome, Point> counts = ProbabilityCalculator.countOutcomes(evaluators,
+    Map<Outcome, WinLossCounter> counts = ProbabilityCalculator.countOutcomes(evaluators,
         boardWithThreeCards, pocket, deckWithTenCards);
 
-    Point count = counts.get(arbitraryKey);
-    assertThat(count.y, equalTo(45));
+    WinLossCounter count = counts.get(arbitraryKey);
+    assertThat(count.getCountTotal(), equalTo(45));
   }
 }

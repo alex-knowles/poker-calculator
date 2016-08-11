@@ -8,7 +8,6 @@ import com.skraylabs.poker.model.Pocket;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -73,11 +72,11 @@ class ProbabilityCalculator {
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
     Pocket pocket = gameState.getPockets()[playerIndex];
-    Map<Outcome, Point> counts = countOutcomes(outcomeEvaluators, CardUtils.collectCards(board),
-        CardUtils.collectCards(pocket), deck);
+    Map<Outcome, WinLossCounter> counts = countOutcomes(outcomeEvaluators,
+        CardUtils.collectCards(board), CardUtils.collectCards(pocket), deck);
     for (Outcome outcome : counts.keySet()) {
-      Point count = counts.get(outcome);
-      double probability = ((double) count.x) / count.y;
+      WinLossCounter count = counts.get(outcome);
+      double probability = ((double) count.getWins()) / count.getCountTotal();
       result.put(outcome, probability);
     }
 
@@ -111,24 +110,22 @@ class ProbabilityCalculator {
    * @return Map of Outcomes to Points, where each Point is a pair of numbers (x, y) where x is the
    *         number of target outcomes, and y is the total number of outcomes
    */
-  static Map<Outcome, Point> countOutcomes(Map<Outcome, HandEvaluator> evaluators,
+  static Map<Outcome, WinLossCounter> countOutcomes(Map<Outcome, HandEvaluator> evaluators,
       Collection<Card> board, Collection<Card> pocket, Collection<Card> undealtCards) {
-    HashMap<Outcome, Point> result = new HashMap<>();
+    HashMap<Outcome, WinLossCounter> result = new HashMap<>();
     for (Outcome outcome : evaluators.keySet()) {
-      result.put(outcome, new Point(0, 0));
+      result.put(outcome, new WinLossCounter());
     }
     if (board.size() == 5) {
       // Board is complete
       Collection<Card> cards = collectHandCards(board, pocket);
       for (Outcome outcome : evaluators.keySet()) {
-        int winOutcomes = result.get(outcome).x;
-        int totalOutcomes = result.get(outcome).y;
         HandEvaluator evaluator = evaluators.get(outcome);
         if (evaluator.apply(cards)) {
-          winOutcomes++;
+          result.get(outcome).incrementWinsBy(1);
+        } else {
+          result.get(outcome).incrementLossesBy(1);
         }
-        totalOutcomes++;
-        result.put(outcome, new Point(winOutcomes, totalOutcomes));
       }
     } else {
       // Board is incomplete
@@ -140,14 +137,10 @@ class ProbabilityCalculator {
         dealtCards.add(card);
         Collection<Card> nextUndealtCards = new ArrayList<>(undealtCards);
         nextUndealtCards.removeAll(dealtCards);
-        Map<Outcome, Point> nextCounts =
+        Map<Outcome, WinLossCounter> nextCounts =
             countOutcomes(evaluators, nextBoard, pocket, nextUndealtCards);
         for (Outcome outcome : result.keySet()) {
-          int winOutcomes = result.get(outcome).x;
-          int totalOutcomes = result.get(outcome).y;
-          winOutcomes += nextCounts.get(outcome).x;
-          totalOutcomes += nextCounts.get(outcome).y;
-          result.put(outcome, new Point(winOutcomes, totalOutcomes));
+          result.get(outcome).incrementBy(nextCounts.get(outcome));
         }
       }
     }
