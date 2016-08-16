@@ -103,7 +103,7 @@ class ProbabilityCalculator {
    * Helper method that evaluates all the remaining combinations for a given set of board cards and
    * counts how many of contain a given Poker type (e.g. Two of a Kind).
    *
-   * @param evaulator Map of Outcomes (keys) to corresponding HandEvaluators (values)
+   * @param evaluators Map of Outcomes (keys) to corresponding HandEvaluators (values)
    * @param board cards collected from a {@link Board}
    * @param pocket cards collected from a {@link Pocket}
    * @param undealtCards collection of cards that have yet to be dealt
