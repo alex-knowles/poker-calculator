@@ -27,9 +27,9 @@ public class StraightTest {
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraight(cards);
 
@@ -39,11 +39,11 @@ public class StraightTest {
   @Test
   public void givenNotAStraightReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
-    cards.add(new Card(Rank.FOUR, Suit.Clubs));
-    cards.add(new Card(Rank.KING, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraight(cards);
 
@@ -53,11 +53,11 @@ public class StraightTest {
   @Test
   public void givenAStraightReturnsTrue() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
-    cards.add(new Card(Rank.FOUR, Suit.Clubs));
-    cards.add(new Card(Rank.FIVE, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FIVE, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraight(cards);
 
@@ -67,11 +67,11 @@ public class StraightTest {
   @Test
   public void givenAHighAceStraightReturnsTrue() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.KING, Suit.Clubs));
-    cards.add(new Card(Rank.QUEEN, Suit.Clubs));
-    cards.add(new Card(Rank.JACK, Suit.Clubs));
-    cards.add(new Card(Rank.TEN, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
+    cards.add(new Card(Rank.JACK, Suit.CLUBS));
+    cards.add(new Card(Rank.TEN, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraight(cards);
 

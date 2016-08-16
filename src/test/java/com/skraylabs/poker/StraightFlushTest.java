@@ -23,9 +23,9 @@ public class StraightFlushTest {
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraightFlush(cards);
 
@@ -35,11 +35,11 @@ public class StraightFlushTest {
   @Test
   public void givenAFlushReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
-    cards.add(new Card(Rank.FOUR, Suit.Clubs));
-    cards.add(new Card(Rank.KING, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraightFlush(cards);
 
@@ -49,11 +49,11 @@ public class StraightFlushTest {
   @Test
   public void givenAStraightReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
-    cards.add(new Card(Rank.FOUR, Suit.Clubs));
-    cards.add(new Card(Rank.FIVE, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FIVE, Suit.HEARTS));
 
     boolean result = ProbabilityCalculator.hasStraightFlush(cards);
 
@@ -63,11 +63,11 @@ public class StraightFlushTest {
   @Test
   public void givenAStraightFlushReturnsTrue() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.ACE, Suit.Clubs));
-    cards.add(new Card(Rank.TWO, Suit.Clubs));
-    cards.add(new Card(Rank.THREE, Suit.Clubs));
-    cards.add(new Card(Rank.FOUR, Suit.Clubs));
-    cards.add(new Card(Rank.FIVE, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FIVE, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasStraightFlush(cards);
 

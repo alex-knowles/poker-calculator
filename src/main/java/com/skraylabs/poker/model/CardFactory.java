@@ -139,13 +139,13 @@ public class CardFactory {
   static Suit parseSuit(char suit) throws CardFormatException {
     switch (suit) {
       case 's':
-        return Suit.Spades;
+        return Suit.SPADES;
       case 'h':
-        return Suit.Hearts;
+        return Suit.HEARTS;
       case 'd':
-        return Suit.Diamonds;
+        return Suit.DIAMONDS;
       case 'c':
-        return Suit.Clubs;
+        return Suit.CLUBS;
       default:
         throw new CardFormatException();
     }
@@ -221,16 +221,16 @@ public class CardFactory {
     }
     char result = '?';
     switch (suit) {
-      case Spades:
+      case SPADES:
         result = 's';
         break;
-      case Hearts:
+      case HEARTS:
         result = 'h';
         break;
-      case Diamonds:
+      case DIAMONDS:
         result = 'd';
         break;
-      case Clubs:
+      case CLUBS:
         result = 'c';
         break;
       default:

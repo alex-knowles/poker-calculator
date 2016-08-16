@@ -28,8 +28,8 @@ public class PocketTest {
    */
   @Before
   public void setUp() throws Exception {
-    card1 = new Card(Rank.ACE, Suit.Hearts);
-    card2 = new Card(Rank.ACE, Suit.Diamonds);
+    card1 = new Card(Rank.ACE, Suit.HEARTS);
+    card2 = new Card(Rank.ACE, Suit.DIAMONDS);
     fixedPocket = new Pocket(card1, card2);
   }
 
@@ -82,7 +82,7 @@ public class PocketTest {
   public void testEquals_different2() {
     // Set up
     Pocket differentPocket =
-        new Pocket(new Card(Rank.ACE, Suit.Spades), new Card(Rank.ACE, Suit.Clubs));
+        new Pocket(new Card(Rank.ACE, Suit.SPADES), new Card(Rank.ACE, Suit.CLUBS));
     // Exercise
     boolean equals = fixedPocket.equals(differentPocket);
     // Verify

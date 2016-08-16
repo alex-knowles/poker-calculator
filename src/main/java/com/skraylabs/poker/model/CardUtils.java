@@ -97,16 +97,16 @@ public class CardUtils {
     // Assign suit
     switch (number / 13) {
       case 0:
-        result.suit = Suit.Spades;
+        result.suit = Suit.SPADES;
         break;
       case 1:
-        result.suit = Suit.Hearts;
+        result.suit = Suit.HEARTS;
         break;
       case 2:
-        result.suit = Suit.Diamonds;
+        result.suit = Suit.DIAMONDS;
         break;
       case 3:
-        result.suit = Suit.Clubs;
+        result.suit = Suit.CLUBS;
         break;
       default:
         throw new RuntimeException("Logic error!");
@@ -172,16 +172,16 @@ public class CardUtils {
     }
     int number = 0;
     switch (card.suit) {
-      case Spades:
+      case SPADES:
         number = 13 * 0;
         break;
-      case Hearts:
+      case HEARTS:
         number = 13 * 1;
         break;
-      case Diamonds:
+      case DIAMONDS:
         number = 13 * 2;
         break;
-      case Clubs:
+      case CLUBS:
         number = 13 * 3;
         break;
       default:

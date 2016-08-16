@@ -30,10 +30,10 @@ public class BoardTest {
    */
   @Before
   public void setUp() throws Exception {
-    card1 = new Card(Rank.JACK, Suit.Diamonds);
-    card2 = new Card(Rank.QUEEN, Suit.Diamonds);
-    card3 = new Card(Rank.THREE, Suit.Hearts);
-    card4 = new Card(Rank.JACK, Suit.Spades);
+    card1 = new Card(Rank.JACK, Suit.DIAMONDS);
+    card2 = new Card(Rank.QUEEN, Suit.DIAMONDS);
+    card3 = new Card(Rank.THREE, Suit.HEARTS);
+    card4 = new Card(Rank.JACK, Suit.SPADES);
     fixedBoard = new Board(card1, card2, card3, card4);
   }
 
@@ -85,7 +85,7 @@ public class BoardTest {
   @Test
   public void testEquals_different2() {
     // Set up
-    Card riverCard = new Card(Rank.EIGHT, Suit.Clubs);
+    Card riverCard = new Card(Rank.EIGHT, Suit.CLUBS);
     Board differentBoard = new Board(card1, card2, card3, card4, riverCard);
     // Exercise
     boolean equals = fixedBoard.equals(differentBoard);
