@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -166,33 +167,34 @@ public class Application {
    * @return formatted string describing the probability for each poker hand
    */
   static String formatOutputForPlayer(ProbabilityCalculator calculator, int playerIndex) {
+    Map<Outcome, Double> probabilities = calculator.allOutcomesForAPlayer(playerIndex);
     StringBuilder builder = new StringBuilder();
 
-    long probability = Math.round(100 * calculator.royalFlushForPlayer(playerIndex));
+    long probability = Math.round(100 * probabilities.get(Outcome.RoyalFlush));
     builder.append(String.format("Royal Flush: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.straightFlushForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.StraightFlush));
     builder.append(String.format("Straight Flush: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.fourOfAKindForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.FourOfAKind));
     builder.append(String.format("Four of a Kind: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.fullHouseForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.FullHouse));
     builder.append(String.format("Full House: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.flushForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.Flush));
     builder.append(String.format("Flush: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.straightForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.Straight));
     builder.append(String.format("Straight: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.threeOfAKindForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.ThreeOfAKind));
     builder.append(String.format("Three of a Kind: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.twoPairForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.TwoPair));
     builder.append(String.format("Two Pair: %d%%\n", probability));
 
-    probability = Math.round(100 * calculator.twoOfAKindForPlayer(playerIndex));
+    probability = Math.round(100 * probabilities.get(Outcome.TwoOfAKind));
     builder.append(String.format("Two of a Kind: %d%%", probability));
 
 
