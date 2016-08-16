@@ -177,7 +177,7 @@ public class GameStateFactoryTest {
     Board sutBoard = sut.getBoard();
     assertThat(sutBoard, equalTo(expectedBoard));
     Pocket expectedPocket0 =
-        new Pocket(new Card(Rank.Ace, Suit.Spades), new Card(Rank.Ace, Suit.Clubs));
+        new Pocket(new Card(Rank.ACE, Suit.Spades), new Card(Rank.ACE, Suit.Clubs));
     Pocket[] sutPockets = sut.getPockets();
     for (int i = 0; i < GameState.MAX_PLAYERS; ++i) {
       Pocket sutPocket = sutPockets[i];

@@ -30,8 +30,8 @@ public class NOfAKindTest {
     zeroCards = new ArrayList<Card>();
 
     twoAces = new ArrayList<Card>();
-    twoAces.add(new Card(Rank.Ace, Suit.Spades));
-    twoAces.add(new Card(Rank.Ace, Suit.Hearts));
+    twoAces.add(new Card(Rank.ACE, Suit.Spades));
+    twoAces.add(new Card(Rank.ACE, Suit.Hearts));
   }
 
   @Test
@@ -65,8 +65,8 @@ public class NOfAKindTest {
   @Test
   public void givenLessThanNOfAKindReturnsFalse() {
     Collection<Card> cards = new ArrayList<Card>();
-    cards.add(new Card(Rank.Ace, Suit.Spades));
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.Spades));
+    cards.add(new Card(Rank.ACE, Suit.Hearts));
 
     boolean result = ProbabilityCalculator.hasNOfAKind(twoAces, 3);
 
@@ -76,8 +76,8 @@ public class NOfAKindTest {
   @Test
   public void givenExactlyNCardsReturnsTrue() {
     Collection<Card> cards = new ArrayList<Card>();
-    cards.add(new Card(Rank.Ace, Suit.Spades));
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.Spades));
+    cards.add(new Card(Rank.ACE, Suit.Hearts));
 
     boolean result = ProbabilityCalculator.hasNOfAKind(twoAces, 2);
 

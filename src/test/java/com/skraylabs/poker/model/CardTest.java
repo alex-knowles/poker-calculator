@@ -22,7 +22,7 @@ public class CardTest {
   /**
    * Test fixture rank.
    */
-  final Rank fixedRank = Rank.Ace;
+  final Rank fixedRank = Rank.ACE;
 
   /**
    * Test fixture suit.
@@ -80,7 +80,7 @@ public class CardTest {
   @Test
   public void testEquals_differentRank() {
     // Set up
-    Card differentCard = new Card(Rank.Four, fixedSuit);
+    Card differentCard = new Card(Rank.FOUR, fixedSuit);
     // Exercise
     final boolean equals = fixedCard.equals(differentCard);
     // Verify
@@ -90,7 +90,7 @@ public class CardTest {
   @Test
   public void testEquals_differentRankAndDifferentSuit() {
     // Set up
-    Card differentCard = new Card(Rank.Queen, Suit.Hearts);
+    Card differentCard = new Card(Rank.QUEEN, Suit.Hearts);
     // Exercise
     final boolean equals = fixedCard.equals(differentCard);
     // Verify

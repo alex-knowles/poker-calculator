@@ -37,11 +37,11 @@ public class GameStateTest {
    */
   @Before
   public void setUp() throws Exception {
-    cardA = new Card(Rank.Ace, Suit.Spades);
-    cardB = new Card(Rank.Three, Suit.Clubs);
-    cardC = new Card(Rank.Nine, Suit.Diamonds);
-    cardD = new Card(Rank.Queen, Suit.Hearts);
-    cardE = new Card(Rank.Five, Suit.Clubs);
+    cardA = new Card(Rank.ACE, Suit.Spades);
+    cardB = new Card(Rank.THREE, Suit.Clubs);
+    cardC = new Card(Rank.NINE, Suit.Diamonds);
+    cardD = new Card(Rank.QUEEN, Suit.Hearts);
+    cardE = new Card(Rank.FIVE, Suit.Clubs);
   }
 
   @After
@@ -112,7 +112,7 @@ public class GameStateTest {
     // Exercise
     // Attempt to modify board card
     Board board = game.getBoard();
-    board.flopCard1.rank = Rank.Two;
+    board.flopCard1.rank = Rank.TWO;
     board.flopCard1.suit = Suit.Clubs;
     assertThat(board.flopCard1, not(expectedFlopCard1)); // guard assertion
     // Verify
@@ -210,7 +210,7 @@ public class GameStateTest {
     // Exercise
     // Attempt to modify pocket card
     Pocket pocket = game.getPockets()[0];
-    pocket.card1.rank = Rank.Nine;
+    pocket.card1.rank = Rank.NINE;
     pocket.card1.suit = Suit.Diamonds;
     // Verify
     assertThat(game.getPockets()[0].card1, is(expectedCard1));

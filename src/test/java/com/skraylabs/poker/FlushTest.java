@@ -24,10 +24,10 @@ public class FlushTest {
   @Test
   public void givenLessThanFiveOfASuitReturnsFalse() {
     Collection<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
-    cards.add(new Card(Rank.Two, Suit.Hearts));
-    cards.add(new Card(Rank.Three, Suit.Hearts));
-    cards.add(new Card(Rank.Four, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.Hearts));
+    cards.add(new Card(Rank.TWO, Suit.Hearts));
+    cards.add(new Card(Rank.THREE, Suit.Hearts));
+    cards.add(new Card(Rank.FOUR, Suit.Hearts));
 
     boolean result = ProbabilityCalculator.hasFlush(cards);
 
@@ -37,11 +37,11 @@ public class FlushTest {
   @Test
   public void givenFiveOfASuitReturnsTrue() {
     Collection<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
-    cards.add(new Card(Rank.Two, Suit.Hearts));
-    cards.add(new Card(Rank.Three, Suit.Hearts));
-    cards.add(new Card(Rank.Four, Suit.Hearts));
-    cards.add(new Card(Rank.Five, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.Hearts));
+    cards.add(new Card(Rank.TWO, Suit.Hearts));
+    cards.add(new Card(Rank.THREE, Suit.Hearts));
+    cards.add(new Card(Rank.FOUR, Suit.Hearts));
+    cards.add(new Card(Rank.FIVE, Suit.Hearts));
 
     boolean result = ProbabilityCalculator.hasFlush(cards);
 

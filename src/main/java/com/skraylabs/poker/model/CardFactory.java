@@ -99,31 +99,31 @@ public class CardFactory {
   static Rank parseRank(char rank) throws CardFormatException {
     switch (rank) {
       case 'A':
-        return Rank.Ace;
+        return Rank.ACE;
       case 'K':
-        return Rank.King;
+        return Rank.KING;
       case 'Q':
-        return Rank.Queen;
+        return Rank.QUEEN;
       case 'J':
-        return Rank.Jack;
+        return Rank.JACK;
       case 'T':
-        return Rank.Ten;
+        return Rank.TEN;
       case '9':
-        return Rank.Nine;
+        return Rank.NINE;
       case '8':
-        return Rank.Eight;
+        return Rank.EIGHT;
       case '7':
-        return Rank.Seven;
+        return Rank.SEVEN;
       case '6':
-        return Rank.Six;
+        return Rank.SIX;
       case '5':
-        return Rank.Five;
+        return Rank.FIVE;
       case '4':
-        return Rank.Four;
+        return Rank.FOUR;
       case '3':
-        return Rank.Three;
+        return Rank.THREE;
       case '2':
-        return Rank.Two;
+        return Rank.TWO;
       default:
         throw new CardFormatException();
     }
@@ -163,43 +163,43 @@ public class CardFactory {
     }
     char result = '?';
     switch (rank) {
-      case Ace:
+      case ACE:
         result = 'A';
         break;
-      case King:
+      case KING:
         result = 'K';
         break;
-      case Queen:
+      case QUEEN:
         result = 'Q';
         break;
-      case Jack:
+      case JACK:
         result = 'J';
         break;
-      case Ten:
+      case TEN:
         result = 'T';
         break;
-      case Nine:
+      case NINE:
         result = '9';
         break;
-      case Eight:
+      case EIGHT:
         result = '8';
         break;
-      case Seven:
+      case SEVEN:
         result = '7';
         break;
-      case Six:
+      case SIX:
         result = '6';
         break;
-      case Five:
+      case FIVE:
         result = '5';
         break;
-      case Four:
+      case FOUR:
         result = '4';
         break;
-      case Three:
+      case THREE:
         result = '3';
         break;
-      case Two:
+      case TWO:
         result = '2';
         break;
       default:

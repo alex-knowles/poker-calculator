@@ -23,11 +23,11 @@ public class RoyalFlushTest {
   @Test
   public void givenNotARoyalFlushReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Clubs));
-    cards.add(new Card(Rank.King, Suit.Clubs));
-    cards.add(new Card(Rank.Queen, Suit.Clubs));
-    cards.add(new Card(Rank.Jack, Suit.Clubs));
-    cards.add(new Card(Rank.Two, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.Clubs));
+    cards.add(new Card(Rank.KING, Suit.Clubs));
+    cards.add(new Card(Rank.QUEEN, Suit.Clubs));
+    cards.add(new Card(Rank.JACK, Suit.Clubs));
+    cards.add(new Card(Rank.TWO, Suit.Clubs));
 
     boolean result = ProbabilityCalculator.hasRoyalFlush(cards);
 
@@ -37,11 +37,11 @@ public class RoyalFlushTest {
   @Test
   public void givenAStraightFlushReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.King, Suit.Clubs));
-    cards.add(new Card(Rank.Queen, Suit.Clubs));
-    cards.add(new Card(Rank.Jack, Suit.Clubs));
-    cards.add(new Card(Rank.Ten, Suit.Clubs));
-    cards.add(new Card(Rank.Nine, Suit.Clubs));
+    cards.add(new Card(Rank.KING, Suit.Clubs));
+    cards.add(new Card(Rank.QUEEN, Suit.Clubs));
+    cards.add(new Card(Rank.JACK, Suit.Clubs));
+    cards.add(new Card(Rank.TEN, Suit.Clubs));
+    cards.add(new Card(Rank.NINE, Suit.Clubs));
 
     boolean result = ProbabilityCalculator.hasRoyalFlush(cards);
 
@@ -51,11 +51,11 @@ public class RoyalFlushTest {
   @Test
   public void givenARoyalFlushReturnsTrue() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Clubs));
-    cards.add(new Card(Rank.King, Suit.Clubs));
-    cards.add(new Card(Rank.Queen, Suit.Clubs));
-    cards.add(new Card(Rank.Jack, Suit.Clubs));
-    cards.add(new Card(Rank.Ten, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.Clubs));
+    cards.add(new Card(Rank.KING, Suit.Clubs));
+    cards.add(new Card(Rank.QUEEN, Suit.Clubs));
+    cards.add(new Card(Rank.JACK, Suit.Clubs));
+    cards.add(new Card(Rank.TEN, Suit.Clubs));
 
     boolean result = ProbabilityCalculator.hasRoyalFlush(cards);
 

@@ -423,9 +423,9 @@ class ProbabilityCalculator {
       // Check for Straight with Aces High
       if (result == false && cardSequence.size() == 4) {
         Card lastSequenceCard = cardSequence.get(cardSequence.size() - 1);
-        if (lastSequenceCard.getRank() == Rank.King) {
+        if (lastSequenceCard.getRank() == Rank.KING) {
           Card lowestCard = sortedCards.get(0);
-          if (lowestCard.getRank() == Rank.Ace) {
+          if (lowestCard.getRank() == Rank.ACE) {
             result = true;
           }
         }
@@ -514,7 +514,7 @@ class ProbabilityCalculator {
    */
   static boolean hasRoyalFlush(Collection<Card> cards) {
     Predicate<Card> tenAndHigherFilter =
-        card -> card.getRank().aceHighValue() >= Rank.Ten.aceHighValue();
+        card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue();
     List<Card> topFiveRanks =
         cards.stream().filter(tenAndHigherFilter).collect(Collectors.toList());
     return hasStraightFlush(topFiveRanks);
