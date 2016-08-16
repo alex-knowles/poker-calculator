@@ -59,15 +59,7 @@ class ProbabilityCalculator {
 
     Map<Outcome, Double> result = new HashMap<>();
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
-
-    // Make a deck of undealt cards
-    ArrayList<Card> deck = new ArrayList<>();
-    for (int i = 0; i < 52; i++) {
-      Card card = CardUtils.cardFromNumber(i);
-      if (!dealtCards.contains(card)) {
-        deck.add(card);
-      }
-    }
+    Collection<Card> deck = makeDeckOfUndealtCards(dealtCards);
 
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
@@ -143,6 +135,25 @@ class ProbabilityCalculator {
       }
     }
     return result;
+  }
+
+  /**
+   * Helper method that creates a full deck of 52 cards minus a collection of cards that have
+   * already been dealt. This is useful when evaluating which outcomes are possible given an
+   * incomplete {@link GameState}.
+   *
+   * @param cardsToExclude cards that should not be part of the undealt deck
+   * @return deck of cards minus {@code cardsToExclude}
+   */
+  private Collection<Card> makeDeckOfUndealtCards(Collection<Card> cardsToExclude) {
+    ArrayList<Card> deck = new ArrayList<>();
+    for (int i = 0; i < 52; i++) {
+      Card card = CardUtils.cardFromNumber(i);
+      if (!cardsToExclude.contains(card)) {
+        deck.add(card);
+      }
+    }
+    return deck;
   }
 
   /**
