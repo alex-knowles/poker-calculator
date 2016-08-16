@@ -389,7 +389,7 @@ class ProbabilityCalculator {
       // Sort cards by Rank, with Aces Low
       ArrayList<Card> sortedCards = new ArrayList<>(cards);
       Comparator<Card> aceLowRankComparator =
-          (Card card1, Card card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue();
+          (card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue();
       sortedCards.sort(aceLowRankComparator);
 
       // Check for Straights with Aces Low
