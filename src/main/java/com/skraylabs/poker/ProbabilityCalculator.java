@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome probability for
@@ -148,14 +149,10 @@ class ProbabilityCalculator {
    * @return deck of cards minus {@code cardsToExclude}
    */
   private Collection<Card> makeDeckOfUndealtCards(Collection<Card> cardsToExclude) {
-    ArrayList<Card> deck = new ArrayList<>();
-    for (int i = 0; i < DECK_SIZE; i++) {
-      Card card = CardUtils.cardFromNumber(i);
-      if (!cardsToExclude.contains(card)) {
-        deck.add(card);
-      }
-    }
-    return deck;
+    return IntStream.range(0, DECK_SIZE)
+        .mapToObj(CardUtils::cardFromNumber)
+        .filter(card -> !cardsToExclude.contains(card))
+        .collect(Collectors.toList());
   }
 
   /**
