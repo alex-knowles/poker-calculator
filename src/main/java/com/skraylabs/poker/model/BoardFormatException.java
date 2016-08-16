@@ -1,8 +1,7 @@
 package com.skraylabs.poker.model;
 
 /**
- * A checked exception thrown when a string cannot be resolved to the expected {@link Board}
- * format.
+ * A checked exception thrown when a string cannot be resolved to the expected {@link Board} format.
  */
 public class BoardFormatException extends PokerFormatException {
 

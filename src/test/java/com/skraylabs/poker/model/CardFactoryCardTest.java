@@ -13,7 +13,8 @@ import org.junit.rules.ExpectedException;
 
 public class CardFactoryCardTest {
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   @Before
   public void setUp() throws Exception {}

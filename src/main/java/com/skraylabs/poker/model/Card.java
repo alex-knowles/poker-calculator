@@ -60,6 +60,7 @@ public class Card {
 
   /**
    * Accessor: Playing card rank (A, K, Q, J, 10-2).
+   *
    * @return the rank
    */
   public Rank getRank() {
@@ -68,6 +69,7 @@ public class Card {
 
   /**
    * Accessor: Playing card suit (Spades, Hearts, Diamond, Clubs).
+   *
    * @return the suit
    */
   public Suit getSuit() {

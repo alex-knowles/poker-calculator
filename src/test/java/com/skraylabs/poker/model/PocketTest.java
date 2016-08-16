@@ -11,7 +11,8 @@ import org.junit.rules.ExpectedException;
 
 public class PocketTest {
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   Pocket fixedPocket;
   Card card1;
@@ -20,7 +21,8 @@ public class PocketTest {
   /**
    * Set up shared test fixture.
    * 
-   * <p>Use common Pocket object with predictable Card objects populated.
+   * <p>
+   * Use common Pocket object with predictable Card objects populated.
    *
    * @throws Exception shouldn't happen.
    */

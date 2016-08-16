@@ -123,14 +123,14 @@ public class ProbabilityCalculatorTest {
     for (int i = 0; i < cards.length; ++i) {
       cards[i] = CardUtils.cardFromNumber(i);
     }
-    Collection<Card> boardWithThreeCards = new ArrayList<Card>();
+    Collection<Card> boardWithThreeCards = new ArrayList<>();
     for (int i = 0; i < 3; ++i) {
       boardWithThreeCards.add(cards[i]);
     }
-    Collection<Card> pocket = new ArrayList<Card>();
+    Collection<Card> pocket = new ArrayList<>();
     pocket.add(cards[3]);
     pocket.add(cards[4]);
-    Collection<Card> deckWithTenCards = new ArrayList<Card>();
+    Collection<Card> deckWithTenCards = new ArrayList<>();
     for (int i = 5; i < cards.length; ++i) {
       deckWithTenCards.add(cards[i]);
     }

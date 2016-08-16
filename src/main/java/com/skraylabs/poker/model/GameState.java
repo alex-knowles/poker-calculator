@@ -20,8 +20,7 @@ public class GameState {
   /**
    * Default constructor.
    */
-  GameState() {
-  }
+  GameState() {}
 
   /**
    * Accessor: get a copy of the board cards.

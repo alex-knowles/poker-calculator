@@ -108,7 +108,7 @@ public class GameStateFactory {
   static Board parseBoard(String input) throws CardFormatException, BoardFormatException {
     Board result = null;
     StringTokenizer tokenizer = new StringTokenizer(input, " ");
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     while (tokenizer.hasMoreTokens()) {
       String cardInput = tokenizer.nextToken();
       Card card = CardFactory.createCardFromString(cardInput);
@@ -144,7 +144,7 @@ public class GameStateFactory {
   static Pocket parsePocket(String input) throws CardFormatException, PocketFormatException {
     Pocket result = null;
     StringTokenizer tokenizer = new StringTokenizer(input, " ");
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     while (tokenizer.hasMoreTokens()) {
       String cardInput = tokenizer.nextToken();
       Card card = CardFactory.createCardFromString(cardInput);
@@ -175,8 +175,8 @@ public class GameStateFactory {
    */
   static ArrayList<Card> findDuplicateCards(GameState gameState) {
     Collection<Card> cards = CardUtils.collectCards(gameState);
-    HashSet<Card> cardSet = new HashSet<Card>();
-    ArrayList<Card> result = new ArrayList<Card>();
+    HashSet<Card> cardSet = new HashSet<>();
+    ArrayList<Card> result = new ArrayList<>();
     for (Card card : cards) {
       boolean firstTimeAdded = cardSet.add(card);
       if (!firstTimeAdded) {

@@ -15,7 +15,8 @@ import org.junit.rules.ExpectedException;
 
 public class GameStateTest {
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   /**
    * Test fixture cards to use in test methods. There are no duplicates in this set.
@@ -29,7 +30,8 @@ public class GameStateTest {
   /**
    * Set up shared test fixture.
    *
-   * <p>Establishes some card values to make test methods predictable.
+   * <p>
+   * Establishes some card values to make test methods predictable.
    *
    * @throws Exception shouldn't happen.
    */

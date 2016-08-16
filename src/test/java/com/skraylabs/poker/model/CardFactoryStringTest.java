@@ -9,7 +9,8 @@ import org.junit.rules.ExpectedException;
 
 public class CardFactoryStringTest {
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   Card card;
 

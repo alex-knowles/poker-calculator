@@ -35,6 +35,7 @@ public enum Rank {
    *
    * <p>
    * Aces high: Ace is a "14".
+   *
    * @return relative value with Aces high.
    */
   public int aceHighValue() {
@@ -46,6 +47,7 @@ public enum Rank {
    *
    * <p>
    * Aces low: Ace is a "1".
+   *
    * @return relative value with Aces low.
    */
   public int aceLowValue() {

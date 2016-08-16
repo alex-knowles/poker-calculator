@@ -11,7 +11,8 @@ import org.junit.rules.ExpectedException;
 
 public class CardTest {
 
-  @Rule public ExpectedException exception = ExpectedException.none();
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   /**
    * Test fixture card.

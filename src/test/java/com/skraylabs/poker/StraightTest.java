@@ -26,7 +26,7 @@ public class StraightTest {
 
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));
@@ -38,7 +38,7 @@ public class StraightTest {
 
   @Test
   public void givenNotAStraightReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));
@@ -52,7 +52,7 @@ public class StraightTest {
 
   @Test
   public void givenAStraightReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.Two, Suit.Clubs));
     cards.add(new Card(Rank.Three, Suit.Clubs));
@@ -66,7 +66,7 @@ public class StraightTest {
 
   @Test
   public void givenAHighAceStraightReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.Ace, Suit.Clubs));
     cards.add(new Card(Rank.King, Suit.Clubs));
     cards.add(new Card(Rank.Queen, Suit.Clubs));

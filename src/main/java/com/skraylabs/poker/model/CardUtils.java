@@ -30,7 +30,7 @@ public class CardUtils {
    * @return collection of cards found in {@code board}
    */
   public static Collection<Card> collectCards(Board board) {
-    ArrayList<Card> result = new ArrayList<Card>();
+    ArrayList<Card> result = new ArrayList<>();
     if (board == null) {
       return result;
     }
@@ -69,7 +69,7 @@ public class CardUtils {
    * @return collection of cards from {@code pocket}
    */
   public static Collection<Card> collectCards(Pocket pocket) {
-    ArrayList<Card> result = new ArrayList<Card>();
+    ArrayList<Card> result = new ArrayList<>();
     if (pocket == null) {
       return result;
     }
