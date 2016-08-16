@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
  */
 class ProbabilityCalculator {
 
+  private static final int DECK_SIZE = 52;
+
   private GameState gameState;
 
   public ProbabilityCalculator(GameState gameState) {
@@ -147,7 +149,7 @@ class ProbabilityCalculator {
    */
   private Collection<Card> makeDeckOfUndealtCards(Collection<Card> cardsToExclude) {
     ArrayList<Card> deck = new ArrayList<>();
-    for (int i = 0; i < 52; i++) {
+    for (int i = 0; i < DECK_SIZE; i++) {
       Card card = CardUtils.cardFromNumber(i);
       if (!cardsToExclude.contains(card)) {
         deck.add(card);
