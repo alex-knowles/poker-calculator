@@ -20,15 +20,15 @@ public class ApplicationFormatOutputTest {
       @Override
       public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
         HashMap<Outcome, Double> allOutcomes = new HashMap<>();
-        allOutcomes.put(Outcome.RoyalFlush, 0.0);
-        allOutcomes.put(Outcome.StraightFlush, 0.222222);
-        allOutcomes.put(Outcome.FourOfAKind, 0.3333333);
-        allOutcomes.put(Outcome.FullHouse, 0.4444);
-        allOutcomes.put(Outcome.Flush, 0.5);
-        allOutcomes.put(Outcome.Straight, 0.7777);
-        allOutcomes.put(Outcome.ThreeOfAKind, 0.8333);
-        allOutcomes.put(Outcome.TwoPair, 0.935);
-        allOutcomes.put(Outcome.TwoOfAKind, 1.0);
+        allOutcomes.put(Outcome.ROYAL_FLUSH, 0.0);
+        allOutcomes.put(Outcome.STRAIGHT_FLUSH, 0.222222);
+        allOutcomes.put(Outcome.FOUR_OF_A_KIND, 0.3333333);
+        allOutcomes.put(Outcome.FULL_HOUSE, 0.4444);
+        allOutcomes.put(Outcome.FLUSH, 0.5);
+        allOutcomes.put(Outcome.STRAIGHT, 0.7777);
+        allOutcomes.put(Outcome.THREE_OF_A_KIND, 0.8333);
+        allOutcomes.put(Outcome.TWO_PAIR, 0.935);
+        allOutcomes.put(Outcome.TWO_OF_A_KIND, 1.0);
         return allOutcomes;
       }
     };

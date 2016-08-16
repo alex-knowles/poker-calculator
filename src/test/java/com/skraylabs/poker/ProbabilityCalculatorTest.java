@@ -129,15 +129,15 @@ public class ProbabilityCalculatorTest {
 
     Map<Outcome, Double> probabilities = calculator.allOutcomesForAPlayer(0);
 
-    assertThat(probabilities.get(Outcome.RoyalFlush), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.StraightFlush), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.FourOfAKind), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.FullHouse), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.Flush), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.Straight), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.ThreeOfAKind), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.TwoPair), is(notNullValue()));
-    assertThat(probabilities.get(Outcome.TwoOfAKind), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.ROYAL_FLUSH), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.STRAIGHT_FLUSH), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.FOUR_OF_A_KIND), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.FULL_HOUSE), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.FLUSH), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.STRAIGHT), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.THREE_OF_A_KIND), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.TWO_PAIR), is(notNullValue()));
+    assertThat(probabilities.get(Outcome.TWO_OF_A_KIND), is(notNullValue()));
   }
 
   @Test
@@ -159,7 +159,7 @@ public class ProbabilityCalculatorTest {
     }
     ProbabilityCalculator.HandEvaluator evaluator = (someCards) -> false;
     Map<Outcome, ProbabilityCalculator.HandEvaluator> evaluators = new HashMap<>();
-    Outcome arbitraryKey = Outcome.Flush;
+    Outcome arbitraryKey = Outcome.FLUSH;
     evaluators.put(arbitraryKey, evaluator);
 
     Map<Outcome, WinLossCounter> counts = ProbabilityCalculator.countOutcomes(evaluators,
