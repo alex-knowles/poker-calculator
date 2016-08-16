@@ -219,7 +219,15 @@ class ProbabilityCalculator {
    */
   private static <T> Collection<Card> collectNOfAType(Collection<Card> cards, int number,
       Function<Card, T> typeFunction) {
-    List<Card> result = new ArrayList<>();
+    // Sanity checks
+    if (cards == null) {
+      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
+    }
+    if (number <= 0) {
+      throw new IllegalArgumentException("Parameter \"number\" must be a positive value.");
+    }
+
+    List<Card> result = new ArrayList<Card>();
     Map<T, List<Card>> cardsByType = cards.stream().collect(Collectors.groupingBy(typeFunction));
     for (T key : cardsByType.keySet()) {
       List<Card> cardsOfType = cardsByType.get(key);
@@ -243,22 +251,8 @@ class ProbabilityCalculator {
    */
   private static <T> boolean hasNOfAType(Collection<Card> cards, int number,
       Function<Card, T> typeFunction) {
-    if (cards == null) {
-      throw new IllegalArgumentException("Parameter \"cards\" must be non-null.");
-    }
-    if (number <= 0) {
-      throw new IllegalArgumentException("Parameter \"number\" must be a positive value.");
-    }
-    boolean result = false;
-    Map<T, Long> countByType =
-        cards.stream().collect(Collectors.groupingBy(typeFunction, Collectors.counting()));
-    for (Long count : countByType.values()) {
-      if (count >= number) {
-        result = true;
-        break;
-      }
-    }
-    return result;
+    Collection<Card> cardsOfType = collectNOfAType(cards, number, typeFunction);
+    return !cardsOfType.isEmpty();
   }
 
   /**
