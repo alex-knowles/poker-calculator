@@ -24,9 +24,9 @@ public class TwoPairTest {
   @Test
   public void givenLessThanFourCardsReturnsFalse() {
     Collection<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
-    cards.add(new Card(Rank.Ace, Suit.Spades));
-    cards.add(new Card(Rank.King, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.KING, Suit.HEARTS));
 
     boolean result = ProbabilityCalculator.hasTwoPair(cards);
 
@@ -36,10 +36,10 @@ public class TwoPairTest {
   @Test
   public void givenFourUnpairedCardsReturnsFalse() {
     Collection<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
-    cards.add(new Card(Rank.King, Suit.Hearts));
-    cards.add(new Card(Rank.Queen, Suit.Hearts));
-    cards.add(new Card(Rank.Jack, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.KING, Suit.HEARTS));
+    cards.add(new Card(Rank.QUEEN, Suit.HEARTS));
+    cards.add(new Card(Rank.JACK, Suit.HEARTS));
 
     boolean result = ProbabilityCalculator.hasTwoPair(cards);
 
@@ -49,10 +49,10 @@ public class TwoPairTest {
   @Test
   public void givenNotATwoPairReturnsTrue() {
     Collection<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
-    cards.add(new Card(Rank.Ace, Suit.Spades));
-    cards.add(new Card(Rank.King, Suit.Clubs));
-    cards.add(new Card(Rank.King, Suit.Diamonds));
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.DIAMONDS));
 
     boolean result = ProbabilityCalculator.hasTwoPair(cards);
 

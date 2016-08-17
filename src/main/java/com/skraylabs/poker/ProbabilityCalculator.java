@@ -92,7 +92,7 @@ class ProbabilityCalculator {
    * @return the probability of getting the specified poker outcome
    */
   double outcomeForAPlayer(HandEvaluator outcomeEvaluator, int playerIndex) {
-    Outcome arbitraryKey = Outcome.Flush;
+    Outcome arbitraryKey = Outcome.FLUSH;
     HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
     evaluators.put(arbitraryKey, outcomeEvaluator);
     Map<Outcome, Double> outcomes = outcomesForAPlayer(evaluators, playerIndex);
@@ -167,15 +167,15 @@ class ProbabilityCalculator {
    */
   public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
     HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
-    evaluators.put(Outcome.TwoOfAKind, ProbabilityCalculator::hasTwoOfAKind);
-    evaluators.put(Outcome.TwoPair, ProbabilityCalculator::hasTwoPair);
-    evaluators.put(Outcome.ThreeOfAKind, ProbabilityCalculator::hasThreeOfAKind);
-    evaluators.put(Outcome.Straight, ProbabilityCalculator::hasStraight);
-    evaluators.put(Outcome.Flush, ProbabilityCalculator::hasFlush);
-    evaluators.put(Outcome.FullHouse, ProbabilityCalculator::hasFullHouse);
-    evaluators.put(Outcome.FourOfAKind, ProbabilityCalculator::hasFourOfAKind);
-    evaluators.put(Outcome.StraightFlush, ProbabilityCalculator::hasStraightFlush);
-    evaluators.put(Outcome.RoyalFlush, ProbabilityCalculator::hasRoyalFlush);
+    evaluators.put(Outcome.TWO_OF_A_KIND, ProbabilityCalculator::hasTwoOfAKind);
+    evaluators.put(Outcome.TWO_PAIR, ProbabilityCalculator::hasTwoPair);
+    evaluators.put(Outcome.THREE_OF_A_KIND, ProbabilityCalculator::hasThreeOfAKind);
+    evaluators.put(Outcome.STRAIGHT, ProbabilityCalculator::hasStraight);
+    evaluators.put(Outcome.FLUSH, ProbabilityCalculator::hasFlush);
+    evaluators.put(Outcome.FULL_HOUSE, ProbabilityCalculator::hasFullHouse);
+    evaluators.put(Outcome.FOUR_OF_A_KIND, ProbabilityCalculator::hasFourOfAKind);
+    evaluators.put(Outcome.STRAIGHT_FLUSH, ProbabilityCalculator::hasStraightFlush);
+    evaluators.put(Outcome.ROYAL_FLUSH, ProbabilityCalculator::hasRoyalFlush);
     return outcomesForAPlayer(evaluators, playerIndex);
   }
 
@@ -423,9 +423,9 @@ class ProbabilityCalculator {
       // Check for Straight with Aces High
       if (result == false && cardSequence.size() == 4) {
         Card lastSequenceCard = cardSequence.get(cardSequence.size() - 1);
-        if (lastSequenceCard.getRank() == Rank.King) {
+        if (lastSequenceCard.getRank() == Rank.KING) {
           Card lowestCard = sortedCards.get(0);
-          if (lowestCard.getRank() == Rank.Ace) {
+          if (lowestCard.getRank() == Rank.ACE) {
             result = true;
           }
         }
@@ -514,7 +514,7 @@ class ProbabilityCalculator {
    */
   static boolean hasRoyalFlush(Collection<Card> cards) {
     Predicate<Card> tenAndHigherFilter =
-        card -> card.getRank().aceHighValue() >= Rank.Ten.aceHighValue();
+        card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue();
     List<Card> topFiveRanks =
         cards.stream().filter(tenAndHigherFilter).collect(Collectors.toList());
     return hasStraightFlush(topFiveRanks);

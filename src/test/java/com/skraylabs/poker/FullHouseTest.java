@@ -23,9 +23,9 @@ public class FullHouseTest {
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Clubs));
-    cards.add(new Card(Rank.Two, Suit.Clubs));
-    cards.add(new Card(Rank.Three, Suit.Clubs));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
 
     boolean result = ProbabilityCalculator.hasFullHouse(cards);
 
@@ -35,13 +35,13 @@ public class FullHouseTest {
   @Test
   public void givenNotAFullHouseReturnsFalse() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Clubs));
-    cards.add(new Card(Rank.Ace, Suit.Spades));
-    cards.add(new Card(Rank.Three, Suit.Clubs));
-    cards.add(new Card(Rank.Three, Suit.Spades));
-    cards.add(new Card(Rank.Ten, Suit.Spades));
-    cards.add(new Card(Rank.Jack, Suit.Spades));
-    cards.add(new Card(Rank.King, Suit.Spades));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.SPADES));
+    cards.add(new Card(Rank.TEN, Suit.SPADES));
+    cards.add(new Card(Rank.JACK, Suit.SPADES));
+    cards.add(new Card(Rank.KING, Suit.SPADES));
 
     boolean result = ProbabilityCalculator.hasFullHouse(cards);
 
@@ -51,13 +51,13 @@ public class FullHouseTest {
   @Test
   public void givenAFullHouseReturnsTrue() {
     ArrayList<Card> cards = new ArrayList<>();
-    cards.add(new Card(Rank.Ace, Suit.Clubs));
-    cards.add(new Card(Rank.Ace, Suit.Spades));
-    cards.add(new Card(Rank.Three, Suit.Clubs));
-    cards.add(new Card(Rank.Three, Suit.Spades));
-    cards.add(new Card(Rank.Ten, Suit.Spades));
-    cards.add(new Card(Rank.Jack, Suit.Spades));
-    cards.add(new Card(Rank.Ace, Suit.Hearts));
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.SPADES));
+    cards.add(new Card(Rank.TEN, Suit.SPADES));
+    cards.add(new Card(Rank.JACK, Suit.SPADES));
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
 
     boolean result = ProbabilityCalculator.hasFullHouse(cards);
 

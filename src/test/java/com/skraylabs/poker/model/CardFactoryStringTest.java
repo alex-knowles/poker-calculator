@@ -37,7 +37,7 @@ public class CardFactoryStringTest {
   @Test
   public void testAceOfHearts() {
     // Set up
-    card = new Card(Rank.Ace, Suit.Hearts);
+    card = new Card(Rank.ACE, Suit.HEARTS);
     // Exercise
     String string = CardFactory.createStringFromCard(card);
     // Verify
@@ -47,7 +47,7 @@ public class CardFactoryStringTest {
   @Test
   public void testTwoOfClubs() {
     // Set up
-    card = new Card(Rank.Two, Suit.Clubs);
+    card = new Card(Rank.TWO, Suit.CLUBS);
     // Exercise
     String string = CardFactory.createStringFromCard(card);
     // Verify
@@ -57,7 +57,7 @@ public class CardFactoryStringTest {
   @Test
   public void testFiveOfDiamonds() {
     // Set up
-    card = new Card(Rank.Five, Suit.Diamonds);
+    card = new Card(Rank.FIVE, Suit.DIAMONDS);
     // Exercise
     String string = CardFactory.createStringFromCard(card);
     // Verify
@@ -67,7 +67,7 @@ public class CardFactoryStringTest {
   @Test
   public void testTenOfSpades() {
     // Set up
-    card = new Card(Rank.Ten, Suit.Spades);
+    card = new Card(Rank.TEN, Suit.SPADES);
     // Exercise
     String string = CardFactory.createStringFromCard(card);
     // Verify

@@ -170,31 +170,31 @@ public class Application {
     Map<Outcome, Double> probabilities = calculator.allOutcomesForAPlayer(playerIndex);
     StringBuilder builder = new StringBuilder();
 
-    long probability = Math.round(100 * probabilities.get(Outcome.RoyalFlush));
+    long probability = Math.round(100 * probabilities.get(Outcome.ROYAL_FLUSH));
     builder.append(String.format("Royal Flush: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.StraightFlush));
+    probability = Math.round(100 * probabilities.get(Outcome.STRAIGHT_FLUSH));
     builder.append(String.format("Straight Flush: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.FourOfAKind));
+    probability = Math.round(100 * probabilities.get(Outcome.FOUR_OF_A_KIND));
     builder.append(String.format("Four of a Kind: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.FullHouse));
+    probability = Math.round(100 * probabilities.get(Outcome.FULL_HOUSE));
     builder.append(String.format("Full House: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.Flush));
+    probability = Math.round(100 * probabilities.get(Outcome.FLUSH));
     builder.append(String.format("Flush: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.Straight));
+    probability = Math.round(100 * probabilities.get(Outcome.STRAIGHT));
     builder.append(String.format("Straight: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.ThreeOfAKind));
+    probability = Math.round(100 * probabilities.get(Outcome.THREE_OF_A_KIND));
     builder.append(String.format("Three of a Kind: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.TwoPair));
+    probability = Math.round(100 * probabilities.get(Outcome.TWO_PAIR));
     builder.append(String.format("Two Pair: %d%%\n", probability));
 
-    probability = Math.round(100 * probabilities.get(Outcome.TwoOfAKind));
+    probability = Math.round(100 * probabilities.get(Outcome.TWO_OF_A_KIND));
     builder.append(String.format("Two of a Kind: %d%%", probability));
 
 

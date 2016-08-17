@@ -97,16 +97,16 @@ public class CardUtils {
     // Assign suit
     switch (number / 13) {
       case 0:
-        result.suit = Suit.Spades;
+        result.suit = Suit.SPADES;
         break;
       case 1:
-        result.suit = Suit.Hearts;
+        result.suit = Suit.HEARTS;
         break;
       case 2:
-        result.suit = Suit.Diamonds;
+        result.suit = Suit.DIAMONDS;
         break;
       case 3:
-        result.suit = Suit.Clubs;
+        result.suit = Suit.CLUBS;
         break;
       default:
         throw new RuntimeException("Logic error!");
@@ -114,43 +114,43 @@ public class CardUtils {
     // Assign rank
     switch (number % 13) {
       case 0:
-        result.rank = Rank.Ace;
+        result.rank = Rank.ACE;
         break;
       case 1:
-        result.rank = Rank.King;
+        result.rank = Rank.KING;
         break;
       case 2:
-        result.rank = Rank.Queen;
+        result.rank = Rank.QUEEN;
         break;
       case 3:
-        result.rank = Rank.Jack;
+        result.rank = Rank.JACK;
         break;
       case 4:
-        result.rank = Rank.Ten;
+        result.rank = Rank.TEN;
         break;
       case 5:
-        result.rank = Rank.Nine;
+        result.rank = Rank.NINE;
         break;
       case 6:
-        result.rank = Rank.Eight;
+        result.rank = Rank.EIGHT;
         break;
       case 7:
-        result.rank = Rank.Seven;
+        result.rank = Rank.SEVEN;
         break;
       case 8:
-        result.rank = Rank.Six;
+        result.rank = Rank.SIX;
         break;
       case 9:
-        result.rank = Rank.Five;
+        result.rank = Rank.FIVE;
         break;
       case 10:
-        result.rank = Rank.Four;
+        result.rank = Rank.FOUR;
         break;
       case 11:
-        result.rank = Rank.Three;
+        result.rank = Rank.THREE;
         break;
       case 12:
-        result.rank = Rank.Two;
+        result.rank = Rank.TWO;
         break;
       default:
         throw new RuntimeException("Logic error!");
@@ -172,59 +172,59 @@ public class CardUtils {
     }
     int number = 0;
     switch (card.suit) {
-      case Spades:
+      case SPADES:
         number = 13 * 0;
         break;
-      case Hearts:
+      case HEARTS:
         number = 13 * 1;
         break;
-      case Diamonds:
+      case DIAMONDS:
         number = 13 * 2;
         break;
-      case Clubs:
+      case CLUBS:
         number = 13 * 3;
         break;
       default:
         throw new RuntimeException("Logic error!");
     }
     switch (card.rank) {
-      case Ace:
+      case ACE:
         number += 0;
         break;
-      case King:
+      case KING:
         number += 1;
         break;
-      case Queen:
+      case QUEEN:
         number += 2;
         break;
-      case Jack:
+      case JACK:
         number += 3;
         break;
-      case Ten:
+      case TEN:
         number += 4;
         break;
-      case Nine:
+      case NINE:
         number += 5;
         break;
-      case Eight:
+      case EIGHT:
         number += 6;
         break;
-      case Seven:
+      case SEVEN:
         number += 7;
         break;
-      case Six:
+      case SIX:
         number += 8;
         break;
-      case Five:
+      case FIVE:
         number += 9;
         break;
-      case Four:
+      case FOUR:
         number += 10;
         break;
-      case Three:
+      case THREE:
         number += 11;
         break;
-      case Two:
+      case TWO:
         number += 12;
         break;
       default:

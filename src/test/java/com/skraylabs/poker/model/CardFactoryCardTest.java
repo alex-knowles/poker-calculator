@@ -145,7 +145,7 @@ public class CardFactoryCardTest {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify
-    assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
+    assertCardRankAndSuit(card, Rank.ACE, Suit.SPADES);
   }
 
   @Test
@@ -158,7 +158,7 @@ public class CardFactoryCardTest {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify
-    assertCardRankAndSuit(card, Rank.Eight, Suit.Clubs);
+    assertCardRankAndSuit(card, Rank.EIGHT, Suit.CLUBS);
   }
 
   @Test
@@ -171,7 +171,7 @@ public class CardFactoryCardTest {
       fail("An InvalidCardFormatException was thrown for a valid Card input.");
     }
     // Verify
-    assertCardRankAndSuit(card, Rank.Ace, Suit.Spades);
+    assertCardRankAndSuit(card, Rank.ACE, Suit.SPADES);
   }
 
   /**
