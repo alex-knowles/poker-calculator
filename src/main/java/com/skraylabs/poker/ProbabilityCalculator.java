@@ -26,6 +26,7 @@ import java.util.stream.IntStream;
 class ProbabilityCalculator {
 
   private static final int DECK_SIZE = 52;
+  private static final int STRAIGHT_SIZE = 5;
 
   private GameState gameState;
 
@@ -395,7 +396,7 @@ class ProbabilityCalculator {
    */
   static boolean hasStraight(Collection<Card> cards) {
     boolean result = false;
-    if (cards.size() >= 5) {
+    if (cards.size() >= STRAIGHT_SIZE) {
       // Check for Straights with Aces Low
       result = hasStraight(cards, rank -> rank.aceLowValue());
 
@@ -419,7 +420,7 @@ class ProbabilityCalculator {
    */
   private static boolean hasStraight(Collection<Card> cards, Function<Rank, Integer> rankFunction) {
     boolean result = false;
-    if (cards.size() >= 5) {
+    if (cards.size() >= STRAIGHT_SIZE) {
       // Sort cards by Rank, according to rankFunction
       ArrayList<Card> sortedCards = new ArrayList<>(cards);
       Comparator<Card> rankComparator = (card1, card2) ->
@@ -440,7 +441,7 @@ class ProbabilityCalculator {
           if (rankValueDelta == 1) {
             // Advance the sequence
             cardSequence.add(card);
-            if (cardSequence.size() == 5) {
+            if (cardSequence.size() == STRAIGHT_SIZE) {
               result = true;
               break;
             }
