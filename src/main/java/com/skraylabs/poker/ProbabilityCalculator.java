@@ -396,13 +396,37 @@ class ProbabilityCalculator {
   static boolean hasStraight(Collection<Card> cards) {
     boolean result = false;
     if (cards.size() >= 5) {
-      // Sort cards by Rank, with Aces Low
-      ArrayList<Card> sortedCards = new ArrayList<>(cards);
-      Comparator<Card> aceLowRankComparator =
-          (card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue();
-      sortedCards.sort(aceLowRankComparator);
-
       // Check for Straights with Aces Low
+      result = hasStraight(cards, rank -> rank.aceLowValue());
+
+      // Check for Straights with Aces High
+      if (!result) {
+        result = hasStraight(cards, rank -> rank.aceHighValue());
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Helper method that determines if a collection of cards contains a straight. Ordering of card
+   * rank is singular and is determined by a given Function that maps {@link Rank} to an integer
+   * value. In other words, Aces can be low or high, but not both.
+   *
+   * @param cards to evaluate
+   * @param rankFunction returns a single integer value for a given {@link Rank}
+   * @return {@code true} if the cards contain 5 cards of consecutive Rank; {@code false} otherwise
+   */
+  private static boolean hasStraight(Collection<Card> cards, Function<Rank, Integer> rankFunction) {
+    boolean result = false;
+    if (cards.size() >= 5) {
+      // Sort cards by Rank, according to rankFunction
+      ArrayList<Card> sortedCards = new ArrayList<>(cards);
+      Comparator<Card> rankComparator = (card1, card2) ->
+          rankFunction.apply(card1.getRank()) - rankFunction.apply(card2.getRank());
+      sortedCards.sort(rankComparator);
+
+      // Check for Straights, according to rankFunction
       ArrayList<Card> cardSequence = new ArrayList<>();
       for (Card card : sortedCards) {
         if (cardSequence.isEmpty()) {
@@ -410,8 +434,8 @@ class ProbabilityCalculator {
           cardSequence.add(card);
         } else {
           Card previousCard = cardSequence.get(cardSequence.size() - 1);
-          int cardRankValue = card.getRank().aceLowValue();
-          int previousCardRankValue = previousCard.getRank().aceLowValue();
+          int cardRankValue = rankFunction.apply(card.getRank());
+          int previousCardRankValue = rankFunction.apply(previousCard.getRank());
           int rankValueDelta = Math.abs(cardRankValue - previousCardRankValue);
           if (rankValueDelta == 1) {
             // Advance the sequence
@@ -426,17 +450,6 @@ class ProbabilityCalculator {
             cardSequence.add(card);
           } else if (rankValueDelta == 0) {
             // Do nothing, the sequence already has one of this Rank
-          }
-        }
-      }
-
-      // Check for Straight with Aces High
-      if (result == false && cardSequence.size() == 4) {
-        Card lastSequenceCard = cardSequence.get(cardSequence.size() - 1);
-        if (lastSequenceCard.getRank() == Rank.KING) {
-          Card lowestCard = sortedCards.get(0);
-          if (lowestCard.getRank() == Rank.ACE) {
-            result = true;
           }
         }
       }
