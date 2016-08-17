@@ -435,28 +435,44 @@ class ProbabilityCalculator {
           cardSequence.add(card);
         } else {
           Card previousCard = cardSequence.get(cardSequence.size() - 1);
-          int cardRankValue = rankFunction.apply(card.getRank());
-          int previousCardRankValue = rankFunction.apply(previousCard.getRank());
-          int rankValueDelta = Math.abs(cardRankValue - previousCardRankValue);
-          if (rankValueDelta == 1) {
+          if (cardRanksAreAdjacent(card, previousCard, rankFunction)) {
             // Advance the sequence
             cardSequence.add(card);
             if (cardSequence.size() == STRAIGHT_SIZE) {
               result = true;
               break;
             }
-          } else if (rankValueDelta > 1) {
+          } else if (card.getRank() != previousCard.getRank()) {
             // Restart the sequence
             cardSequence.clear();
             cardSequence.add(card);
-          } else if (rankValueDelta == 0) {
-            // Do nothing, the sequence already has one of this Rank
+          } else if (card.getRank() == previousCard.getRank()) {
+            // Do nothing
+            // Sequence is neither advanced nor restarted
           }
         }
       }
     }
 
     return result;
+  }
+
+  /**
+   * Helper method that returns true if two Cards have "adjacent" ranks, where rank ordering is
+   * determined by a given {@code Function<Rank, Integer>}. For example, a Jack is adjacent to a
+   * Ten, but not to a King.
+   *
+   * @param card1 card to compare
+   * @param card2 card to compare
+   * @param rankFunction determines order of {@link Rank} values
+   * @return {@code true} if {@code card1} and {@code card2} are adjacent in rank; {@code false} if
+   *         they have equivalent ranks or are non-neighboring ranks
+   */
+  private static boolean cardRanksAreAdjacent(Card card1, Card card2,
+      Function<Rank, Integer> rankFunction) {
+    int rank1 = rankFunction.apply(card1.getRank());
+    int rank2 = rankFunction.apply(card2.getRank());
+    return Math.abs(rank1 - rank2) == 1;
   }
 
   /**

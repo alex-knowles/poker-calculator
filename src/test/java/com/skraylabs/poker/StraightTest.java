@@ -51,6 +51,20 @@ public class StraightTest {
   }
 
   @Test
+  public void givenNotAStraightWithDuplicateRanksReturnsFalse() {
+    ArrayList<Card> cards = new ArrayList<>();
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.SPADES));
+
+    boolean result = ProbabilityCalculator.hasStraight(cards);
+
+    assertThat(result, is(false));
+  }
+
+  @Test
   public void givenAStraightReturnsTrue() {
     ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
