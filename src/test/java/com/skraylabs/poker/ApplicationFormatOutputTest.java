@@ -6,6 +6,9 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ApplicationFormatOutputTest {
 
   @Before
@@ -15,48 +18,18 @@ public class ApplicationFormatOutputTest {
   public void probabilityCalculationsAreFormattedNicely() {
     ProbabilityCalculator calculator = new ProbabilityCalculator(null) {
       @Override
-      public double royalFlushForPlayer(int playerIndex) {
-        return 0.0;
-      }
-
-      @Override
-      public double straightFlushForPlayer(int playerIndex) {
-        return 0.222222;
-      }
-
-      @Override
-      public double fourOfAKindForPlayer(int playerIndex) {
-        return 0.3333333;
-      }
-
-      @Override
-      public double fullHouseForPlayer(int playerIndex) {
-        return 0.4444;
-      }
-
-      @Override
-      public double flushForPlayer(int playerIndex) {
-        return 0.5;
-      }
-
-      @Override
-      public double straightForPlayer(int playerIndex) {
-        return 0.7777;
-      }
-
-      @Override
-      public double threeOfAKindForPlayer(int playerIndex) {
-        return 0.8333;
-      }
-
-      @Override
-      public double twoPairForPlayer(int playerIndex) {
-        return 0.935;
-      }
-
-      @Override
-      public double twoOfAKindForPlayer(int playerIndex) {
-        return 1.0;
+      public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
+        HashMap<Outcome, Double> allOutcomes = new HashMap<>();
+        allOutcomes.put(Outcome.RoyalFlush, 0.0);
+        allOutcomes.put(Outcome.StraightFlush, 0.222222);
+        allOutcomes.put(Outcome.FourOfAKind, 0.3333333);
+        allOutcomes.put(Outcome.FullHouse, 0.4444);
+        allOutcomes.put(Outcome.Flush, 0.5);
+        allOutcomes.put(Outcome.Straight, 0.7777);
+        allOutcomes.put(Outcome.ThreeOfAKind, 0.8333);
+        allOutcomes.put(Outcome.TwoPair, 0.935);
+        allOutcomes.put(Outcome.TwoOfAKind, 1.0);
+        return allOutcomes;
       }
     };
     String output = Application.formatOutputForPlayer(calculator, 0);

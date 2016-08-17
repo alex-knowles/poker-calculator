@@ -8,10 +8,10 @@ import com.skraylabs.poker.model.Pocket;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -31,19 +31,35 @@ class ProbabilityCalculator {
   }
 
   /**
-   * Generic helper method that calculates a given outcome for a given player.
-   *
-   * @param outcomeEvaluator evaluates if a hand meets the criteria of a categorical poker outcome
-   *        (Two Of Kind, Full House, etc...)
-   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
-   * @return the probability of getting the specified poker outcome
+   * A Function that evaluates a collection of cards to see if it matches conditions for a type of
+   * Poker outcome (e.g. Two of Kind, Royal Flush, etc...).
    */
-  double outcomeForAPlayer(Function<Collection<Card>, Boolean> outcomeEvaluator, int playerIndex) {
+  interface HandEvaluator extends Function<Collection<Card>, Boolean> {
+  }
+
+  /**
+   * Generic helper method that calculates the probabilities of multiple outcomes for a given
+   * player. Instead of making successive calls to {@link #outcomeForAPlayer(HandEvaluator, int)}
+   * for each type of outcome, this method offers a way to batch together calculations for multiple
+   * outcome types.
+   *
+   * @param outcomeEvaluators specifies which {@link Outcome} types to calculate and a matching
+   *        {@link HandEvaulator}.
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   *
+   * @return probabilities for each type of {@link Outcome} requested
+   */
+  Map<Outcome, Double> outcomesForAPlayer(Map<Outcome, HandEvaluator> outcomeEvaluators,
+      int playerIndex) {
+    // Sanity check
     if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
       throw new IllegalArgumentException(String
           .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
     }
+
+    Map<Outcome, Double> result = new HashMap<>();
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
+
     // Make a deck of undealt cards
     ArrayList<Card> deck = new ArrayList<>();
     for (int i = 0; i < 52; i++) {
@@ -52,37 +68,63 @@ class ProbabilityCalculator {
         deck.add(card);
       }
     }
+
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
     Pocket pocket = gameState.getPockets()[playerIndex];
-    Point count = countOutcomes(outcomeEvaluator, CardUtils.collectCards(board),
-        CardUtils.collectCards(pocket), deck);
-    return ((double) count.x) / count.y;
+    Map<Outcome, WinLossCounter> counts = countOutcomes(outcomeEvaluators,
+        CardUtils.collectCards(board), CardUtils.collectCards(pocket), deck);
+    for (Outcome outcome : counts.keySet()) {
+      WinLossCounter count = counts.get(outcome);
+      double probability = ((double) count.getWins()) / count.getCountTotal();
+      result.put(outcome, probability);
+    }
+
+    return result;
+  }
+
+  /**
+   * Generic helper method that calculates a given outcome for a given player.
+   *
+   * @param outcomeEvaluator evaluates if a hand meets the criteria of a categorical poker outcome
+   *        (Two Of Kind, Full House, etc...)
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return the probability of getting the specified poker outcome
+   */
+  double outcomeForAPlayer(HandEvaluator outcomeEvaluator, int playerIndex) {
+    Outcome arbitraryKey = Outcome.Flush;
+    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
+    evaluators.put(arbitraryKey, outcomeEvaluator);
+    Map<Outcome, Double> outcomes = outcomesForAPlayer(evaluators, playerIndex);
+    return outcomes.get(arbitraryKey);
   }
 
   /**
    * Helper method that evaluates all the remaining combinations for a given set of board cards and
    * counts how many of contain a given Poker type (e.g. Two of a Kind).
    *
-   * @param evaulator tests if a Card Collection contains a target Poker hand (e.g. Two of a Kind,
-   *        Full House, etc...)
+   * @param evaulator Map of Outcomes (keys) to corresponding HandEvaluators (values)
    * @param board cards collected from a {@link Board}
    * @param pocket cards collected from a {@link Pocket}
    * @param undealtCards collection of cards that have yet to be dealt
-   * @return a pair of numbers (x, y) where x is the number of target outcomes, and y is the total
-   *         number of outcomes
+   * @return Map of Outcomes to Points, where each Point is a pair of numbers (x, y) where x is the
+   *         number of target outcomes, and y is the total number of outcomes
    */
-  static Point countOutcomes(Function<Collection<Card>, Boolean> evaluator, Collection<Card> board,
-      Collection<Card> pocket, Collection<Card> undealtCards) {
-    int winOutcomes = 0;
-    int totalOutcomes = 0;
+  static Map<Outcome, WinLossCounter> countOutcomes(Map<Outcome, HandEvaluator> evaluators,
+      Collection<Card> board, Collection<Card> pocket, Collection<Card> undealtCards) {
+    Map<Outcome, WinLossCounter> result = evaluators.keySet().stream()
+        .collect(Collectors.toMap(outcome -> outcome, outcome -> new WinLossCounter()));
     if (board.size() == 5) {
       // Board is complete
       Collection<Card> cards = collectHandCards(board, pocket);
-      if (evaluator.apply(cards)) {
-        winOutcomes++;
+      for (Outcome outcome : evaluators.keySet()) {
+        HandEvaluator evaluator = evaluators.get(outcome);
+        if (evaluator.apply(cards)) {
+          result.get(outcome).incrementWinsBy(1);
+        } else {
+          result.get(outcome).incrementLossesBy(1);
+        }
       }
-      totalOutcomes++;
     } else {
       // Board is incomplete
       // Recurse on all possible cards that could be dealt next
@@ -93,12 +135,14 @@ class ProbabilityCalculator {
         dealtCards.add(card);
         Collection<Card> nextUndealtCards = new ArrayList<>(undealtCards);
         nextUndealtCards.removeAll(dealtCards);
-        Point nextCount = countOutcomes(evaluator, nextBoard, pocket, nextUndealtCards);
-        winOutcomes += nextCount.x;
-        totalOutcomes += nextCount.y;
+        Map<Outcome, WinLossCounter> nextCounts =
+            countOutcomes(evaluators, nextBoard, pocket, nextUndealtCards);
+        for (Outcome outcome : result.keySet()) {
+          result.get(outcome).incrementBy(nextCounts.get(outcome));
+        }
       }
     }
-    return new Point(winOutcomes, totalOutcomes);
+    return result;
   }
 
   /**
@@ -113,6 +157,26 @@ class ProbabilityCalculator {
     Collection<Card> cards = new ArrayList<>(board);
     cards.addAll(pocket);
     return cards;
+  }
+
+  /**
+   * Report the probabilities of each kind of poker {@link Outcome} for a player.
+   *
+   * @param playerIndex index of Player in the GameState. A number in range [0, 9].
+   * @return a map o probabilities for each category of poker outcome.
+   */
+  public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
+    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
+    evaluators.put(Outcome.TwoOfAKind, ProbabilityCalculator::hasTwoOfAKind);
+    evaluators.put(Outcome.TwoPair, ProbabilityCalculator::hasTwoPair);
+    evaluators.put(Outcome.ThreeOfAKind, ProbabilityCalculator::hasThreeOfAKind);
+    evaluators.put(Outcome.Straight, ProbabilityCalculator::hasStraight);
+    evaluators.put(Outcome.Flush, ProbabilityCalculator::hasFlush);
+    evaluators.put(Outcome.FullHouse, ProbabilityCalculator::hasFullHouse);
+    evaluators.put(Outcome.FourOfAKind, ProbabilityCalculator::hasFourOfAKind);
+    evaluators.put(Outcome.StraightFlush, ProbabilityCalculator::hasStraightFlush);
+    evaluators.put(Outcome.RoyalFlush, ProbabilityCalculator::hasRoyalFlush);
+    return outcomesForAPlayer(evaluators, playerIndex);
   }
 
   /**
