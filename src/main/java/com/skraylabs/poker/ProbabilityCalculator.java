@@ -10,7 +10,6 @@ import com.skraylabs.poker.model.Suit;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -397,45 +396,27 @@ class ProbabilityCalculator {
   static boolean hasStraight(Collection<Card> cards) {
     boolean result = false;
     if (cards.size() >= STRAIGHT_SIZE) {
-      // Check for Straights with Aces Low
-      result = hasStraight(cards, rank -> rank.aceLowValue());
+      // Sort cards with Aces low
+      List<Card> sortedCardsAcesLow = cards.stream()
+          .sorted((card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue())
+          .collect(Collectors.toList());
 
-      // Check for Straights with Aces High
-      if (!result) {
-        result = hasStraight(cards, rank -> rank.aceHighValue());
-      }
-    }
+      // Add aces to end of sorted List
+      Collection<Card> aces = cards.stream()
+          .filter(card -> card.getRank() == Rank.ACE)
+          .collect(Collectors.toList());
+      List<Card> sortedCardsAcesLowAndHigh = new ArrayList<>(sortedCardsAcesLow);
+      sortedCardsAcesLowAndHigh.addAll(aces);
 
-    return result;
-  }
-
-  /**
-   * Helper method that determines if a collection of cards contains a straight. Ordering of card
-   * rank is singular and is determined by a given Function that maps {@link Rank} to an integer
-   * value. In other words, Aces can be low or high, but not both.
-   *
-   * @param cards to evaluate
-   * @param rankFunction returns a single integer value for a given {@link Rank}
-   * @return {@code true} if the cards contain 5 cards of consecutive Rank; {@code false} otherwise
-   */
-  private static boolean hasStraight(Collection<Card> cards, Function<Rank, Integer> rankFunction) {
-    boolean result = false;
-    if (cards.size() >= STRAIGHT_SIZE) {
-      // Sort cards by Rank, according to rankFunction
-      ArrayList<Card> sortedCards = new ArrayList<>(cards);
-      Comparator<Card> rankComparator = (card1, card2) ->
-          rankFunction.apply(card1.getRank()) - rankFunction.apply(card2.getRank());
-      sortedCards.sort(rankComparator);
-
-      // Check for Straights, according to rankFunction
+      // Gather adjacencies
       ArrayList<Card> cardSequence = new ArrayList<>();
-      for (Card card : sortedCards) {
+      for (Card card : sortedCardsAcesLowAndHigh) {
         if (cardSequence.isEmpty()) {
           // Begin a sequence
           cardSequence.add(card);
         } else {
           Card previousCard = cardSequence.get(cardSequence.size() - 1);
-          if (cardRanksAreAdjacent(card, previousCard, rankFunction)) {
+          if (cardRanksAreAdjacent(card, previousCard)) {
             // Advance the sequence
             cardSequence.add(card);
             if (cardSequence.size() == STRAIGHT_SIZE) {
@@ -458,21 +439,20 @@ class ProbabilityCalculator {
   }
 
   /**
-   * Helper method that returns true if two Cards have "adjacent" ranks, where rank ordering is
-   * determined by a given {@code Function<Rank, Integer>}. For example, a Jack is adjacent to a
-   * Ten, but not to a King.
+   * Helper method that returns true if two Cards have "adjacent" ranks. For example, a Jack is
+   * adjacent to a Ten, but not to a King.
    *
    * @param card1 card to compare
    * @param card2 card to compare
-   * @param rankFunction determines order of {@link Rank} values
    * @return {@code true} if {@code card1} and {@code card2} are adjacent in rank; {@code false} if
    *         they have equivalent ranks or are non-neighboring ranks
    */
-  private static boolean cardRanksAreAdjacent(Card card1, Card card2,
-      Function<Rank, Integer> rankFunction) {
-    int rank1 = rankFunction.apply(card1.getRank());
-    int rank2 = rankFunction.apply(card2.getRank());
-    return Math.abs(rank1 - rank2) == 1;
+  private static boolean cardRanksAreAdjacent(Card card1, Card card2) {
+    Rank rank1 = card1.getRank();
+    Rank rank2 = card2.getRank();
+    int shortestDifference = Math.min(Math.abs(rank1.aceLowValue() - rank2.aceLowValue()),
+        Math.abs(rank1.aceHighValue() - rank2.aceHighValue()));
+    return shortestDifference == 1;
   }
 
   /**
