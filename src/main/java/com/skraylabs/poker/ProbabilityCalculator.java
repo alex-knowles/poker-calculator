@@ -17,12 +17,15 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome probability for
  * each Player.
  */
 class ProbabilityCalculator {
+
+  private static final int DECK_SIZE = 52;
 
   private GameState gameState;
 
@@ -59,15 +62,7 @@ class ProbabilityCalculator {
 
     Map<Outcome, Double> result = new HashMap<>();
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
-
-    // Make a deck of undealt cards
-    ArrayList<Card> deck = new ArrayList<>();
-    for (int i = 0; i < 52; i++) {
-      Card card = CardUtils.cardFromNumber(i);
-      if (!dealtCards.contains(card)) {
-        deck.add(card);
-      }
-    }
+    Collection<Card> deck = makeDeckOfUndealtCards(dealtCards);
 
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
@@ -143,6 +138,21 @@ class ProbabilityCalculator {
       }
     }
     return result;
+  }
+
+  /**
+   * Helper method that creates a full deck of 52 cards minus a collection of cards that have
+   * already been dealt. This is useful when evaluating which outcomes are possible given an
+   * incomplete {@link GameState}.
+   *
+   * @param cardsToExclude cards that should not be part of the undealt deck
+   * @return deck of cards minus {@code cardsToExclude}
+   */
+  private Collection<Card> makeDeckOfUndealtCards(Collection<Card> cardsToExclude) {
+    return IntStream.range(0, DECK_SIZE)
+        .mapToObj(CardUtils::cardFromNumber)
+        .filter(card -> !cardsToExclude.contains(card))
+        .collect(Collectors.toList());
   }
 
   /**
