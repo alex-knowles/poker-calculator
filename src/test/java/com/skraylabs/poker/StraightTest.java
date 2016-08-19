@@ -18,76 +18,82 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class StraightTest {
 
+  private Collection<Card> cards;
+  private OutcomeChecker checker;
+
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+    cards = new ArrayList<Card>();
+  }
 
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraight(cards);
+    boolean result = checker.hasStraight();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenNotAStraightReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.CLUBS));
     cards.add(new Card(Rank.KING, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraight(cards);
+    boolean result = checker.hasStraight();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenNotAStraightWithDuplicateRanksReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.SPADES));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraight(cards);
+    boolean result = checker.hasStraight();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenAStraightReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.CLUBS));
     cards.add(new Card(Rank.FIVE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraight(cards);
+    boolean result = checker.hasStraight();
 
     assertThat(result, is(true));
   }
 
   @Test
   public void givenAHighAceStraightReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.KING, Suit.CLUBS));
     cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
     cards.add(new Card(Rank.JACK, Suit.CLUBS));
     cards.add(new Card(Rank.TEN, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraight(cards);
+    boolean result = checker.hasStraight();
 
     assertThat(result, is(true));
   }

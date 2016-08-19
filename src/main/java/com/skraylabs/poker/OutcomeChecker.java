@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  */
 public class OutcomeChecker {
   private static final int TWO_PAIR_SIZE = 4;
+  private static final int STRAIGHT_SIZE = 5;
 
   private Collection<Card> cards;
 
@@ -27,8 +28,8 @@ public class OutcomeChecker {
     predicateMap.put(Outcome.TWO_OF_A_KIND, OutcomeChecker::hasTwoOfAKind);
     predicateMap.put(Outcome.TWO_PAIR, OutcomeChecker::hasTwoPair);
     predicateMap.put(Outcome.THREE_OF_A_KIND, OutcomeChecker::hasThreeOfAKind);
+    predicateMap.put(Outcome.STRAIGHT, OutcomeChecker::hasStraight);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.STRAIGHT, checker -> false);
     predicateMap.put(Outcome.FLUSH, checker -> false);
     predicateMap.put(Outcome.FULL_HOUSE, checker -> false);
     predicateMap.put(Outcome.FOUR_OF_A_KIND, checker -> false);
@@ -92,6 +93,55 @@ public class OutcomeChecker {
   }
 
   /**
+   * Check for a Straight.
+   *
+   * @return {@code true} if there is at least one Straight; {@code false} otherwise
+   */
+  public boolean hasStraight() {
+    boolean result = false;
+    if (cards.size() >= STRAIGHT_SIZE) {
+      // Sort cards with Aces low
+      List<Card> sortedCardsAcesLow = cards.stream()
+          .sorted((card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue())
+          .collect(Collectors.toList());
+
+      // Add aces to end of sorted List
+      Collection<Card> aces =
+          cards.stream().filter(card -> card.getRank() == Rank.ACE).collect(Collectors.toList());
+      List<Card> sortedCardsAcesLowAndHigh = new ArrayList<>(sortedCardsAcesLow);
+      sortedCardsAcesLowAndHigh.addAll(aces);
+
+      // Gather adjacencies
+      ArrayList<Card> cardSequence = new ArrayList<>();
+      for (Card card : sortedCardsAcesLowAndHigh) {
+        if (cardSequence.isEmpty()) {
+          // Begin a sequence
+          cardSequence.add(card);
+        } else {
+          Card previousCard = cardSequence.get(cardSequence.size() - 1);
+          if (cardRanksAreAdjacent(card, previousCard)) {
+            // Advance the sequence
+            cardSequence.add(card);
+            if (cardSequence.size() == STRAIGHT_SIZE) {
+              result = true;
+              break;
+            }
+          } else if (card.getRank() != previousCard.getRank()) {
+            // Restart the sequence
+            cardSequence.clear();
+            cardSequence.add(card);
+          } else if (card.getRank() == previousCard.getRank()) {
+            // Do nothing
+            // Sequence is neither advanced nor restarted
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Helper method that checks for an <i>n</i> of a Kind exists -- e.g. for n = 3, it will check for
    * a Three of a Kind.
    *
@@ -141,5 +191,22 @@ public class OutcomeChecker {
       }
     }
     return result;
+  }
+
+  /**
+   * Helper method that returns true if two Cards have "adjacent" ranks. For example, a Jack is
+   * adjacent to a Ten, but not to a King.
+   *
+   * @param card1 card to compare
+   * @param card2 card to compare
+   * @return {@code true} if {@code card1} and {@code card2} are adjacent in rank; {@code false} if
+   *         they have equivalent ranks or are non-neighboring ranks
+   */
+  private static boolean cardRanksAreAdjacent(Card card1, Card card2) {
+    Rank rank1 = card1.getRank();
+    Rank rank2 = card2.getRank();
+    int shortestDifference = Math.min(Math.abs(rank1.aceLowValue() - rank2.aceLowValue()),
+        Math.abs(rank1.aceHighValue() - rank2.aceHighValue()));
+    return shortestDifference == 1;
   }
 }
