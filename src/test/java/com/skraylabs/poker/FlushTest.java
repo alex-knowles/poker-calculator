@@ -14,6 +14,7 @@ import com.skraylabs.poker.model.PocketFormatException;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,29 +22,37 @@ import java.util.Collection;
 
 public class FlushTest {
 
+  private Collection<Card> cards;
+  private OutcomeChecker checker;
+
+  @Before
+  public void setUp() {
+    cards = new ArrayList<Card>();
+  }
+
   @Test
   public void givenLessThanFiveOfASuitReturnsFalse() {
-    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.HEARTS));
     cards.add(new Card(Rank.TWO, Suit.HEARTS));
     cards.add(new Card(Rank.THREE, Suit.HEARTS));
     cards.add(new Card(Rank.FOUR, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasFlush(cards);
+    boolean result = checker.hasFlush();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenFiveOfASuitReturnsTrue() {
-    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.HEARTS));
     cards.add(new Card(Rank.TWO, Suit.HEARTS));
     cards.add(new Card(Rank.THREE, Suit.HEARTS));
     cards.add(new Card(Rank.FOUR, Suit.HEARTS));
     cards.add(new Card(Rank.FIVE, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasFlush(cards);
+    boolean result = checker.hasFlush();
 
     assertThat(result, is(true));
   }

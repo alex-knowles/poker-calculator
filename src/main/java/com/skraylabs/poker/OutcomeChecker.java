@@ -29,8 +29,8 @@ public class OutcomeChecker {
     predicateMap.put(Outcome.TWO_PAIR, OutcomeChecker::hasTwoPair);
     predicateMap.put(Outcome.THREE_OF_A_KIND, OutcomeChecker::hasThreeOfAKind);
     predicateMap.put(Outcome.STRAIGHT, OutcomeChecker::hasStraight);
+    predicateMap.put(Outcome.FLUSH, OutcomeChecker::hasFlush);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.FLUSH, checker -> false);
     predicateMap.put(Outcome.FULL_HOUSE, checker -> false);
     predicateMap.put(Outcome.FOUR_OF_A_KIND, checker -> false);
     predicateMap.put(Outcome.STRAIGHT_FLUSH, checker -> false);
@@ -139,6 +139,15 @@ public class OutcomeChecker {
     }
 
     return result;
+  }
+
+  /**
+   * Check for a Flush.
+   *
+   * @return {@code true} if there is at least one Flush; {@code false} otherwise
+   */
+  public boolean hasFlush() {
+    return hasNOfAType(5, Card::getSuit);
   }
 
   /**
