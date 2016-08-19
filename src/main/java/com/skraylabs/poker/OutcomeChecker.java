@@ -26,8 +26,8 @@ public class OutcomeChecker {
   static {
     predicateMap.put(Outcome.TWO_OF_A_KIND, OutcomeChecker::hasTwoOfAKind);
     predicateMap.put(Outcome.TWO_PAIR, OutcomeChecker::hasTwoPair);
+    predicateMap.put(Outcome.THREE_OF_A_KIND, OutcomeChecker::hasThreeOfAKind);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.THREE_OF_A_KIND, checker -> false);
     predicateMap.put(Outcome.STRAIGHT, checker -> false);
     predicateMap.put(Outcome.FLUSH, checker -> false);
     predicateMap.put(Outcome.FULL_HOUSE, checker -> false);
@@ -80,6 +80,15 @@ public class OutcomeChecker {
       }
     }
     return result;
+  }
+
+  /**
+   * Check for a Three of a Kind.
+   *
+   * @return {@code true} if there is at least one Three of a Kind; {@code false} otherwise
+   */
+  public boolean hasThreeOfAKind() {
+    return hasNOfAKind(3);
   }
 
   /**

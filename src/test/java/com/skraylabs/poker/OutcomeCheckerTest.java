@@ -45,4 +45,28 @@ public class OutcomeCheckerTest {
     assertThat(result, is(true));
   }
 
+  @Test
+  public void givenNegativeCardsHasThreeOfAKindReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.QUEEN, Suit.SPADES));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasThreeOfAKind();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasThreeOfAKindReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasThreeOfAKind();
+
+    assertThat(result, is(true));
+  }
+
 }
