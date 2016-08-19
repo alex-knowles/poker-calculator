@@ -14,6 +14,7 @@ import com.skraylabs.poker.model.PocketFormatException;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,40 +22,48 @@ import java.util.Collection;
 
 public class TwoPairTest {
 
+  private Collection<Card> cards;
+  private OutcomeChecker checker;
+
+  @Before
+  public void setUp() {
+    cards = new ArrayList<>();
+  }
+
   @Test
   public void givenLessThanFourCardsReturnsFalse() {
-    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.HEARTS));
     cards.add(new Card(Rank.ACE, Suit.SPADES));
     cards.add(new Card(Rank.KING, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasTwoPair(cards);
+    boolean result = checker.hasTwoPair();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenFourUnpairedCardsReturnsFalse() {
-    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.HEARTS));
     cards.add(new Card(Rank.KING, Suit.HEARTS));
     cards.add(new Card(Rank.QUEEN, Suit.HEARTS));
     cards.add(new Card(Rank.JACK, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasTwoPair(cards);
+    boolean result = checker.hasTwoPair();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenNotATwoPairReturnsTrue() {
-    Collection<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.HEARTS));
     cards.add(new Card(Rank.ACE, Suit.SPADES));
     cards.add(new Card(Rank.KING, Suit.CLUBS));
     cards.add(new Card(Rank.KING, Suit.DIAMONDS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasTwoPair(cards);
+    boolean result = checker.hasTwoPair();
 
     assertThat(result, is(true));
   }

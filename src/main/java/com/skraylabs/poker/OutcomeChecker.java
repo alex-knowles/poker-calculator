@@ -17,14 +17,16 @@ import java.util.stream.Collectors;
  * Analyze a collection of Cards to determine if various poker outcomes are present or not.
  */
 public class OutcomeChecker {
+  private static final int TWO_PAIR_SIZE = 4;
+
   private Collection<Card> cards;
 
   private static HashMap<Outcome, Predicate<OutcomeChecker>> predicateMap = new HashMap<>();
 
   static {
     predicateMap.put(Outcome.TWO_OF_A_KIND, OutcomeChecker::hasTwoOfAKind);
+    predicateMap.put(Outcome.TWO_PAIR, OutcomeChecker::hasTwoPair);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.TWO_PAIR, checker -> false);
     predicateMap.put(Outcome.THREE_OF_A_KIND, checker -> false);
     predicateMap.put(Outcome.STRAIGHT, checker -> false);
     predicateMap.put(Outcome.FLUSH, checker -> false);
@@ -56,6 +58,28 @@ public class OutcomeChecker {
    */
   public boolean hasTwoOfAKind() {
     return hasNOfAKind(2);
+  }
+
+  /**
+   * Check for a Two Pair.
+   *
+   * @return {@code true} if there is a Two Pair; {@code false} otherwise
+   */
+  public boolean hasTwoPair() {
+    boolean result = false;
+    if (cards.size() >= TWO_PAIR_SIZE) {
+      Collection<Card> cardsCopy = new ArrayList<>(cards);
+      OutcomeChecker copyChecker = new OutcomeChecker(cardsCopy);
+      Collection<Card> firstPair = copyChecker.collectNOfAType(2, Card::getRank);
+      if (!firstPair.isEmpty()) {
+        cardsCopy.removeAll(firstPair);
+        Collection<Card> secondPair = copyChecker.collectNOfAType(2, Card::getRank);
+        if (!secondPair.isEmpty()) {
+          result = true;
+        }
+      }
+    }
+    return result;
   }
 
   /**
