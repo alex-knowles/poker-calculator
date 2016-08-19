@@ -30,8 +30,8 @@ public class OutcomeChecker {
     predicateMap.put(Outcome.THREE_OF_A_KIND, OutcomeChecker::hasThreeOfAKind);
     predicateMap.put(Outcome.STRAIGHT, OutcomeChecker::hasStraight);
     predicateMap.put(Outcome.FLUSH, OutcomeChecker::hasFlush);
+    predicateMap.put(Outcome.FULL_HOUSE, OutcomeChecker::hasFullHouse);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.FULL_HOUSE, checker -> false);
     predicateMap.put(Outcome.FOUR_OF_A_KIND, checker -> false);
     predicateMap.put(Outcome.STRAIGHT_FLUSH, checker -> false);
     predicateMap.put(Outcome.ROYAL_FLUSH, checker -> false);
@@ -148,6 +148,28 @@ public class OutcomeChecker {
    */
   public boolean hasFlush() {
     return hasNOfAType(5, Card::getSuit);
+  }
+
+  /**
+   * Check for a Full House.
+   *
+   * @return {@code true} if there is at least one Full House; {@code false} otherwise
+   */
+  public boolean hasFullHouse() {
+    boolean result = false;
+    if (cards.size() >= 5) {
+      Collection<Card> cardsCopy = new ArrayList<>(cards);
+      OutcomeChecker copyChecker = new OutcomeChecker(cardsCopy);
+      Collection<Card> threeOfAKind = copyChecker.collectNOfAType(3, Card::getRank);
+      if (!threeOfAKind.isEmpty()) {
+        cardsCopy.removeAll(threeOfAKind);
+        Collection<Card> pair = copyChecker.collectNOfAType(2, Card::getRank);
+        if (!pair.isEmpty()) {
+          result = true;
+        }
+      }
+    }
+    return result;
   }
 
   /**
