@@ -188,11 +188,11 @@ public class OutcomeChecker {
    */
   public boolean hasStraightFlush() {
     boolean result = false;
-    if (cards.size() >= 5) {
+    if (cards.size() >= STRAIGHT_SIZE) {
       Map<Suit, List<Card>> cardsBySuit =
           cards.stream().collect(Collectors.groupingBy(Card::getSuit));
       for (List<Card> suitedCards : cardsBySuit.values()) {
-        if (suitedCards.size() >= 5) {
+        if (suitedCards.size() >= STRAIGHT_SIZE) {
           OutcomeChecker straightChecker = new OutcomeChecker(suitedCards);
           if (straightChecker.hasStraight()) {
             result = true;
