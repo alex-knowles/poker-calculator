@@ -33,8 +33,7 @@ public class OutcomeChecker {
     predicateMap.put(Outcome.FULL_HOUSE, OutcomeChecker::hasFullHouse);
     predicateMap.put(Outcome.FOUR_OF_A_KIND, OutcomeChecker::hasFourOfAKind);
     predicateMap.put(Outcome.STRAIGHT_FLUSH, OutcomeChecker::hasStraightFlush);
-    // TODO: replace stubs below
-    predicateMap.put(Outcome.ROYAL_FLUSH, checker -> false);
+    predicateMap.put(Outcome.ROYAL_FLUSH, OutcomeChecker::hasRoyalFlush);
   }
 
   public OutcomeChecker(Collection<Card> cards) {
@@ -202,6 +201,19 @@ public class OutcomeChecker {
       }
     }
     return result;
+  }
+
+  /**
+   * Check for a Royal Flush.
+   *
+   * @return {@code true} if there is at least one Royal Flush; {@code false} otherwise
+   */
+  public boolean hasRoyalFlush() {
+    List<Card> topFiveRanks = cards.stream()
+            .filter(card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue())
+            .collect(Collectors.toList());
+    OutcomeChecker straightChecker = new OutcomeChecker(topFiveRanks);
+    return straightChecker.hasStraightFlush();
   }
 
   /**

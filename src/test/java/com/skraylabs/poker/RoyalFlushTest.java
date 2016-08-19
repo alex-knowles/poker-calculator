@@ -14,50 +14,60 @@ import com.skraylabs.poker.model.PocketFormatException;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class RoyalFlushTest {
 
+  private Collection<Card> cards;
+  private OutcomeChecker checker;
+
+  @Before
+  public void setUp() {
+    cards = new ArrayList<>();
+  }
+
   @Test
   public void givenNotARoyalFlushReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.KING, Suit.CLUBS));
     cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
     cards.add(new Card(Rank.JACK, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasRoyalFlush(cards);
+    boolean result = checker.hasRoyalFlush();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenAStraightFlushReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.KING, Suit.CLUBS));
     cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
     cards.add(new Card(Rank.JACK, Suit.CLUBS));
     cards.add(new Card(Rank.TEN, Suit.CLUBS));
     cards.add(new Card(Rank.NINE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasRoyalFlush(cards);
+    boolean result = checker.hasRoyalFlush();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenARoyalFlushReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.KING, Suit.CLUBS));
     cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
     cards.add(new Card(Rank.JACK, Suit.CLUBS));
     cards.add(new Card(Rank.TEN, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasRoyalFlush(cards);
+    boolean result = checker.hasRoyalFlush();
 
     assertThat(result, is(true));
   }
