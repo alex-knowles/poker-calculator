@@ -34,26 +34,17 @@ class ProbabilityCalculator {
   }
 
   /**
-   * A Function that evaluates a collection of cards to see if it matches conditions for a type of
-   * Poker outcome (e.g. Two of Kind, Royal Flush, etc...).
-   */
-  interface HandEvaluator extends Function<Collection<Card>, Boolean> {
-  }
-
-  /**
    * Generic helper method that calculates the probabilities of multiple outcomes for a given
-   * player. Instead of making successive calls to {@link #outcomeForAPlayer(HandEvaluator, int)}
-   * for each type of outcome, this method offers a way to batch together calculations for multiple
-   * outcome types.
+   * player. Instead of making successive calls to {@link #outcomeForAPlayer(Outcome, int)} for each
+   * type of outcome, this method offers a way to batch together calculations for multiple outcome
+   * types.
    *
-   * @param outcomeEvaluators specifies which {@link Outcome} types to calculate and a matching
-   *        {@link HandEvaulator}.
+   * @param outcomes specifies which {@link Outcome} types to calculate
    * @param playerIndex index of Player in the GameState. A number in range [0, 9].
    *
    * @return probabilities for each type of {@link Outcome} requested
    */
-  Map<Outcome, Double> outcomesForAPlayer(Map<Outcome, HandEvaluator> outcomeEvaluators,
-      int playerIndex) {
+  Map<Outcome, Double> outcomesForAPlayer(Collection<Outcome> outcomes, int playerIndex) {
     // Sanity check
     if (playerIndex < 0 || playerIndex >= GameState.MAX_PLAYERS) {
       throw new IllegalArgumentException(String
@@ -67,8 +58,8 @@ class ProbabilityCalculator {
     // Iterate through every possible GameState branch
     Board board = gameState.getBoard();
     Pocket pocket = gameState.getPockets()[playerIndex];
-    Map<Outcome, WinLossCounter> counts = countOutcomes(outcomeEvaluators,
-        CardUtils.collectCards(board), CardUtils.collectCards(pocket), deck);
+    Map<Outcome, WinLossCounter> counts = countOutcomes(outcomes, CardUtils.collectCards(board),
+        CardUtils.collectCards(pocket), deck);
     for (Outcome outcome : counts.keySet()) {
       WinLossCounter count = counts.get(outcome);
       double probability = ((double) count.getWins()) / count.getCountTotal();
@@ -81,40 +72,38 @@ class ProbabilityCalculator {
   /**
    * Generic helper method that calculates a given outcome for a given player.
    *
-   * @param outcomeEvaluator evaluates if a hand meets the criteria of a categorical poker outcome
-   *        (Two Of Kind, Full House, etc...)
+   * @param outcome poker outcome to calculate probability for
    * @param playerIndex index of Player in the GameState. A number in range [0, 9].
    * @return the probability of getting the specified poker outcome
    */
-  double outcomeForAPlayer(HandEvaluator outcomeEvaluator, int playerIndex) {
-    Outcome arbitraryKey = Outcome.FLUSH;
-    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
-    evaluators.put(arbitraryKey, outcomeEvaluator);
-    Map<Outcome, Double> outcomes = outcomesForAPlayer(evaluators, playerIndex);
-    return outcomes.get(arbitraryKey);
+  double outcomeForAPlayer(Outcome outcome, int playerIndex) {
+    Collection<Outcome> outcomes = new ArrayList<>();
+    outcomes.add(outcome);
+    Map<Outcome, Double> results = outcomesForAPlayer(outcomes, playerIndex);
+    return results.get(outcome);
   }
 
   /**
    * Helper method that evaluates all the remaining combinations for a given set of board cards and
    * counts how many of contain a given Poker type (e.g. Two of a Kind).
    *
-   * @param evaluators Map of Outcomes (keys) to corresponding HandEvaluators (values)
+   * @param outcomes events to count
    * @param board cards collected from a {@link Board}
    * @param pocket cards collected from a {@link Pocket}
    * @param undealtCards collection of cards that have yet to be dealt
    * @return Map of Outcomes to Points, where each Point is a pair of numbers (x, y) where x is the
    *         number of target outcomes, and y is the total number of outcomes
    */
-  static Map<Outcome, WinLossCounter> countOutcomes(Map<Outcome, HandEvaluator> evaluators,
+  static Map<Outcome, WinLossCounter> countOutcomes(Collection<Outcome> outcomes,
       Collection<Card> board, Collection<Card> pocket, Collection<Card> undealtCards) {
-    Map<Outcome, WinLossCounter> result = evaluators.keySet().stream()
+    Map<Outcome, WinLossCounter> result = outcomes.stream()
         .collect(Collectors.toMap(outcome -> outcome, outcome -> new WinLossCounter()));
     if (board.size() == 5) {
       // Board is complete
       Collection<Card> cards = collectHandCards(board, pocket);
-      for (Outcome outcome : evaluators.keySet()) {
-        HandEvaluator evaluator = evaluators.get(outcome);
-        if (evaluator.apply(cards)) {
+      OutcomeChecker checker = new OutcomeChecker(cards);
+      for (Outcome outcome : outcomes) {
+        if (checker.hasOutcome(outcome)) {
           result.get(outcome).incrementWinsBy(1);
         } else {
           result.get(outcome).incrementLossesBy(1);
@@ -131,7 +120,7 @@ class ProbabilityCalculator {
         Collection<Card> nextUndealtCards = new ArrayList<>(undealtCards);
         nextUndealtCards.removeAll(dealtCards);
         Map<Outcome, WinLossCounter> nextCounts =
-            countOutcomes(evaluators, nextBoard, pocket, nextUndealtCards);
+            countOutcomes(outcomes, nextBoard, pocket, nextUndealtCards);
         for (Outcome outcome : result.keySet()) {
           result.get(outcome).incrementBy(nextCounts.get(outcome));
         }
@@ -176,17 +165,17 @@ class ProbabilityCalculator {
    * @return a map o probabilities for each category of poker outcome.
    */
   public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
-    HashMap<Outcome, HandEvaluator> evaluators = new HashMap<>();
-    evaluators.put(Outcome.TWO_OF_A_KIND, ProbabilityCalculator::hasTwoOfAKind);
-    evaluators.put(Outcome.TWO_PAIR, ProbabilityCalculator::hasTwoPair);
-    evaluators.put(Outcome.THREE_OF_A_KIND, ProbabilityCalculator::hasThreeOfAKind);
-    evaluators.put(Outcome.STRAIGHT, ProbabilityCalculator::hasStraight);
-    evaluators.put(Outcome.FLUSH, ProbabilityCalculator::hasFlush);
-    evaluators.put(Outcome.FULL_HOUSE, ProbabilityCalculator::hasFullHouse);
-    evaluators.put(Outcome.FOUR_OF_A_KIND, ProbabilityCalculator::hasFourOfAKind);
-    evaluators.put(Outcome.STRAIGHT_FLUSH, ProbabilityCalculator::hasStraightFlush);
-    evaluators.put(Outcome.ROYAL_FLUSH, ProbabilityCalculator::hasRoyalFlush);
-    return outcomesForAPlayer(evaluators, playerIndex);
+    Collection<Outcome> outcomes = new ArrayList<>();
+    outcomes.add(Outcome.TWO_OF_A_KIND);
+    outcomes.add(Outcome.TWO_PAIR);
+    outcomes.add(Outcome.THREE_OF_A_KIND);
+    outcomes.add(Outcome.STRAIGHT);
+    outcomes.add(Outcome.FLUSH);
+    outcomes.add(Outcome.FULL_HOUSE);
+    outcomes.add(Outcome.FOUR_OF_A_KIND);
+    outcomes.add(Outcome.STRAIGHT_FLUSH);
+    outcomes.add(Outcome.ROYAL_FLUSH);
+    return outcomesForAPlayer(outcomes, playerIndex);
   }
 
   /**
@@ -196,7 +185,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Two Of A Kind.
    */
   public double twoOfAKindForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasTwoOfAKind, playerIndex);
+    return outcomeForAPlayer(Outcome.TWO_OF_A_KIND, playerIndex);
   }
 
   /**
@@ -206,7 +195,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Two Pair.
    */
   public double twoPairForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasTwoPair, playerIndex);
+    return outcomeForAPlayer(Outcome.TWO_PAIR, playerIndex);
   }
 
   /**
@@ -216,7 +205,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Three Of A Kind.
    */
   public double threeOfAKindForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasThreeOfAKind, playerIndex);
+    return outcomeForAPlayer(Outcome.THREE_OF_A_KIND, playerIndex);
   }
 
   /**
@@ -226,7 +215,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Straight.
    */
   public double straightForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasStraight, playerIndex);
+    return outcomeForAPlayer(Outcome.STRAIGHT, playerIndex);
   }
 
   /**
@@ -236,7 +225,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Flush.
    */
   public double flushForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasFlush, playerIndex);
+    return outcomeForAPlayer(Outcome.FLUSH, playerIndex);
   }
 
   /**
@@ -246,7 +235,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Full House.
    */
   public double fullHouseForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasFullHouse, playerIndex);
+    return outcomeForAPlayer(Outcome.FULL_HOUSE, playerIndex);
   }
 
   /**
@@ -256,7 +245,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Four Of A Kind.
    */
   public double fourOfAKindForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasFourOfAKind, playerIndex);
+    return outcomeForAPlayer(Outcome.FOUR_OF_A_KIND, playerIndex);
   }
 
   /**
@@ -266,7 +255,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Straight Flush.
    */
   public double straightFlushForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasStraightFlush, playerIndex);
+    return outcomeForAPlayer(Outcome.STRAIGHT_FLUSH, playerIndex);
   }
 
   /**
@@ -276,7 +265,7 @@ class ProbabilityCalculator {
    * @return the probability of getting a Royal Flush.
    */
   public double royalFlushForPlayer(int playerIndex) {
-    return outcomeForAPlayer(ProbabilityCalculator::hasRoyalFlush, playerIndex);
+    return outcomeForAPlayer(Outcome.ROYAL_FLUSH, playerIndex);
   }
 
   /**

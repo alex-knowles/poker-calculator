@@ -21,7 +21,6 @@ import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -157,15 +156,14 @@ public class ProbabilityCalculatorTest {
     for (int i = 5; i < cards.length; ++i) {
       deckWithTenCards.add(cards[i]);
     }
-    ProbabilityCalculator.HandEvaluator evaluator = (someCards) -> false;
-    Map<Outcome, ProbabilityCalculator.HandEvaluator> evaluators = new HashMap<>();
-    Outcome arbitraryKey = Outcome.FLUSH;
-    evaluators.put(arbitraryKey, evaluator);
+    Collection<Outcome> outcomes = new ArrayList<>();
+    Outcome arbitraryOutcome = Outcome.FLUSH;
+    outcomes.add(arbitraryOutcome);
 
-    Map<Outcome, WinLossCounter> counts = ProbabilityCalculator.countOutcomes(evaluators,
+    Map<Outcome, WinLossCounter> counts = ProbabilityCalculator.countOutcomes(outcomes,
         boardWithThreeCards, pocket, deckWithTenCards);
 
-    WinLossCounter count = counts.get(arbitraryKey);
+    WinLossCounter count = counts.get(arbitraryOutcome);
     assertThat(count.getCountTotal(), equalTo(45));
   }
 }
