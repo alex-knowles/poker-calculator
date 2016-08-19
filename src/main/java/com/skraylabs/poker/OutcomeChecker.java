@@ -32,8 +32,8 @@ public class OutcomeChecker {
     predicateMap.put(Outcome.FLUSH, OutcomeChecker::hasFlush);
     predicateMap.put(Outcome.FULL_HOUSE, OutcomeChecker::hasFullHouse);
     predicateMap.put(Outcome.FOUR_OF_A_KIND, OutcomeChecker::hasFourOfAKind);
+    predicateMap.put(Outcome.STRAIGHT_FLUSH, OutcomeChecker::hasStraightFlush);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.STRAIGHT_FLUSH, checker -> false);
     predicateMap.put(Outcome.ROYAL_FLUSH, checker -> false);
   }
 
@@ -179,6 +179,29 @@ public class OutcomeChecker {
    */
   public boolean hasFourOfAKind() {
     return hasNOfAKind(4);
+  }
+
+  /**
+   * Check for a Straight Flush.
+   *
+   * @return {@code true} if there is at least one Straight Flush; {@code false} otherwise
+   */
+  public boolean hasStraightFlush() {
+    boolean result = false;
+    if (cards.size() >= 5) {
+      Map<Suit, List<Card>> cardsBySuit =
+          cards.stream().collect(Collectors.groupingBy(Card::getSuit));
+      for (List<Card> suitedCards : cardsBySuit.values()) {
+        if (suitedCards.size() >= 5) {
+          OutcomeChecker straightChecker = new OutcomeChecker(suitedCards);
+          if (straightChecker.hasStraight()) {
+            result = true;
+            break;
+          }
+        }
+      }
+    }
+    return result;
   }
 
   /**

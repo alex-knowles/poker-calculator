@@ -14,62 +14,72 @@ import com.skraylabs.poker.model.PocketFormatException;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class StraightFlushTest {
 
+  private Collection<Card> cards;
+  private OutcomeChecker checker;
+
+  @Before
+  public void setUp() {
+    cards = new ArrayList<>();
+  }
+
   @Test
   public void givenLessThanFiveCardsReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraightFlush(cards);
+    boolean result = checker.hasStraightFlush();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenAFlushReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.CLUBS));
     cards.add(new Card(Rank.KING, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraightFlush(cards);
+    boolean result = checker.hasStraightFlush();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenAStraightReturnsFalse() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.CLUBS));
     cards.add(new Card(Rank.FIVE, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraightFlush(cards);
+    boolean result = checker.hasStraightFlush();
 
     assertThat(result, is(false));
   }
 
   @Test
   public void givenAStraightFlushReturnsTrue() {
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
     cards.add(new Card(Rank.TWO, Suit.CLUBS));
     cards.add(new Card(Rank.THREE, Suit.CLUBS));
     cards.add(new Card(Rank.FOUR, Suit.CLUBS));
     cards.add(new Card(Rank.FIVE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
 
-    boolean result = ProbabilityCalculator.hasStraightFlush(cards);
+    boolean result = checker.hasStraightFlush();
 
     assertThat(result, is(true));
   }
