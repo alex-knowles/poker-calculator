@@ -31,8 +31,8 @@ public class OutcomeChecker {
     predicateMap.put(Outcome.STRAIGHT, OutcomeChecker::hasStraight);
     predicateMap.put(Outcome.FLUSH, OutcomeChecker::hasFlush);
     predicateMap.put(Outcome.FULL_HOUSE, OutcomeChecker::hasFullHouse);
+    predicateMap.put(Outcome.FOUR_OF_A_KIND, OutcomeChecker::hasFourOfAKind);
     // TODO: replace stubs below
-    predicateMap.put(Outcome.FOUR_OF_A_KIND, checker -> false);
     predicateMap.put(Outcome.STRAIGHT_FLUSH, checker -> false);
     predicateMap.put(Outcome.ROYAL_FLUSH, checker -> false);
   }
@@ -170,6 +170,15 @@ public class OutcomeChecker {
       }
     }
     return result;
+  }
+
+  /**
+   * Check for a Four of a Kind.
+   *
+   * @return {@code true} if there is at least one Four of a Kind; {@code false} otherwise
+   */
+  public boolean hasFourOfAKind() {
+    return hasNOfAKind(4);
   }
 
   /**
