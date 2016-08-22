@@ -10,7 +10,6 @@ import com.skraylabs.poker.model.Suit;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ import java.util.stream.IntStream;
 class ProbabilityCalculator {
 
   private static final int DECK_SIZE = 52;
+  private static final int STRAIGHT_SIZE = 5;
 
   private GameState gameState;
 
@@ -395,54 +395,64 @@ class ProbabilityCalculator {
    */
   static boolean hasStraight(Collection<Card> cards) {
     boolean result = false;
-    if (cards.size() >= 5) {
-      // Sort cards by Rank, with Aces Low
-      ArrayList<Card> sortedCards = new ArrayList<>(cards);
-      Comparator<Card> aceLowRankComparator =
-          (card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue();
-      sortedCards.sort(aceLowRankComparator);
+    if (cards.size() >= STRAIGHT_SIZE) {
+      // Sort cards with Aces low
+      List<Card> sortedCardsAcesLow = cards.stream()
+          .sorted((card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue())
+          .collect(Collectors.toList());
 
-      // Check for Straights with Aces Low
+      // Add aces to end of sorted List
+      Collection<Card> aces = cards.stream()
+          .filter(card -> card.getRank() == Rank.ACE)
+          .collect(Collectors.toList());
+      List<Card> sortedCardsAcesLowAndHigh = new ArrayList<>(sortedCardsAcesLow);
+      sortedCardsAcesLowAndHigh.addAll(aces);
+
+      // Gather adjacencies
       ArrayList<Card> cardSequence = new ArrayList<>();
-      for (Card card : sortedCards) {
+      for (Card card : sortedCardsAcesLowAndHigh) {
         if (cardSequence.isEmpty()) {
           // Begin a sequence
           cardSequence.add(card);
         } else {
           Card previousCard = cardSequence.get(cardSequence.size() - 1);
-          int cardRankValue = card.getRank().aceLowValue();
-          int previousCardRankValue = previousCard.getRank().aceLowValue();
-          int rankValueDelta = Math.abs(cardRankValue - previousCardRankValue);
-          if (rankValueDelta == 1) {
+          if (cardRanksAreAdjacent(card, previousCard)) {
             // Advance the sequence
             cardSequence.add(card);
-            if (cardSequence.size() == 5) {
+            if (cardSequence.size() == STRAIGHT_SIZE) {
               result = true;
               break;
             }
-          } else if (rankValueDelta > 1) {
+          } else if (card.getRank() != previousCard.getRank()) {
             // Restart the sequence
             cardSequence.clear();
             cardSequence.add(card);
-          } else if (rankValueDelta == 0) {
-            // Do nothing, the sequence already has one of this Rank
-          }
-        }
-      }
-
-      // Check for Straight with Aces High
-      if (result == false && cardSequence.size() == 4) {
-        Card lastSequenceCard = cardSequence.get(cardSequence.size() - 1);
-        if (lastSequenceCard.getRank() == Rank.KING) {
-          Card lowestCard = sortedCards.get(0);
-          if (lowestCard.getRank() == Rank.ACE) {
-            result = true;
+          } else if (card.getRank() == previousCard.getRank()) {
+            // Do nothing
+            // Sequence is neither advanced nor restarted
           }
         }
       }
     }
 
     return result;
+  }
+
+  /**
+   * Helper method that returns true if two Cards have "adjacent" ranks. For example, a Jack is
+   * adjacent to a Ten, but not to a King.
+   *
+   * @param card1 card to compare
+   * @param card2 card to compare
+   * @return {@code true} if {@code card1} and {@code card2} are adjacent in rank; {@code false} if
+   *         they have equivalent ranks or are non-neighboring ranks
+   */
+  private static boolean cardRanksAreAdjacent(Card card1, Card card2) {
+    Rank rank1 = card1.getRank();
+    Rank rank2 = card2.getRank();
+    int shortestDifference = Math.min(Math.abs(rank1.aceLowValue() - rank2.aceLowValue()),
+        Math.abs(rank1.aceHighValue() - rank2.aceHighValue()));
+    return shortestDifference == 1;
   }
 
   /**
