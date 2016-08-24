@@ -286,4 +286,60 @@ public class OutcomeCheckerTest {
 
     assertThat(result, is(true));
   }
+
+  /* hasStraightFlush() test methods */
+
+  @Test
+  public void givenLessThanFiveCardsHasStraightFlushReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraightFlush();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenAFlushHasStraightFlushReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraightFlush();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenAStraightHasStraightFlushReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FIVE, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraightFlush();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasStraightFlushReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FIVE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraightFlush();
+
+    assertThat(result, is(true));
+  }
 }
