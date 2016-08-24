@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.Rank;

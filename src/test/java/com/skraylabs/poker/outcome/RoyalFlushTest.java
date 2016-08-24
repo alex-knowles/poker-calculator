@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,31 +9,33 @@ import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.PocketFormatException;
+import com.skraylabs.poker.outcome.OutcomeCalculator;
 
 import org.junit.Test;
 
-public class StraightFlushTest {
+public class RoyalFlushTest {
 
   @Test
-  public void givenABustedStraightFlushReturnsZeroProbability() throws CardFormatException,
+  public void givenABustedRoyalFlushReturnsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
-    GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n 9h 9d");
+    GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n Kh Kd");
     OutcomeCalculator calculator = new OutcomeCalculator(game);
 
-    double probability = calculator.straightFlushForPlayer(0);
+    double probability = calculator.royalFlushForPlayer(0);
 
     assertThat(probability, equalTo(0.0));
   }
 
   @Test
-  public void givenAStraightFlushDrawWithOneChanceReturnsCorrectProbability()
+  public void givenARoyalFlushDrawWithOneChanceReturnsCorrectProbability()
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
-    GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n 9h 5s");
+    GameState game = GameStateFactory.createGameStateFromString("Ks Qs 2h\n As Js");
     OutcomeCalculator calculator = new OutcomeCalculator(game);
 
-    double probability = calculator.straightFlushForPlayer(0);
+    double probability = calculator.royalFlushForPlayer(0);
 
-    assertThat(probability, equalTo(2.0 / 46.0));
+    assertThat(probability, equalTo(46.0 / 1081.0));
   }
+
 }

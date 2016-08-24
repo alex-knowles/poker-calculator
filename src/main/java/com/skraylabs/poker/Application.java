@@ -7,6 +7,8 @@ import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.Pocket;
 import com.skraylabs.poker.model.PocketFormatException;
+import com.skraylabs.poker.outcome.Outcome;
+import com.skraylabs.poker.outcome.OutcomeCalculator;
 
 import org.apache.commons.lang3.StringUtils;
 

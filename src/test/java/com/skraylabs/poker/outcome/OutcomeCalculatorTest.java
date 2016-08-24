@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,6 +14,9 @@ import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.PocketFormatException;
+import com.skraylabs.poker.outcome.Outcome;
+import com.skraylabs.poker.outcome.OutcomeCalculator;
+import com.skraylabs.poker.outcome.WinLossCounter;
 
 import org.junit.Rule;
 import org.junit.Test;

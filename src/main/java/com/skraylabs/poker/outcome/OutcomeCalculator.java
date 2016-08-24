@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 import com.skraylabs.poker.model.Board;
 import com.skraylabs.poker.model.Card;
@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
  * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome probability for
  * each Player.
  */
-class OutcomeCalculator {
+public class OutcomeCalculator {
 
   private static final int DECK_SIZE = 52;
 

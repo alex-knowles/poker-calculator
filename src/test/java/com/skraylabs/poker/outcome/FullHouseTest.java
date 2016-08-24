@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,32 +9,31 @@ import com.skraylabs.poker.model.GameState;
 import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.PocketFormatException;
+import com.skraylabs.poker.outcome.OutcomeCalculator;
 
 import org.junit.Test;
 
-public class RoyalFlushTest {
+public class FullHouseTest {
 
   @Test
-  public void givenABustedRoyalFlushReturnsZeroProbability() throws CardFormatException,
+  public void givenBustedHandReturnsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
-    GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n Kh Kd");
+    GameState game = GameStateFactory.createGameStateFromString("Ah 2h 3h\n Kc Qc");
     OutcomeCalculator calculator = new OutcomeCalculator(game);
 
-    double probability = calculator.royalFlushForPlayer(0);
+    double probability = calculator.fullHouseForPlayer(0);
 
     assertThat(probability, equalTo(0.0));
   }
 
   @Test
-  public void givenARoyalFlushDrawWithOneChanceReturnsCorrectProbability()
-      throws CardFormatException, BoardFormatException, PocketFormatException,
-      GameStateFormatException {
-    GameState game = GameStateFactory.createGameStateFromString("Ks Qs 2h\n As Js");
+  public void givenTwoPairWithTwoChancesReturnsCorrectProbability() throws CardFormatException,
+      BoardFormatException, PocketFormatException, GameStateFormatException {
+    GameState game = GameStateFactory.createGameStateFromString("Ah Kh Qh\n Kc Qc");
     OutcomeCalculator calculator = new OutcomeCalculator(game);
 
-    double probability = calculator.royalFlushForPlayer(0);
+    double probability = calculator.fullHouseForPlayer(0);
 
-    assertThat(probability, equalTo(46.0 / 1081.0));
+    assertThat(probability, equalTo(181.0 / 1081.0));
   }
-
 }

@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.skraylabs.poker.model.Card;
 import com.skraylabs.poker.model.Rank;
 import com.skraylabs.poker.model.Suit;
+import com.skraylabs.poker.outcome.OutcomeChecker;
 
 import org.junit.Before;
 import org.junit.Test;
