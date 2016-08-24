@@ -342,4 +342,48 @@ public class OutcomeCheckerTest {
 
     assertThat(result, is(true));
   }
+
+  /* hasRoyalFlush() test methods */
+
+  @Test
+  public void givenNegativeCardsHasRoyalFlushReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
+    cards.add(new Card(Rank.JACK, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasRoyalFlush();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenAStraightFlushHasRoyalFlushReturnsFalse() {
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
+    cards.add(new Card(Rank.JACK, Suit.CLUBS));
+    cards.add(new Card(Rank.TEN, Suit.CLUBS));
+    cards.add(new Card(Rank.NINE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasRoyalFlush();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasRoyalFlushReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
+    cards.add(new Card(Rank.JACK, Suit.CLUBS));
+    cards.add(new Card(Rank.TEN, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasRoyalFlush();
+
+    assertThat(result, is(true));
+  }
 }
