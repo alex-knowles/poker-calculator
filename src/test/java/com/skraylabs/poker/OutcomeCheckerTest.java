@@ -23,6 +23,8 @@ public class OutcomeCheckerTest {
     cards = new ArrayList<>();
   }
 
+  /* hasTwoOfAKind() test methods */
+
   @Test
   public void givenNegativeCardsHasTwoOfAKindReturnsFalse() {
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
@@ -44,6 +46,8 @@ public class OutcomeCheckerTest {
 
     assertThat(result, is(true));
   }
+
+  /* hasThreeOfAKind() test methods */
 
   @Test
   public void givenNegativeCardsHasThreeOfAKindReturnsFalse() {
@@ -69,6 +73,8 @@ public class OutcomeCheckerTest {
     assertThat(result, is(true));
   }
 
+  /* hasFourOfAKind() test methods */
+
   @Test
   public void givenNegativeCardsHasFourOfAKindReturnsFalse() {
     cards.add(new Card(Rank.ACE, Suit.CLUBS));
@@ -91,6 +97,36 @@ public class OutcomeCheckerTest {
     checker = new OutcomeChecker(cards);
 
     boolean result = checker.hasFourOfAKind();
+
+    assertThat(result, is(true));
+  }
+
+  /* hasFlush() test methods */
+
+  @Test
+  public void givenNegativeCardsHasFlushReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.TWO, Suit.HEARTS));
+    cards.add(new Card(Rank.THREE, Suit.HEARTS));
+    cards.add(new Card(Rank.FOUR, Suit.HEARTS));
+    cards.add(new Card(Rank.FIVE, Suit.SPADES));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasFlush();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasFlushReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.TWO, Suit.HEARTS));
+    cards.add(new Card(Rank.THREE, Suit.HEARTS));
+    cards.add(new Card(Rank.FOUR, Suit.HEARTS));
+    cards.add(new Card(Rank.FIVE, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasFlush();
 
     assertThat(result, is(true));
   }
