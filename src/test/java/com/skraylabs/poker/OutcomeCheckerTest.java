@@ -131,4 +131,73 @@ public class OutcomeCheckerTest {
     assertThat(result, is(true));
   }
 
+  /* hasStraight() test methods */
+
+  @Test
+  public void givenLessThanFiveCardsHasStraightReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraight();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenNegativeCardsHasStraightReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraight();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenNegativeCardsWithDuplicateRanksHasStraightReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.SPADES));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraight();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasStraightReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.FOUR, Suit.CLUBS));
+    cards.add(new Card(Rank.FIVE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraight();
+
+    assertThat(result, is(true));
+  }
+
+  @Test
+  public void givenPositiveCardsWithHighAceHasStraightReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.QUEEN, Suit.CLUBS));
+    cards.add(new Card(Rank.JACK, Suit.CLUBS));
+    cards.add(new Card(Rank.TEN, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasStraight();
+
+    assertThat(result, is(true));
+  }
 }
