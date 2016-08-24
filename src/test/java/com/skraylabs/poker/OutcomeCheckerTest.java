@@ -171,6 +171,52 @@ public class OutcomeCheckerTest {
     assertThat(result, is(true));
   }
 
+  /* hasFullHouse() test methods */
+
+  @Test
+  public void givenLessThanFiveCardsHasFullHouseReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.TWO, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasFullHouse();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenNegativeChardsHasFullHouseReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.SPADES));
+    cards.add(new Card(Rank.TEN, Suit.SPADES));
+    cards.add(new Card(Rank.JACK, Suit.SPADES));
+    cards.add(new Card(Rank.KING, Suit.SPADES));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasFullHouse();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasFullHouseReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.CLUBS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.THREE, Suit.CLUBS));
+    cards.add(new Card(Rank.THREE, Suit.SPADES));
+    cards.add(new Card(Rank.TEN, Suit.SPADES));
+    cards.add(new Card(Rank.JACK, Suit.SPADES));
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasFullHouse();
+
+    assertThat(result, is(true));
+  }
+
   /* hasStraight() test methods */
 
   @Test
