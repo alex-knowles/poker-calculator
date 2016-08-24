@@ -17,13 +17,13 @@ import java.util.stream.IntStream;
  * For a given {@link com.skraylabs.poker.model.GameState}, calculates the outcome probability for
  * each Player.
  */
-class ProbabilityCalculator {
+class OutcomeCalculator {
 
   private static final int DECK_SIZE = 52;
 
   private GameState gameState;
 
-  public ProbabilityCalculator(GameState gameState) {
+  public OutcomeCalculator(GameState gameState) {
     this.gameState = gameState;
   }
 

@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.Map;
 
 
-public class ProbabilityCalculatorTest {
+public class OutcomeCalculatorTest {
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
@@ -33,7 +33,7 @@ public class ProbabilityCalculatorTest {
       BoardFormatException, PocketFormatException, GameStateFormatException {
     exception.expect(IllegalArgumentException.class);
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     calculator.twoOfAKindForPlayer(GameState.MAX_PLAYERS);
   }
@@ -42,7 +42,7 @@ public class ProbabilityCalculatorTest {
   public void invalidPlayerIndexYieldsCommunityProbabilityCalculation() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(5);
 
@@ -54,7 +54,7 @@ public class ProbabilityCalculatorTest {
       BoardFormatException, PocketFormatException, GameStateFormatException {
 
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Th\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -65,7 +65,7 @@ public class ProbabilityCalculatorTest {
   public void madeHandCalculatesAsFullProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh Jd\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -76,7 +76,7 @@ public class ProbabilityCalculatorTest {
   public void withOneChanceBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh Jh\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -87,7 +87,7 @@ public class ProbabilityCalculatorTest {
   public void withTwoChancesBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Ah Kh Qh\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -98,7 +98,7 @@ public class ProbabilityCalculatorTest {
   public void withFiveChancesBadHandCalculatesAsSomeProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("\n" + "2d 7c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -112,7 +112,7 @@ public class ProbabilityCalculatorTest {
       GameStateFormatException {
     GameState state = GameStateFactory
         .createGameStateFromString("Ah Kh Qh\n" + "2d 7c\n" + "7h 7d\n" + "Ad Kc\n" + "8c 8d");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     double probability = calculator.twoOfAKindForPlayer(0);
 
@@ -124,7 +124,7 @@ public class ProbabilityCalculatorTest {
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
     GameState state = GameStateFactory.createGameStateFromString("Qs Js 8h\n" + "As Ks");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(state);
+    OutcomeCalculator calculator = new OutcomeCalculator(state);
 
     Map<Outcome, Double> probabilities = calculator.allOutcomesForAPlayer(0);
 
@@ -160,7 +160,7 @@ public class ProbabilityCalculatorTest {
     Outcome arbitraryOutcome = Outcome.FLUSH;
     outcomes.add(arbitraryOutcome);
 
-    Map<Outcome, WinLossCounter> counts = ProbabilityCalculator.countOutcomes(outcomes,
+    Map<Outcome, WinLossCounter> counts = OutcomeCalculator.countOutcomes(outcomes,
         boardWithThreeCards, pocket, deckWithTenCards);
 
     WinLossCounter count = counts.get(arbitraryOutcome);

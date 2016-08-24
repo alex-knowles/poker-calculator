@@ -18,7 +18,7 @@ public class FullHouseTest {
   public void givenBustedHandReturnsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("Ah 2h 3h\n Kc Qc");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.fullHouseForPlayer(0);
 
@@ -29,7 +29,7 @@ public class FullHouseTest {
   public void givenTwoPairWithTwoChancesReturnsCorrectProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("Ah Kh Qh\n Kc Qc");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.fullHouseForPlayer(0);
 

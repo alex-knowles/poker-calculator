@@ -18,7 +18,7 @@ public class TwoPairTest {
   public void givenBustedHandReturnsZeroProbability() throws BoardFormatException,
       PocketFormatException, GameStateFormatException, CardFormatException {
     GameState game = GameStateFactory.createGameStateFromString("As Kc Qh 9h\n 5s 2c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.twoPairForPlayer(0);
 
@@ -29,7 +29,7 @@ public class TwoPairTest {
   public void givenAPairAndOneChanceReturnsCorrectProbability() throws BoardFormatException,
       PocketFormatException, GameStateFormatException, CardFormatException {
     GameState game = GameStateFactory.createGameStateFromString("As Kc Qh 9h\n 5s 5c");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.twoPairForPlayer(0);
 

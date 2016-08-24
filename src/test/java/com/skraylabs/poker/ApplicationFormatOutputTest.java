@@ -16,7 +16,7 @@ public class ApplicationFormatOutputTest {
 
   @Test
   public void probabilityCalculationsAreFormattedNicely() {
-    ProbabilityCalculator calculator = new ProbabilityCalculator(null) {
+    OutcomeCalculator calculator = new OutcomeCalculator(null) {
       @Override
       public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
         HashMap<Outcome, Double> allOutcomes = new HashMap<>();

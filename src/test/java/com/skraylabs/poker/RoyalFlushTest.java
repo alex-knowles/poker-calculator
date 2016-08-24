@@ -18,7 +18,7 @@ public class RoyalFlushTest {
   public void givenABustedRoyalFlushReturnsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n Kh Kd");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.royalFlushForPlayer(0);
 
@@ -30,7 +30,7 @@ public class RoyalFlushTest {
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("Ks Qs 2h\n As Js");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.royalFlushForPlayer(0);
 

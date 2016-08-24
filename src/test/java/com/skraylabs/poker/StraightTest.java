@@ -18,7 +18,7 @@ public class StraightTest {
   public void givenABustedStraightReturnsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n 9h 9d");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.straightForPlayer(0);
 
@@ -29,7 +29,7 @@ public class StraightTest {
   public void givenAStraightDrawWithOneChanceReturnsCorrectProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n 9h 5d");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.straightForPlayer(0);
 

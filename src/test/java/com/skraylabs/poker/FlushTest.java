@@ -18,7 +18,7 @@ public class FlushTest {
   public void givenBustedHandReturnsZeroProbability() throws BoardFormatException,
       PocketFormatException, GameStateFormatException, CardFormatException {
     GameState game = GameStateFactory.createGameStateFromString("As Ac Ah Kh\n Ts Js");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.flushForPlayer(0);
 
@@ -29,7 +29,7 @@ public class FlushTest {
   public void givenFlushDrawAndTwoChancesReturnsCorrectProbability() throws BoardFormatException,
       PocketFormatException, GameStateFormatException, CardFormatException {
     GameState game = GameStateFactory.createGameStateFromString("As 2s Kh\n 4s 5s");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.flushForPlayer(0);
 

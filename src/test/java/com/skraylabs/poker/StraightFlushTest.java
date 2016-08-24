@@ -18,7 +18,7 @@ public class StraightFlushTest {
   public void givenABustedStraightFlushReturnsZeroProbability() throws CardFormatException,
       BoardFormatException, PocketFormatException, GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n 9h 9d");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.straightFlushForPlayer(0);
 
@@ -30,7 +30,7 @@ public class StraightFlushTest {
       throws CardFormatException, BoardFormatException, PocketFormatException,
       GameStateFormatException {
     GameState game = GameStateFactory.createGameStateFromString("2s 3s 4s 9c\n 9h 5s");
-    ProbabilityCalculator calculator = new ProbabilityCalculator(game);
+    OutcomeCalculator calculator = new OutcomeCalculator(game);
 
     double probability = calculator.straightFlushForPlayer(0);
 
