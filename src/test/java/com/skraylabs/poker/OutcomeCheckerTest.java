@@ -131,6 +131,46 @@ public class OutcomeCheckerTest {
     assertThat(result, is(true));
   }
 
+  /* hasTwoPair() test methods */
+
+  @Test
+  public void givenLessThanFourCardsHasTwoPairReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.KING, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasTwoPair();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenNegativeCardsHasTwoPairReturnsFalse() {
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.KING, Suit.HEARTS));
+    cards.add(new Card(Rank.QUEEN, Suit.HEARTS));
+    cards.add(new Card(Rank.JACK, Suit.HEARTS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasTwoPair();
+
+    assertThat(result, is(false));
+  }
+
+  @Test
+  public void givenPositiveCardsHasTwoPairReturnsTrue() {
+    cards.add(new Card(Rank.ACE, Suit.HEARTS));
+    cards.add(new Card(Rank.ACE, Suit.SPADES));
+    cards.add(new Card(Rank.KING, Suit.CLUBS));
+    cards.add(new Card(Rank.KING, Suit.DIAMONDS));
+    checker = new OutcomeChecker(cards);
+
+    boolean result = checker.hasTwoPair();
+
+    assertThat(result, is(true));
+  }
+
   /* hasStraight() test methods */
 
   @Test
