@@ -100,20 +100,7 @@ public class OutcomeChecker {
   public boolean hasStraight() {
     boolean result = false;
     if (cards.size() >= STRAIGHT_SIZE) {
-      // Get ranks (no repeats)
-      Set<Rank> ranks = cards.stream()
-          .collect(Collectors.groupingBy(Card::getRank))
-          .keySet();
-      // Sort ranks (ace low)
-      List<Rank> sortedRanksAceLow = ranks.stream()
-          .sorted((rank1, rank2) -> rank1.aceLowValue() - rank2.aceLowValue())
-          .collect(Collectors.toList());
-
-      // Add aces to end of sorted List
-      List<Rank> sortedRanksAceLowAndHigh = sortedRanksAceLow;
-      if (ranks.contains(Rank.ACE)) {
-        sortedRanksAceLowAndHigh.add(Rank.ACE);
-      }
+      List<Rank> sortedRanksAceLowAndHigh = extractRanksInOrder(cards);
 
       // Gather adjacencies
       ArrayList<Rank> rankSequence = new ArrayList<>();
@@ -211,8 +198,8 @@ public class OutcomeChecker {
    * @return {@code true} if there is at least one Royal Flush; {@code false} otherwise
    */
   public boolean hasRoyalFlush() {
-    List<Card> topFiveRanks = cards.stream()
-            .filter(card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue())
+    List<Card> topFiveRanks =
+        cards.stream().filter(card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue())
             .collect(Collectors.toList());
     OutcomeChecker straightChecker = new OutcomeChecker(topFiveRanks);
     return straightChecker.hasStraightFlush();
@@ -268,6 +255,28 @@ public class OutcomeChecker {
       }
     }
     return result;
+  }
+
+  /**
+   * Returns a "distilled" list of Ranks from a given card collection. Each Rank appears only once,
+   * except for Ace, which will be placed both low and high. Results are sorted from low to high.
+   *
+   * @param cards collection from which to extract ranks
+   * @return ranks representing {@code cards}
+   */
+  private static List<Rank> extractRanksInOrder(Collection<Card> cards) {
+    Set<Rank> ranks = cards.stream().collect(Collectors.groupingBy(Card::getRank)).keySet();
+
+    List<Rank> sortedRanksAceLow = ranks.stream()
+        .sorted((rank1, rank2) -> rank1.aceLowValue() - rank2.aceLowValue())
+        .collect(Collectors.toList());
+
+    List<Rank> sortedRanksAceLowAndHigh = sortedRanksAceLow;
+    if (ranks.contains(Rank.ACE)) {
+      sortedRanksAceLowAndHigh.add(Rank.ACE);
+    }
+
+    return sortedRanksAceLowAndHigh;
   }
 
   /**
