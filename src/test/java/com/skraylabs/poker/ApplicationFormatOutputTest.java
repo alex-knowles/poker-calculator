@@ -3,6 +3,9 @@ package com.skraylabs.poker;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import com.skraylabs.poker.outcome.Outcome;
+import com.skraylabs.poker.outcome.OutcomeCalculator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +19,7 @@ public class ApplicationFormatOutputTest {
 
   @Test
   public void probabilityCalculationsAreFormattedNicely() {
-    ProbabilityCalculator calculator = new ProbabilityCalculator(null) {
+    OutcomeCalculator calculator = new OutcomeCalculator(null) {
       @Override
       public Map<Outcome, Double> allOutcomesForAPlayer(int playerIndex) {
         HashMap<Outcome, Double> allOutcomes = new HashMap<>();

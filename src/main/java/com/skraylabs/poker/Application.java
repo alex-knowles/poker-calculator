@@ -7,6 +7,8 @@ import com.skraylabs.poker.model.GameStateFactory;
 import com.skraylabs.poker.model.GameStateFormatException;
 import com.skraylabs.poker.model.Pocket;
 import com.skraylabs.poker.model.PocketFormatException;
+import com.skraylabs.poker.outcome.Outcome;
+import com.skraylabs.poker.outcome.OutcomeCalculator;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -90,7 +92,7 @@ public class Application {
       }
 
       // Calculate outcome probabilities and print output
-      ProbabilityCalculator calculator = new ProbabilityCalculator(gameState);
+      OutcomeCalculator calculator = new OutcomeCalculator(gameState);
       Pocket[] pockets = gameState.getPockets();
       for (int i = 0; i < pockets.length; ++i) {
         Pocket pocket = pockets[i];
@@ -166,7 +168,7 @@ public class Application {
    * @param playerIndex in the range [0, 9]
    * @return formatted string describing the probability for each poker hand
    */
-  static String formatOutputForPlayer(ProbabilityCalculator calculator, int playerIndex) {
+  static String formatOutputForPlayer(OutcomeCalculator calculator, int playerIndex) {
     Map<Outcome, Double> probabilities = calculator.allOutcomesForAPlayer(playerIndex);
     StringBuilder builder = new StringBuilder();
 

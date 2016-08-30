@@ -1,4 +1,4 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 /**
  * A binary counter that counts "wins" and "losses". For example, if you wanted to count the number

@@ -1,9 +1,9 @@
-package com.skraylabs.poker;
+package com.skraylabs.poker.outcome;
 
 /**
  * Categories of Poker outcomes.
  */
-enum Outcome {
+public enum Outcome {
   TWO_OF_A_KIND,
   TWO_PAIR,
   THREE_OF_A_KIND,
