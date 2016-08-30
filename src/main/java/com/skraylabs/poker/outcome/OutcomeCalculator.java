@@ -114,8 +114,8 @@ public class OutcomeCalculator {
         nextUndealtCards.removeAll(dealtCards);
         Map<Outcome, WinLossCounter> nextCounts =
             countOutcomes(outcomes, nextBoard, pocket, nextUndealtCards);
-        for (Outcome outcome : result.keySet()) {
-          result.get(outcome).incrementBy(nextCounts.get(outcome));
+        for (Map.Entry<Outcome, WinLossCounter> entry : result.entrySet()) {
+          entry.getValue().incrementBy(nextCounts.get(entry.getKey()));
         }
       }
     }
