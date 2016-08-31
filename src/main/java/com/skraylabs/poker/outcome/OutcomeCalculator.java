@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -55,10 +56,10 @@ public class OutcomeCalculator {
     Pocket pocket = gameState.getPockets()[playerIndex];
     Map<Outcome, WinLossCounter> counts = countOutcomes(outcomes, CardUtils.collectCards(board),
         CardUtils.collectCards(pocket), deck);
-    for (Outcome outcome : counts.keySet()) {
-      WinLossCounter count = counts.get(outcome);
+    for (Entry<Outcome, WinLossCounter> entry : counts.entrySet()) {
+      WinLossCounter count = entry.getValue();
       double probability = ((double) count.getWins()) / count.getCountTotal();
-      result.put(outcome, probability);
+      result.put(entry.getKey(), probability);
     }
 
     return result;
