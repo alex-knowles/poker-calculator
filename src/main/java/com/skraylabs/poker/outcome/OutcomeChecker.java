@@ -248,8 +248,7 @@ public class OutcomeChecker {
 
     List<Card> result = new ArrayList<Card>();
     Map<T, List<Card>> cardsByType = cards.stream().collect(Collectors.groupingBy(typeFunction));
-    for (T key : cardsByType.keySet()) {
-      List<Card> cardsOfType = cardsByType.get(key);
+    for (List<Card> cardsOfType : cardsByType.values()) {
       if (cardsOfType.size() >= number) {
         result = cardsOfType;
       }
