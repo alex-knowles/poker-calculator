@@ -26,6 +26,14 @@ class WinLossCounter {
     return this.wins + this.losses;
   }
 
+  public double getWinPercentage() {
+    return ((double) this.wins) / getCountTotal();
+  }
+
+  public double getLossPercentage() {
+    return ((double) this.losses) / getCountTotal();
+  }
+
   public void incrementWinsBy(int wins) {
     if (wins <= 0) {
       throw new IllegalArgumentException("Argument must be a positive integer.");

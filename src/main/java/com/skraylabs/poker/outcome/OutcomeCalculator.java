@@ -9,9 +9,7 @@ import com.skraylabs.poker.model.Pocket;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -47,7 +45,6 @@ public class OutcomeCalculator {
           .format("Parameter \"playerIndex\" must be in range [0, %d].", GameState.MAX_PLAYERS));
     }
 
-    Map<Outcome, Double> result = new HashMap<>();
     Collection<Card> dealtCards = CardUtils.collectCards(gameState);
     Collection<Card> deck = makeDeckOfUndealtCards(dealtCards);
 
@@ -56,12 +53,9 @@ public class OutcomeCalculator {
     Pocket pocket = gameState.getPockets()[playerIndex];
     Map<Outcome, WinLossCounter> counts = countOutcomes(outcomes, CardUtils.collectCards(board),
         CardUtils.collectCards(pocket), deck);
-    for (Entry<Outcome, WinLossCounter> entry : counts.entrySet()) {
-      WinLossCounter count = entry.getValue();
-      double probability = ((double) count.getWins()) / count.getCountTotal();
-      result.put(entry.getKey(), probability);
-    }
 
+    Map<Outcome, Double> result = counts.entrySet().stream().collect(
+        Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue().getWinPercentage()));
     return result;
   }
 
