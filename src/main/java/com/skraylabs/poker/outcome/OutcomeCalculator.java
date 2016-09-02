@@ -8,6 +8,7 @@ import com.skraylabs.poker.model.Pocket;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,9 +72,7 @@ public class OutcomeCalculator {
    * @return the probability of getting the specified poker outcome
    */
   double outcomeForAPlayer(Outcome outcome, int playerIndex) {
-    Collection<Outcome> outcomes = new ArrayList<>();
-    outcomes.add(outcome);
-    Map<Outcome, Double> results = outcomesForAPlayer(outcomes, playerIndex);
+    Map<Outcome, Double> results = outcomesForAPlayer(Collections.singleton(outcome), playerIndex);
     return results.get(outcome);
   }
 
