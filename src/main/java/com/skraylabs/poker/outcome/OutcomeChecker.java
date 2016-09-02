@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -99,39 +100,27 @@ public class OutcomeChecker {
   public boolean hasStraight() {
     boolean result = false;
     if (cards.size() >= STRAIGHT_SIZE) {
-      // Sort cards with Aces low
-      List<Card> sortedCardsAcesLow = cards.stream()
-          .sorted((card1, card2) -> card1.getRank().aceLowValue() - card2.getRank().aceLowValue())
-          .collect(Collectors.toList());
-
-      // Add aces to end of sorted List
-      Collection<Card> aces =
-          cards.stream().filter(card -> card.getRank() == Rank.ACE).collect(Collectors.toList());
-      List<Card> sortedCardsAcesLowAndHigh = new ArrayList<>(sortedCardsAcesLow);
-      sortedCardsAcesLowAndHigh.addAll(aces);
+      List<Rank> sortedRanksAceLowAndHigh = extractRanksInOrder(cards);
 
       // Gather adjacencies
-      ArrayList<Card> cardSequence = new ArrayList<>();
-      for (Card card : sortedCardsAcesLowAndHigh) {
-        if (cardSequence.isEmpty()) {
+      ArrayList<Rank> rankSequence = new ArrayList<>();
+      for (Rank rank : sortedRanksAceLowAndHigh) {
+        if (rankSequence.isEmpty()) {
           // Begin a sequence
-          cardSequence.add(card);
+          rankSequence.add(rank);
         } else {
-          Card previousCard = cardSequence.get(cardSequence.size() - 1);
-          if (cardRanksAreAdjacent(card, previousCard)) {
+          Rank previousRank = rankSequence.get(rankSequence.size() - 1);
+          if (ranksAreAdjacent(rank, previousRank)) {
             // Advance the sequence
-            cardSequence.add(card);
-            if (cardSequence.size() == STRAIGHT_SIZE) {
+            rankSequence.add(rank);
+            if (rankSequence.size() == STRAIGHT_SIZE) {
               result = true;
               break;
             }
-          } else if (card.getRank() != previousCard.getRank()) {
+          } else if (rank != previousRank) {
             // Restart the sequence
-            cardSequence.clear();
-            cardSequence.add(card);
-          } else if (card.getRank() == previousCard.getRank()) {
-            // Do nothing
-            // Sequence is neither advanced nor restarted
+            rankSequence.clear();
+            rankSequence.add(rank);
           }
         }
       }
@@ -209,8 +198,8 @@ public class OutcomeChecker {
    * @return {@code true} if there is at least one Royal Flush; {@code false} otherwise
    */
   public boolean hasRoyalFlush() {
-    List<Card> topFiveRanks = cards.stream()
-            .filter(card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue())
+    List<Card> topFiveRanks =
+        cards.stream().filter(card -> card.getRank().aceHighValue() >= Rank.TEN.aceHighValue())
             .collect(Collectors.toList());
     OutcomeChecker straightChecker = new OutcomeChecker(topFiveRanks);
     return straightChecker.hasStraightFlush();
@@ -269,17 +258,37 @@ public class OutcomeChecker {
   }
 
   /**
-   * Helper method that returns true if two Cards have "adjacent" ranks. For example, a Jack is
-   * adjacent to a Ten, but not to a King.
+   * Returns a "distilled" list of Ranks from a given card collection. Each Rank appears only once,
+   * except for Ace, which will be placed both low and high. Results are sorted from low to high.
    *
-   * @param card1 card to compare
-   * @param card2 card to compare
-   * @return {@code true} if {@code card1} and {@code card2} are adjacent in rank; {@code false} if
-   *         they have equivalent ranks or are non-neighboring ranks
+   * @param cards collection from which to extract ranks
+   * @return ranks representing {@code cards}
    */
-  private static boolean cardRanksAreAdjacent(Card card1, Card card2) {
-    Rank rank1 = card1.getRank();
-    Rank rank2 = card2.getRank();
+  private static List<Rank> extractRanksInOrder(Collection<Card> cards) {
+    Set<Rank> ranks = cards.stream().collect(Collectors.groupingBy(Card::getRank)).keySet();
+
+    List<Rank> sortedRanksAceLow = ranks.stream()
+        .sorted((rank1, rank2) -> rank1.aceLowValue() - rank2.aceLowValue())
+        .collect(Collectors.toList());
+
+    List<Rank> sortedRanksAceLowAndHigh = sortedRanksAceLow;
+    if (ranks.contains(Rank.ACE)) {
+      sortedRanksAceLowAndHigh.add(Rank.ACE);
+    }
+
+    return sortedRanksAceLowAndHigh;
+  }
+
+  /**
+   * Helper method that returns true if two Ranks are "adjacent". For example, a Jack is adjacent to
+   * a Ten, but not to a King.
+   *
+   * @param rank1 rank to compare
+   * @param rank2 rank to compare
+   * @return {@code true} if {@code rank1} and {@code rank2} are adjacent; {@code false} if they are
+   *         equivalent are non-neighboring
+   */
+  private static boolean ranksAreAdjacent(Rank rank1, Rank rank2) {
     int shortestDifference = Math.min(Math.abs(rank1.aceLowValue() - rank2.aceLowValue()),
         Math.abs(rank1.aceHighValue() - rank2.aceHighValue()));
     return shortestDifference == 1;
